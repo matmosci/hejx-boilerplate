@@ -3,7 +3,7 @@
 
 <%- include('head'); %>
 
-    <body>
+    <body hx-boost="true">
         <%- include('nav'); %>
         <main class="container"><%- include(content, { query }) %></main>
         <%- include('footer'); %>

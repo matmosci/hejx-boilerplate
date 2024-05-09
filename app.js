@@ -9,11 +9,6 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 
-app.use((req, res, next) => {
-    req.isHx = req.headers['hx-request'] === 'true';
-    next();
-});
-
 app.use('/hx', hx);
 
 app.get('/', (req, res) => { getPage(req, res, "home") });
@@ -28,5 +23,5 @@ app.listen(port, () => {
 function getPage(req, res, pageName) {
     const content = `pages/${pageName}`;
     const { query } = req;
-    req.isHx ? res.render(content, { query }) : res.render("index", { content, query });
+    res.render("index", { content, query });
 }

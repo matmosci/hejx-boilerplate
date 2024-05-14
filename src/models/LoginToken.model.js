@@ -16,7 +16,7 @@ schema.pre("save", function () {
     this.hash = crypto.createHash("sha256").update(this.hash).digest("hex");
 });
 
-schema.statics.verify = async function (email, token, hash = true) {
+schema.statics.verify = async function (email, token, hash) {
     const date = new Date(new Date().getTime() - LOGIN_TOKEN_EXPIRATION).toISOString();
     if (hash) token = crypto.createHash("sha256").update(token).digest("hex");
     const verified = await this.findOne({ email, token, createdAt: { $gte: date } });

@@ -17,6 +17,8 @@ module.exports = {
             }
             const user = await service.getUserByLoginToken(email, loginToken);
             if (!user) throw new Error("E_INVALID_CREDENTIALS");
+            await service.transferUserData(user._id, req.session.user_id);
+            await service.removeAnonymusUser(req.session.user_id);
             req.session.user_id = user._id;
             res.end();
         } catch (error) {
@@ -29,13 +31,16 @@ module.exports = {
         try {
             const user = await service.getUserByLoginHash(hash);
             if (!user) throw new Error("E_INVALID_CREDENTIALS");
+            await service.transferUserData(user._id, req.session.user_id);
+            await service.removeAnonymusUser(req.session.user_id);
             req.session.user_id = user._id;
             res.end();
         } catch (error) {
             return res.status(401).send({ error: error.message });
         }
     },
-    logout: (req, res) => {
+    logout: async (req, res) => {
+        await service.removeAnonymusUser(req.session.user_id);
         req.session.destroy();
         res.end();
     }

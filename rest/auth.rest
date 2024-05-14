@@ -5,7 +5,7 @@ POST {{api}}/api/auth
 Content-Type: application/json
 
 {
-    "email": "example@email.com"
+    "email": "example1@email.com"
 }
 
 ### Login with email and token
@@ -13,8 +13,8 @@ POST {{api}}/api/auth
 Content-Type: application/json
 
 {
-    "email": "example@email.com",
-    "token": "E487"
+    "email": "example1@email.com",
+    "token": "6A5F"
 }
 
 ### Login with hash
@@ -25,3 +25,6 @@ GET {{api}}/api/auth
 
 ###
 DELETE {{api}}/api/auth
+
+###
+GET {{api}}/user

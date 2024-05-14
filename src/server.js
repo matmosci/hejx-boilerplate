@@ -3,8 +3,9 @@ const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const app = express();
 const port = 9090;
-const authRoutes = require('./routes/auth.routes.js');
-const hxRoutes = require('./routes/hx.routes.js');
+const authRoutes = require('./routes/auth.routes');
+const hxRoutes = require('./routes/hx.routes');
+const anonymus = require("./middleware/anonymus.middleware");
 
 app.set('views', './src/views');
 app.set('view engine', 'ejs');
@@ -32,7 +33,13 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.use(anonymus);
 app.use('/hx', hxRoutes);
+
+app.get('/user', (req, res) => {
+    console.log(req.session.user_id);
+    res.end();
+});
 
 app.get('/', (req, res) => { getPage(req, res, "home") });
 app.get('/query', (req, res) => { getPage(req, res, "query") });

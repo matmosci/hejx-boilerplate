@@ -1,11 +1,15 @@
-const User = require('../models/User.model.js');
-const LoginToken = require('../models/LoginToken.model.js');
+const User = require('../models/User.model');
+const LoginToken = require('../models/LoginToken.model');
 const crypto = require("crypto");
 
 module.exports = {
     createLoginToken,
     getUserByLoginToken,
-    getUserByLoginHash
+    getUserByLoginHash,
+    removeAnonymusUser,
+    transferUserData: async (to_user_id, from_user_id) => {
+        return console.log("moveUserData", to_user_id, from_user_id);
+    }
 };
 
 async function createLoginToken(email) {
@@ -15,8 +19,8 @@ async function createLoginToken(email) {
     return { token, hash };
 }
 
-async function getUserByLoginToken(email, token) {
-    if (await LoginToken.verify(email, token))
+async function getUserByLoginToken(email, token, hash = true) {
+    if (await LoginToken.verify(email, token, hash))
         return await User.findOne({ email }) || await User.create({ email, access: 1 });
 }
 
@@ -25,6 +29,9 @@ async function getUserByLoginHash(hash) {
     const loginToken = await LoginToken.findOne({ hash });
     if (!loginToken) return;
     const { email, token } = loginToken;
-    if (await LoginToken.verify(email, token, false))
-        return await User.findOne({ email }) || await User.create({ email, access: 1 });
+    return await getUserByLoginToken(email, token, false);
+}
+
+async function removeAnonymusUser(_id) {
+    return await User.findOneAndDelete({ _id, access: 0 });
 }

@@ -1,27 +1,36 @@
-const express = require('express');
-const app = express();
-const port = 9090;
+require('dotenv').config();
+require('./src/config/app.config.js');
+const mongoose = require('mongoose');
 
-const hx = require('./src/routes/hx.js');
-
-app.set('view engine', 'ejs');
-
-app.use(express.static('public'));
-app.use(express.urlencoded({ extended: true }));
-
-app.use('/hx', hx);
-
-app.get('/', (req, res) => { getPage(req, res, "home") });
-app.get('/query', (req, res) => { getPage(req, res, "query") });
-app.get('/get', (req, res) => { getPage(req, res, "get") });
-app.get('/form', (req, res) => { getPage(req, res, "form") });
-
-app.listen(port, () => {
-    console.log(`Listening at http://localhost:${port}`);
+mongoose.connection.on("connected", () => {
+    console.log(`Connected to database`);
+    require('./src/server.js');
 });
 
-function getPage(req, res, pageName) {
-    const content = `pages/${pageName}`;
-    const { query } = req;
-    res.render("index", { content, query });
-}
+
+mongoose.connection.on("error", (err) => {
+    console.error(`Failed to connect to database on startup `, err);
+});
+
+mongoose.connection.on("disconnected", () => {
+    console.log(`Mongoose default connection to database disconnected`);
+});
+
+
+const exit = () => {
+    mongoose.connection.close();
+    mongoose.connection.on("close", () => {
+        console.log(`Connection to database closed`);
+        process.exit(0);
+    });
+};
+
+process.on("SIGINT", exit).on("SIGTERM", exit).on("SIGQUIT", exit);
+
+try {
+    mongoose.connect(global.config.MONGODB_URI);
+    console.log("Connecting to database...");
+  } catch (err) {
+    console.log("Sever initialization failed ", err.message);
+  }
+  

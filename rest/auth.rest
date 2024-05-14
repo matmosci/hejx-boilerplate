@@ -1,0 +1,27 @@
+@api=http://127.0.0.1:9090
+
+### Create login token
+POST {{api}}/api/auth
+Content-Type: application/json
+
+{
+    "email": "example@email.com"
+}
+
+### Login with email and token
+POST {{api}}/api/auth
+Content-Type: application/json
+
+{
+    "email": "example@email.com",
+    "token": "E487"
+}
+
+### Login with hash
+POST {{api}}/api/auth/8036791e0f267158ec020fc5764b9d040375c856dd42929884058ca8888c5eaf601dc8eef7d563ee377a2c5e8ddcf358
+
+###
+GET {{api}}/api/auth
+
+###
+DELETE {{api}}/api/auth

@@ -1,1 +1,30 @@
+# Dependency directories
 node_modules
+jspm_packages
+bower_components
+
+# Environment variables
+.env
+
+# IDE/Editor folders
+.vscode
+.idea
+*.swp
+*.swo
+
+# Log files
+npm-debug.log
+yarn-error.log
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# Dist directory
+dist
+
+# Cache files
+.cache
+
+# Local database
+db

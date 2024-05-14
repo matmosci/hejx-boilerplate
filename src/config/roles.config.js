@@ -1,0 +1,14 @@
+module.exports = {
+    USER: 0,
+    EMPLOYEE: 1,
+    ORDERS_VIEW: 2,
+    ORDERS_EDIT: 3,
+    CUSTOMERS_VIEW: 4,
+    CUSTOMERS_EDIT: 5,
+    INDEXES_VIEW: 6,
+    INDEXES_EDIT: 7,
+    PRODUCTS_VIEW: 8,
+    PRODUCTS_EDIT: 9,
+    DESIGNS_VIEW: 10,
+    DESIGNS_EDIT: 11,
+};

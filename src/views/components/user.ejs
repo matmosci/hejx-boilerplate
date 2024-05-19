@@ -1,5 +1,7 @@
-<span><%= user %></span>
-<a class="nav-link text-end" href="/login">Login</a>
+<% if (!user.access) { %>
+    <a class="nav-link text-end" href="/login">Login</a>
+<% } else { %>
 <form action="/api/auth" method="DELETE">
     <input class="nav-link text-end" type="submit" value="Logout"></input>
 </form>
+<% } %>

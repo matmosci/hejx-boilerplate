@@ -5,7 +5,7 @@ const app = express();
 const port = 9090;
 const authRoutes = require('./routes/auth.routes');
 const hxRoutes = require('./routes/hx.routes');
-const anonymus = require("./middleware/anonymus.middleware");
+const user = require("./middleware/user.middleware");
 
 app.set('views', './src/views');
 app.set('view engine', 'ejs');
@@ -33,7 +33,7 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(anonymus);
+app.use(user);
 app.use('/hx', hxRoutes);
 
 app.get('/user', (req, res) => {
@@ -57,5 +57,5 @@ app.listen(port, () => {
 function getPage(req, res, pageName) {
     const content = `pages/${pageName}`;
     const { query } = req;
-    res.render("index", { content, query, user: req.session.user_id });
+    res.render("index", { content, query, user: req.session.user });
 };

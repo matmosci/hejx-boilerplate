@@ -1,0 +1,17 @@
+$primary: #046D8B;
+
+@import "../../node_modules/bootstrap/scss/functions";
+@import "../../node_modules/bootstrap/scss/variables";
+
+$custom-colors: (
+    "primary": $primary
+);
+
+.btn-primary,
+.btn-gg {
+    text-shadow: 0 1px 2px #000a;
+}
+
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+@import "../../node_modules/bootstrap/scss/bootstrap";

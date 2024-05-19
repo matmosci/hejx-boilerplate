@@ -6,13 +6,15 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "concurrently \"nodemon app.js\" \"browser-sync start --proxy 'localhost:9090' --files '**/*, !node_modules/**/*, !db/**/*, !.git/**/*' --port 9191 --no-notify\"",
-    "db": "mongod -dbpath ./db"
+    "db": "mongod -dbpath ./db",
+    "scss": "sass --watch ./src/scss/bootstrap.scss ./public/css/bootstrap.css"
   },
   "keywords": [],
   "author": "matmosci",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "bootstrap": "^5.3.3",
     "connect-mongodb-session": "^5.0.0",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.9",
@@ -22,6 +24,7 @@
   },
   "devDependencies": {
     "browser-sync": "^3.0.2",
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "sass": "^1.77.2"
   }
 }

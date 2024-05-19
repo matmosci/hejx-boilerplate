@@ -13,14 +13,14 @@ module.exports = {
             if (!loginToken) {
                 const credentials = await service.createLoginToken(email);
                 if (global.config.NODE_ENV === "development") console.log(credentials);
-                return res.sendStatus(201);
-            }
+                return res.status(201).render("components/loginEmailTokenForm", { email });
+            };
             const user = await service.getUserByLoginToken(email, loginToken);
             if (!user) throw new Error("E_INVALID_CREDENTIALS");
             await service.transferUserData(user._id, req.session.user_id);
             await service.removeAnonymusUser(req.session.user_id);
             req.session.user_id = user._id;
-            res.end();
+            res.redirect('/');
         } catch (error) {
             return res.status(401).send({ error: error.message });
         }
@@ -37,11 +37,11 @@ module.exports = {
             res.end();
         } catch (error) {
             return res.status(401).send({ error: error.message });
-        }
+        };
     },
     logout: async (req, res) => {
         await service.removeAnonymusUser(req.session.user_id);
         req.session.destroy();
-        res.end();
+        res.redirect(303, '/login');
     }
 };

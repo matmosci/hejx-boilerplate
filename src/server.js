@@ -45,6 +45,8 @@ app.get('/', (req, res) => { getPage(req, res, "home") });
 app.get('/query', (req, res) => { getPage(req, res, "query") });
 app.get('/get', (req, res) => { getPage(req, res, "get") });
 app.get('/form', (req, res) => { getPage(req, res, "form") });
+app.get('/login', (req, res) => { getPage(req, res, "login") });
+app.get('/logout', (req, res) => { getPage(req, res, "logout") });
 
 app.use('/api/auth', authRoutes);
 
@@ -55,5 +57,5 @@ app.listen(port, () => {
 function getPage(req, res, pageName) {
     const content = `pages/${pageName}`;
     const { query } = req;
-    res.render("index", { content, query });
+    res.render("index", { content, query, user: req.session.user_id });
 };

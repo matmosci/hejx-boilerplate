@@ -33,5 +33,6 @@ async function getUserByLoginHash(hash) {
 }
 
 async function removeAnonymusUser(_id) {
+    // TODO remove anonymus data
     return await User.findOneAndDelete({ _id, access: 0 });
 }

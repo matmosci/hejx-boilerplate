@@ -18,7 +18,7 @@ Content-Type: application/json
 }
 
 ### Login with hash
-POST {{api}}/api/auth/8036791e0f267158ec020fc5764b9d040375c856dd42929884058ca8888c5eaf601dc8eef7d563ee377a2c5e8ddcf358
+POST {{api}}/api/auth/a2b7a9eac4a3261379bbc83f144368176fa2ce1e13300001d4647025b947847c2e8e7c873305d113ce535e7c2b632570
 
 ###
 GET {{api}}/api/auth

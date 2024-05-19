@@ -22,7 +22,7 @@ store.on('error', error => {
 app.use(session({
     secret: global.config.SESSION_SECRET,
     store,
-    resave: false,
+    resave: true,
     saveUninitialized: true,
     cookie: {
         secure: global.config.NODE_ENV !== 'development',

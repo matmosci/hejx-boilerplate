@@ -1,5 +1,24 @@
 <% if (!user.access) { %>
-    <a class="btn btn-primary btn-sm my-auto" href="/login">Sign in</a>
+    <a class="btn btn-primary btn-sm my-auto ms-sm-2" href="/login">Sign in</a>
 <% } else { %>
-    <a class="nav-link text-center" href="/auth/Logout">Sign out</a>
+    <div class="dropdown my-auto mx-auto ms-sm-2 d-none d-sm-block">
+        <button id="dropdown-user" class="btn btn-primary btn-sm rounded-5 dropdown-toggle" type="button"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa-solid fa-user"></i>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item disabled" href="#"><%= user.email %></a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="/auth/logout">Sign out</a></li>
+        </ul>
+    </div>
+    <div class="d-sm-none">
+        <a class="nav-link text-center disabled" href="#"><%= user.email %></a>
+        <a class="nav-link text-center" href="/auth/logout">Sign out</a>
+    </div>
+    <style>
+        #dropdown-user::after {
+            content: none;
+        }
+    </style>
 <% } %>

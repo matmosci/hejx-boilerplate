@@ -42,6 +42,6 @@ module.exports = {
     logout: async (req, res) => {
         await service.removeAnonymusUser(req.session.user.id);
         req.session.destroy();
-        res.redirect(303, '/login');
+        res.redirect('/login');
     }
 };

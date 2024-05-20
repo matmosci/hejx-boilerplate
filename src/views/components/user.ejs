@@ -1,7 +1,5 @@
 <% if (!user.access) { %>
-    <a class="btn btn-primary btn-sm my-auto" href="/login">Login</a>
+    <a class="btn btn-primary btn-sm my-auto" href="/login">Sign in</a>
 <% } else { %>
-    <form action="/api/auth" method="DELETE">
-        <input class="nav-link text-end" type="submit" value="Logout"></input>
-    </form>
+    <a class="nav-link text-center" href="/auth/Logout">Sign out</a>
 <% } %>

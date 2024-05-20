@@ -3,8 +3,8 @@ const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const app = express();
 const port = 9090;
-const authRoutes = require('./routes/auth.routes');
-const hxRoutes = require('./routes/hx.routes');
+const authRouter = require('./routers/auth.router');
+const hxRouter = require('./routers/hx.router');
 const user = require("./middleware/user.middleware");
 
 app.set('views', './src/views');
@@ -34,7 +34,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use(user);
-app.use('/hx', hxRoutes);
+app.use('/hx', hxRouter);
 
 app.get('/user', (req, res) => {
     console.log(req.session.user_id);
@@ -48,7 +48,7 @@ app.get('/form', (req, res) => { getPage(req, res, "form") });
 app.get('/login', (req, res) => { getPage(req, res, "login") });
 app.get('/logout', (req, res) => { getPage(req, res, "logout") });
 
-app.use('/api/auth', authRoutes);
+app.use('/auth', authRouter);
 
 app.listen(port, () => {
     console.log(`Listening at http://localhost:${port}`);

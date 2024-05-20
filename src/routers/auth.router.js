@@ -6,8 +6,8 @@ const { isAnonymus } = require("../middleware/user.middleware");
 const { access, Roles } = auth;
 
 router.get('/', auth, access(Roles.USER), controller.get);
-router.post('/:hash', isAnonymus, controller.loginHash);
-router.post('/', isAnonymus, controller.login);
-router.delete('/', controller.logout);
+router.post('/login/:hash', isAnonymus, controller.loginHash);
+router.post('/login', isAnonymus, controller.login);
+router.get('/logout', controller.logout);
 
 module.exports = router;

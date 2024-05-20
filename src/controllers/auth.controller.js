@@ -2,7 +2,7 @@ const service = require('../services/auth.service');
 
 module.exports = {
     get: (req, res) => {
-        res.render('user', { user: req.user });
+        res.send(req.session.user);
     },
     login: async (req, res) => {
         const email = req.body?.email?.trim().toLowerCase();

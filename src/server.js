@@ -36,11 +36,6 @@ app.use(express.json());
 app.use(user);
 app.use('/hx', hxRouter);
 
-app.get('/user', (req, res) => {
-    console.log(req.session.user_id);
-    res.end();
-});
-
 app.get('/', (req, res) => { getPage(req, res, "home") });
 app.get('/query', (req, res) => { getPage(req, res, "query") });
 app.get('/get', (req, res) => { getPage(req, res, "get") });

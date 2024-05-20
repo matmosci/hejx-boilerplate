@@ -7,7 +7,6 @@ mongoose.connection.on("connected", () => {
     require('./src/server.js');
 });
 
-
 mongoose.connection.on("error", (err) => {
     console.error(`Failed to connect to database on startup `, err);
 });
@@ -15,7 +14,6 @@ mongoose.connection.on("error", (err) => {
 mongoose.connection.on("disconnected", () => {
     console.log(`Mongoose default connection to database disconnected`);
 });
-
 
 const exit = () => {
     mongoose.connection.close();
@@ -30,7 +28,6 @@ process.on("SIGINT", exit).on("SIGTERM", exit).on("SIGQUIT", exit);
 try {
     mongoose.connect(global.config.MONGODB_URI);
     console.log("Connecting to database...");
-  } catch (err) {
+} catch (err) {
     console.log("Sever initialization failed ", err.message);
-  }
-  
+}

@@ -3,9 +3,9 @@
 
 <%- include('head'); %>
 
-    <body hx-boost="true">
+    <body hx-boost="true" hx-ext="response-targets">
         <%- include('nav'); %>
-        <main class="container mt-3"><%- include(content, { query }) %></main>
+        <main class="container mt-3"><%- include(content); %></main>
         <%- include('footer'); %>
     </body>
 

@@ -1,5 +1,6 @@
-<form action="/auth/login" method="POST">
+<form action="/auth/login" method="POST" hx-target-error="#error">
     <input class="form-control mb-1" type="email" name="email" placeholder="Email" value="<%= email %>">
     <input class="form-control mb-1" type="text" name="token" placeholder="Token" autofocus>
+    <div id="error"></div>
     <input class="btn btn-primary" type="submit"></input>
 </form>

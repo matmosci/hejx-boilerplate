@@ -1,4 +1,5 @@
-<form hx-post="/auth/login" hx-swap="outerHTML">
+<form action="/auth/login" method="POST" hx-target-error="#error">
     <input class="form-control mb-1" type="email" name="email" placeholder="Email" autofocus>
+    <div id="error"></div>
     <input class="btn btn-primary" type="submit"></input>
 </form>

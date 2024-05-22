@@ -1,7 +1,7 @@
 const service = require('../services/auth.service');
 
 module.exports = {
-    get: (req, res) => {
+    getUser: (req, res) => {
         res.send(req.session.user);
     },
     createToken: async (req, res) => {
@@ -17,7 +17,7 @@ module.exports = {
             return res.status(401).send(error.message);
         }
     },
-    login: async (req, res) => {
+    loginByEmailToken: async (req, res) => {
         const email = req.body?.email?.trim().toLowerCase();
         const loginToken = req.body?.token?.trim().toUpperCase();
 
@@ -34,7 +34,7 @@ module.exports = {
             return res.status(401).send(error.message);
         }
     },
-    loginHash: async (req, res) => {
+    loginByHash: async (req, res) => {
         const { hash } = req.params;
 
         try {

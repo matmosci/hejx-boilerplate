@@ -19,10 +19,10 @@ module.exports = {
     },
     login: async (req, res) => {
         const email = req.body?.email?.trim().toLowerCase();
-        const loginToken = req.body?.token;
+        const loginToken = req.body?.token?.trim().toUpperCase();
 
         try {
-            if (!email || !loginToken || loginToken === '') throw new Error("E_INVALID_CREDENTIALS");
+            if (!email || !loginToken) throw new Error("E_INVALID_CREDENTIALS");
             const user = await service.getUserByLoginToken(email, loginToken);
             if (!user) throw new Error("E_INVALID_CREDENTIALS");
             await service.transferUserData(user.id, req.session.user.id);

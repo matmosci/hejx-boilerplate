@@ -43,9 +43,9 @@ module.exports = {
             await service.transferUserData(user.id, req.session.user.id);
             await service.removeAnonymusUser(req.session.user.id);
             req.session.user = { id: user.id, email: user.email, access: user.access };
-            res.end();
+            res.redirect('/');
         } catch (error) {
-            return res.status(401).send({ error: error.message });
+            return res.status(401).send(error.message);
         };
     },
     logout: async (req, res) => {

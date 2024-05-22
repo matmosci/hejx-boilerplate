@@ -8,8 +8,8 @@ router.get('/', auth(Roles.USER), controller.get);
 router.get('/login', (req, res) => res.render("index", { content: "pages/login", form: "loginEmailForm", user: req.session.user }));
 router.get('/login/token', (req, res) => res.render("index", { content: "pages/login", form: "loginEmailTokenForm", email: '', user: req.session.user }));
 router.get('/logout', controller.logout);
+router.get('/login/:hash', isAnonymus, controller.loginHash);
 router.post('/login', isAnonymus, controller.createToken);
 router.post('/login/token', isAnonymus, controller.login);
-router.post('/login/:hash', isAnonymus, controller.loginHash);
 
 module.exports = router;

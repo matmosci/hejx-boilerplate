@@ -13,8 +13,8 @@ module.exports = {
             if (global.config.NODE_ENV === "development") console.log(credentials);
             return res.status(201).render("index", { content: "pages/login", form: "loginEmailTokenForm", email, user: req.session.user });
         } catch (error) {
-            console.log(error.message);
-            return res.status(401).send(error.message);
+            if (error.message !== "E_INVALID_CREDENTIALS") console.log(error.message);
+            return res.status(401).send(res.locals.__(error.message));
         }
     },
     loginByEmailToken: async (req, res) => {
@@ -30,8 +30,8 @@ module.exports = {
             req.session.user = { id: user.id, email: user.email, access: user.access };
             res.redirect('/');
         } catch (error) {
-            console.log(error.message);
-            return res.status(401).send(error.message);
+            if (error.message !== "E_INVALID_CREDENTIALS") console.log(error.message);
+            return res.status(401).send(res.locals.__(error.message));
         }
     },
     loginByHash: async (req, res) => {
@@ -45,7 +45,8 @@ module.exports = {
             req.session.user = { id: user.id, email: user.email, access: user.access };
             res.redirect('/');
         } catch (error) {
-            return res.status(401).send(error.message);
+            if (error.message !== "E_INVALID_CREDENTIALS") console.log(error.message);
+            return res.status(401).send(res.locals.__(error.message));
         };
     },
     logout: async (req, res) => {

@@ -10,5 +10,5 @@ module.exports = (req, res, next) => {
 
 module.exports.isAnonymus = (req, res, next) => {
     if (req.session.user.access === 0) return next();
-    res.status(400).send("E_USER_ALREADY_LOGGED_IN");
+    res.status(400).send(res.locals.__("E_USER_ALREADY_LOGGED_IN"));
 };

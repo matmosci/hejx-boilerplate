@@ -1,3 +1,6 @@
 {
-    "sign_in": "Sign in"
+	"SIGN_IN": "Sign in",
+	"SIGN_OUT": "Sign out",
+	"E_INVALID_CREDENTIALS": "Invalid credentials",
+	"E_USER_ALREADY_LOGGED_IN": "You are already logged in"
 }

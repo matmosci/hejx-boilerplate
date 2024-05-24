@@ -1,5 +1,5 @@
 <% if (!user.access) { %>
-    <a class="btn btn-primary btn-sm my-auto ms-sm-2" href="/auth/login"><%= __('sign_in') %></a>
+    <a class="btn btn-primary btn-sm my-auto ms-sm-2" href="/auth/login"><%= __('SIGN_IN') %></a>
 <% } else { %>
     <div class="dropdown my-auto mx-auto ms-sm-2 d-none d-sm-block">
         <button id="dropdown-user" class="material-icons notranslate btn btn-primary btn-sm rounded-5 p-1 dropdown-toggle" type="button"
@@ -9,12 +9,12 @@
         <ul class="dropdown-menu dropdown-menu-end">
             <li><a class="dropdown-item disabled" href="#"><%= user.email %></a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="/auth/logout">Sign out</a></li>
+            <li><a class="dropdown-item" href="/auth/logout"><%= __('SIGN_OUT') %></a></li>
         </ul>
     </div>
     <div class="d-sm-none">
         <a class="nav-link text-center disabled" href="#"><%= user.email %></a>
-        <a class="nav-link text-center" href="/auth/logout">Sign out</a>
+        <a class="nav-link text-center" href="/auth/logout"><%= __('SIGN_OUT') %></a>
     </div>
     <style>
         #dropdown-user::after {

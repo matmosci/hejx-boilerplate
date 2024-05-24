@@ -1,3 +1,6 @@
 {
-	"sign_in": "Zaloguj"
+	"SIGN_IN": "Zaloguj",
+	"SIGN_OUT": "SIGN_OUT",
+	"E_INVALID_CREDENTIALS": "Nieprawidłowe dane logowania",
+	"E_USER_ALREADY_LOGGED_IN": "Użytkownik już jest zalogowany"
 }

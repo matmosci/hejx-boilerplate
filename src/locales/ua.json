@@ -1,3 +1,6 @@
 {
-	"sign_in": "Увійти"
+	"SIGN_IN": "Увійти",
+	"SIGN_OUT": "Выход",
+	"E_INVALID_CREDENTIALS": "Неправильні облікові дані",
+	"E_USER_ALREADY_LOGGED_IN": "Ви вже увійшли в систему"
 }

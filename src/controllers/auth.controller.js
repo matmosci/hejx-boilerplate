@@ -13,7 +13,7 @@ module.exports = {
             if (global.config.NODE_ENV === "development") console.log(credentials);
             return res.status(201).render("index", { content: "pages/login", form: "loginEmailTokenForm", email, user: req.session.user });
         } catch (error) {
-            if (error.message !== "E_INVALID_CREDENTIALS") console.log(error.message);
+            if (error.message !== "E_INVALID_CREDENTIALS") console.log(error);
             return res.status(401).send(res.locals.__(error.message));
         }
     },
@@ -30,7 +30,7 @@ module.exports = {
             req.session.user = { id: user.id, email: user.email, access: user.access };
             res.redirect('/');
         } catch (error) {
-            if (error.message !== "E_INVALID_CREDENTIALS") console.log(error.message);
+            if (error.message !== "E_INVALID_CREDENTIALS") console.log(error);
             return res.status(401).send(res.locals.__(error.message));
         }
     },
@@ -45,13 +45,18 @@ module.exports = {
             req.session.user = { id: user.id, email: user.email, access: user.access };
             res.redirect('/');
         } catch (error) {
-            if (error.message !== "E_INVALID_CREDENTIALS") console.log(error.message);
+            if (error.message !== "E_INVALID_CREDENTIALS") console.log(error);
             return res.status(401).send(res.locals.__(error.message));
         };
     },
     logout: async (req, res) => {
-        await service.removeAnonymusUser(req.session.user.id);
-        req.session.destroy();
-        res.redirect('/auth/login');
+        try {
+            await service.removeAnonymusUser(req.session.user.id);
+            req.session.destroy();
+            res.redirect('/auth/login');
+        } catch (error) {
+            console.log(error);
+            res.sendStatus(500);            
+        }
     }
 };

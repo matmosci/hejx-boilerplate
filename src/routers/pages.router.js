@@ -1,15 +1,10 @@
 const express = require("express");
 const router = express.Router();
+const render = require("../utils/render.utils");
 
-router.get('/', (req, res) => { getPage(req, res, "home") });
-router.get('/query', (req, res) => { getPage(req, res, "query") });
-router.get('/get', (req, res) => { getPage(req, res, "get") });
-router.get('/form', (req, res) => { getPage(req, res, "form") });
-
-function getPage(req, res, pageName) {
-    const content = `pages/${pageName}`;
-    const { query } = req;
-    res.render("index", { content, query, user: req.session.user });
-};
+router.get('/', (req, res) => { render(req, res, "home") });
+router.get('/query', (req, res) => { render(req, res, "query", { show: req.query.show }) });
+router.get('/get', (req, res) => { render(req, res, "get") });
+router.get('/form', (req, res) => { render(req, res, "form") });
 
 module.exports = router;

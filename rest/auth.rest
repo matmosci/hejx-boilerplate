@@ -1,7 +1,7 @@
-@api=http://127.0.0.1:9090
+@api=http://localhost:9090
 
 ### Create login token
-POST {{api}}/api/auth
+POST {{api}}/auth/login
 Content-Type: application/json
 
 {
@@ -9,22 +9,19 @@ Content-Type: application/json
 }
 
 ### Login with email and token
-POST {{api}}/api/auth
+POST {{api}}/auth/login/token
 Content-Type: application/json
 
 {
     "email": "example1@email.com",
-    "token": "6A5F"
+    "token": "C80C"
 }
 
 ### Login with hash
-POST {{api}}/api/auth/a2b7a9eac4a3261379bbc83f144368176fa2ce1e13300001d4647025b947847c2e8e7c873305d113ce535e7c2b632570
+GET {{api}}/auth/login/f5e9d74eb4da2ce056bf17aa8f3f53c00da868b0b63032cb3925bf2f8b67f5bf1338cce97dd1e4b3491c20cb0dc23682
 
 ###
-GET {{api}}/api/auth
+GET {{api}}/auth
 
 ###
-DELETE {{api}}/api/auth
-
-###
-GET {{api}}/user
+GET {{api}}/auth/logout

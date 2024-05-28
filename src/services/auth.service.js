@@ -1,9 +1,11 @@
 const User = require('../models/User.model');
 const LoginToken = require('../models/LoginToken.model');
 const crypto = require("crypto");
+const mailer = require('../utils/mailer.utils');
 
 module.exports = {
     createLoginToken,
+    sendLoginToken,
     getUserByLoginToken,
     getUserByLoginHash,
     removeAnonymusUser,
@@ -35,4 +37,13 @@ async function getUserByLoginHash(user_id, hash) {
 async function removeAnonymusUser(_id) {
     // TODO remove anonymus data
     return await User.findOneAndDelete({ _id, access: 0 });
+}
+
+function sendLoginToken(email, credentials) {
+    // TODO localize message
+    const message = `
+<p>Your login token: <strong>${credentials.token}</strong></p>
+<p>You can also use this link to login: http://localhost:9090/auth/login/${credentials.hash}</p>
+`;
+    mailer.send("Login Token", message, email);
 }

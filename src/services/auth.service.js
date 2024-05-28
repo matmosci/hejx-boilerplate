@@ -19,17 +19,17 @@ async function createLoginToken(email) {
     return { token, hash };
 }
 
-async function getUserByLoginToken(email, token, hash = true) {
+async function getUserByLoginToken(user_id, email, token, hash = true) {
     if (await LoginToken.verify(email, token, hash))
-        return await User.findOne({ email }) || await User.create({ email, access: 1 });
+        return await User.findOne({ email }) || await User.findByIdAndUpdate(user_id, { email, access: 1 }, { new: true, upsert: true });
 }
 
-async function getUserByLoginHash(hash) {
+async function getUserByLoginHash(user_id, hash) {
     hash = crypto.createHash("sha256").update(hash).digest("hex");
     const loginToken = await LoginToken.findOne({ hash });
     if (!loginToken) return;
     const { email, token } = loginToken;
-    return await getUserByLoginToken(email, token, false);
+    return await getUserByLoginToken(user_id, email, token, false);
 }
 
 async function removeAnonymusUser(_id) {

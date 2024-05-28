@@ -1,4 +1,4 @@
-const service = require('../services/auth.service');
+const service = require("../services/auth.service");
 
 module.exports = {
     getUser: (req, res) => {
@@ -23,12 +23,12 @@ module.exports = {
 
         try {
             if (!email || !loginToken) throw new Error("E_INVALID_CREDENTIALS");
-            const user = await service.getUserByLoginToken(email, loginToken);
+            const user = await service.getUserByLoginToken(req.session.user._id, email, loginToken);
             if (!user) throw new Error("E_INVALID_CREDENTIALS");
             await service.transferUserData(user.id, req.session.user._id);
             await service.removeAnonymusUser(req.session.user._id);
             req.session.user = { _id: user._id, email: user.email, access: user.access };
-            res.redirect('/');
+            res.redirect("/");
         } catch (error) {
             if (error.message !== "E_INVALID_CREDENTIALS") console.log(error);
             return res.status(401).send(res.locals.__(error.message));
@@ -38,25 +38,25 @@ module.exports = {
         const { hash } = req.params;
 
         try {
-            const user = await service.getUserByLoginHash(hash);
+            const user = await service.getUserByLoginHash(req.session.user._id, hash);
             if (!user) throw new Error("E_INVALID_CREDENTIALS");
             await service.transferUserData(user.id, req.session.user._id);
             await service.removeAnonymusUser(req.session.user._id);
             req.session.user = { _id: user._id, email: user.email, access: user.access };
-            res.redirect('/');
+            res.redirect("/");
         } catch (error) {
             if (error.message !== "E_INVALID_CREDENTIALS") console.log(error);
             return res.status(401).send(res.locals.__(error.message));
-        };
+        }
     },
     logout: async (req, res) => {
         try {
             await service.removeAnonymusUser(req.session.user._id);
             req.session.destroy();
-            res.redirect('/auth/login');
+            res.redirect("/auth/login");
         } catch (error) {
             console.log(error);
-            res.sendStatus(500);            
+            res.sendStatus(500);
         }
-    }
+    },
 };

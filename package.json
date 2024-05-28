@@ -5,7 +5,9 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently \"nodemon app.js\" \"browser-sync start --proxy 'localhost:9090' --files '**/*, !node_modules/**/*, !db/**/*, !.git/**/*' --port 9191 --no-notify\"",
+    "start": "concurrently \"npm run app\" \"npm run proxy\"",
+    "app": "nodemon app.js",
+    "proxy": "browser-sync start --proxy \"localhost:9090\" --files \"**/*, !node_modules/**/*, !db/**/*, !.git/**/*\" --port 9191 --no-notify",
     "db": "mongod -dbpath ./db",
     "scss": "sass --watch ./src/scss/bootstrap.scss ./public/css/bootstrap.css"
   },

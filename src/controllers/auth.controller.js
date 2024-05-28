@@ -13,8 +13,9 @@ module.exports = {
             if (global.config.NODE_ENV === "development") console.log(credentials);
             return res.status(201).render("index", { content: "pages/login", form: "loginEmailTokenForm", email, user: req.session.user });
         } catch (error) {
-            if (error.message !== "E_INVALID_CREDENTIALS") console.log(error);
-            return res.status(401).send(res.locals.__(error.message));
+            if (error.message === "E_INVALID_CREDENTIALS") return res.status(401).send(res.locals.__(error.message));
+            console.log(error);
+            res.sendStatus(500);
         }
     },
     loginByEmailToken: async (req, res) => {
@@ -26,8 +27,9 @@ module.exports = {
             const user = await service.getUserByLoginToken(req.session.user._id, email, loginToken);
             loginUser(req, res, user);
         } catch (error) {
-            if (error.message !== "E_INVALID_CREDENTIALS") console.log(error);
-            return res.status(401).send(res.locals.__(error.message));
+            if (error.message === "E_INVALID_CREDENTIALS") return res.status(401).send(res.locals.__(error.message));
+            console.log(error);
+            res.sendStatus(500);
         }
     },
     loginByHash: async (req, res) => {
@@ -38,8 +40,9 @@ module.exports = {
             if (!user) throw new Error("E_INVALID_CREDENTIALS");
             loginUser(req, res, user);
         } catch (error) {
-            if (error.message !== "E_INVALID_CREDENTIALS") console.log(error);
-            return res.status(401).send(res.locals.__(error.message));
+            if (error.message === "E_INVALID_CREDENTIALS") return res.status(401).send(res.locals.__(error.message));
+            console.log(error);
+            res.sendStatus(500);
         }
     },
     logout: async (req, res) => {

@@ -1,4 +1,5 @@
 const service = require("../services/auth.service");
+const render = require("../utils/render.utils");
 
 module.exports = {
     getUser: (req, res) => {
@@ -11,7 +12,7 @@ module.exports = {
             if (!email) throw new Error("E_INVALID_CREDENTIALS");
             const credentials = await service.createLoginToken(email);
             if (global.config.NODE_ENV === "development") console.log(credentials);
-            res.status(201).render("index", { content: "pages/login", form: "loginEmailTokenForm", email, user: req.session.user });
+            render(req, res, "login", { form: "loginEmailTokenForm", email, $status: 201 });
         } catch (error) {
             if (error.message === "E_INVALID_CREDENTIALS") return res.status(401).send(res.locals.__(error.message));
             console.log(error);

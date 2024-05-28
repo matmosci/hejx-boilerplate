@@ -61,7 +61,7 @@ module.exports = {
 
 async function loginUser(req, res, user) {
     if (!user) throw new Error("E_INVALID_CREDENTIALS");
-    await service.transferUserData(user.id, req.session.user._id);
+    await service.transferUserData(user._id, req.session.user._id);
     await service.removeAnonymusUser(req.session.user._id);
     req.session.user = { _id: user._id, email: user.email, access: user.access };
     res.redirect("/");

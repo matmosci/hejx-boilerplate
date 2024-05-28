@@ -25,9 +25,9 @@ module.exports = {
             if (!email || !loginToken) throw new Error("E_INVALID_CREDENTIALS");
             const user = await service.getUserByLoginToken(email, loginToken);
             if (!user) throw new Error("E_INVALID_CREDENTIALS");
-            await service.transferUserData(user.id, req.session.user.id);
-            await service.removeAnonymusUser(req.session.user.id);
-            req.session.user = { id: user.id, email: user.email, access: user.access };
+            await service.transferUserData(user.id, req.session.user._id);
+            await service.removeAnonymusUser(req.session.user._id);
+            req.session.user = { _id: user._id, email: user.email, access: user.access };
             res.redirect('/');
         } catch (error) {
             if (error.message !== "E_INVALID_CREDENTIALS") console.log(error);
@@ -40,9 +40,9 @@ module.exports = {
         try {
             const user = await service.getUserByLoginHash(hash);
             if (!user) throw new Error("E_INVALID_CREDENTIALS");
-            await service.transferUserData(user.id, req.session.user.id);
-            await service.removeAnonymusUser(req.session.user.id);
-            req.session.user = { id: user.id, email: user.email, access: user.access };
+            await service.transferUserData(user.id, req.session.user._id);
+            await service.removeAnonymusUser(req.session.user._id);
+            req.session.user = { _id: user._id, email: user.email, access: user.access };
             res.redirect('/');
         } catch (error) {
             if (error.message !== "E_INVALID_CREDENTIALS") console.log(error);
@@ -51,7 +51,7 @@ module.exports = {
     },
     logout: async (req, res) => {
         try {
-            await service.removeAnonymusUser(req.session.user.id);
+            await service.removeAnonymusUser(req.session.user._id);
             req.session.destroy();
             res.redirect('/auth/login');
         } catch (error) {

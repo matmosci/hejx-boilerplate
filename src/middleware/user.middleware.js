@@ -3,7 +3,7 @@ const User = require("../models/User.model");
 module.exports = (req, res, next) => {
     if (req.session.user) return next();
     User.create({}).then(user => {
-        req.session.user = { id: user.id, access: user.access };
+        req.session.user = { _id: user._id, access: user.access };
         next();
     });
 };

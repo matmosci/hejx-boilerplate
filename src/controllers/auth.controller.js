@@ -25,7 +25,7 @@ module.exports = {
         try {
             if (!email || !loginToken) throw new Error("E_INVALID_CREDENTIALS");
             const user = await service.getUserByLoginToken(req.session.user._id, email, loginToken);
-            loginUser(req, res, user);
+            await loginUser(req, res, user);
         } catch (error) {
             if (error.message === "E_INVALID_CREDENTIALS") return res.status(401).send(res.locals.__(error.message));
             console.log(error);
@@ -38,7 +38,7 @@ module.exports = {
         try {
             const user = await service.getUserByLoginHash(req.session.user._id, hash);
             if (!user) throw new Error("E_INVALID_CREDENTIALS");
-            loginUser(req, res, user);
+            await loginUser(req, res, user);
         } catch (error) {
             if (error.message === "E_INVALID_CREDENTIALS") return res.status(401).send(res.locals.__(error.message));
             console.log(error);

@@ -11,7 +11,7 @@ module.exports = {
             if (!email) throw new Error("E_INVALID_CREDENTIALS");
             const credentials = await service.createLoginToken(email);
             if (global.config.NODE_ENV === "development") console.log(credentials);
-            return res.status(201).render("index", { content: "pages/login", form: "loginEmailTokenForm", email, user: req.session.user });
+            res.status(201).render("index", { content: "pages/login", form: "loginEmailTokenForm", email, user: req.session.user });
         } catch (error) {
             if (error.message === "E_INVALID_CREDENTIALS") return res.status(401).send(res.locals.__(error.message));
             console.log(error);

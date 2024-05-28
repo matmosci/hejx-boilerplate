@@ -23,10 +23,5 @@
     "express-session": "^1.18.0",
     "i18n": "^0.15.1",
     "mongoose": "^8.3.4"
-  },
-  "devDependencies": {
-    "browser-sync": "^3.0.2",
-    "concurrently": "^8.2.2",
-    "sass": "^1.77.2"
   }
 }

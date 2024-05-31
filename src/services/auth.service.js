@@ -43,7 +43,7 @@ function sendLoginToken(email, credentials) {
     // TODO localize message
     const message = `
 <p>Your login token: <strong>${credentials.token}</strong></p>
-<p>You can also use this link to login: http://localhost:9090/auth/login/${credentials.hash}</p>
+<p>You can also use this link to login: ${global.config.BASE_URL}/auth/login/${credentials.hash}</p>
 `;
     mailer.send("Login Token", message, email);
 }

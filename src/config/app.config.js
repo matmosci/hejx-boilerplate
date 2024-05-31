@@ -1,5 +1,6 @@
 global.config = {
     NODE_ENV: process.env.NODE_ENV,
+    BASE_URL: process.env.BASE_URL,
     MONGODB_URI: process.env.MONGODB_URI,
     SESSION_SECRET: process.env.SESSION_SECRET,
     SESSION_MAX_AGE: 1000 * 60 * 60 * 24 * 7,

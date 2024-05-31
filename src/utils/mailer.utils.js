@@ -28,7 +28,7 @@ function sendNextMail() {
         return;
     }
     const mailOptions = {
-        from: process.env.mailer_user,
+        from: config.auth.user,
         to: mail.to,
         subject: mail.subject,
         text: mail.message,

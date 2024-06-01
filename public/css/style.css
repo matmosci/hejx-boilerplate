@@ -7,6 +7,10 @@
         url('/fonts/MaterialIcons-Regular.ttf') format('truetype');
 }
 
+:root, .bg-root {
+    background-color: var(--bs-secondary-bg-subtle);
+}
+
 .material-icons {
     font-family: 'Material Icons';
     font-weight: normal;

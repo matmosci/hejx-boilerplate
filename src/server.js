@@ -16,7 +16,7 @@ app.set('view engine', 'ejs');
 app.set('trust proxy', 1);
 
 const store = new MongoDBStore({
-    uri: process.env.MONGODB_URI,
+    uri: global.config.MONGODB_URI,
     collection: 'sessions'
 });
 

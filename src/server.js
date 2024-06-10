@@ -13,7 +13,7 @@ require('./utils/mailer.utils').verify();
 
 app.set('views', './src/views');
 app.set('view engine', 'ejs');
-app.set('trust proxy', 1);
+app.set('trust proxy', global.config.TRUST_PROXY);
 
 const store = new MongoDBStore({
     uri: global.config.MONGODB_URI,

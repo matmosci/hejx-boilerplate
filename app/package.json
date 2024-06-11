@@ -8,7 +8,7 @@
     "start": "concurrently \"npm run app\" \"npm run proxy\"",
     "app": "nodemon app.js",
     "proxy": "browser-sync start --proxy \"localhost:9090\" --files \"**/*, !node_modules/**/*, !db/**/*, !.git/**/*\" --port 9191 --no-notify",
-    "db": "mongod -dbpath ./db",
+    "db": "mongod -dbpath ../db",
     "scss": "sass --watch ./src/scss/bootstrap.scss ./public/css/bootstrap.css"
   },
   "keywords": [],

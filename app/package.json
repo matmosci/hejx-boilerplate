@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --watch",
     "start": "concurrently \"npm run app\" \"npm run proxy\"",
     "app": "nodemon app.js",
     "proxy": "browser-sync start --proxy \"localhost:9090\" --files \"**/*, !node_modules/**/*, !db/**/*, !.git/**/*\" --port 9191 --no-notify",
@@ -26,5 +26,8 @@
     "i18n": "^0.15.1",
     "mongoose": "^8.3.4",
     "nodemailer": "^6.9.13"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   }
 }

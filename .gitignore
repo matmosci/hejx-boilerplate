@@ -5,6 +5,7 @@ bower_components
 
 # Environment variables
 .env
+.env.*
 
 # IDE/Editor folders
 .vscode

@@ -1,5 +1,5 @@
 <form action="/auth/login/token" method="POST" hx-target-error="#error">
-    <input class="form-control mb-1" type="email" name="email" placeholder="Email" value="<%= email %>" disabled>
+    <input class="form-control mb-1" type="email" name="email" placeholder="Email" value="<%= email %>">
     <input class="form-control mb-1" type="text" name="token" placeholder="Token" autofocus autocomplete="off">
     <div id="error" class="alert alert-danger d-empty-none py-1"></div>
     <input class="btn btn-primary" type="submit"></input>

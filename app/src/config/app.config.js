@@ -14,5 +14,5 @@ global.config = {
             pass: process.env.MAILER_PASS,
         },
     },
-    TRUST_PROXY: false
+    TRUST_PROXY: process.env.TRUST_PROXY ? Number(process.env.TRUST_PROXY) : false
 };

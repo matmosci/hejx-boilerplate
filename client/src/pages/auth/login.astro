@@ -1,0 +1,26 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Login">
+  <main>
+    <div class="container mt-3" style="max-width: 320px;">
+      <div class="card">
+        <div class="card-header">Login</div>
+        <div class="card-body">
+          <form action="/auth/login" hx-target="this" hx-swap="outerHTML" method="POST" hx-target-error="#error">
+            <input
+              class="form-control mb-1"
+              type="email"
+              name="email"
+              placeholder="Email"
+              autofocus
+            />
+            <div id="error" class="alert alert-danger d-empty-none py-1"></div>
+            <input class="btn btn-primary" type="submit" />
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>

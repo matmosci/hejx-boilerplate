@@ -7,11 +7,13 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "scss": "sass --watch ./scss/bootstrap.scss ./public/css/bootstrap.css"
   },
   "dependencies": {
-    "astro": "^4.16.10",
     "@astrojs/check": "^0.9.4",
+    "astro": "^4.16.10",
+    "bootstrap": "^5.3.3",
     "typescript": "^5.6.3"
   }
 }

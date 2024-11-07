@@ -1,7 +1,7 @@
 $primary: #046D8B;
 
-@import "../../node_modules/bootstrap/scss/functions";
-@import "../../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
 
 $custom-colors: (
     "primary": $primary
@@ -17,4 +17,4 @@ $custom-colors: (
 
 $theme-colors: map-merge($theme-colors, $custom-colors);
 
-@import "../../node_modules/bootstrap/scss/bootstrap";
+@import "../node_modules/bootstrap/scss/bootstrap";

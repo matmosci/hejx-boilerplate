@@ -1,0 +1,51 @@
+---
+const host = import.meta.env.VITE_HOST;
+---
+
+<fragment id="nav-user"></fragment>
+<script is:inline define:vars={{host}}>
+  (() => {
+    updateNavUser();
+
+    fetch(`${host}/auth`)
+      .then((response) => response.json())
+      .then((userData) => {
+        sessionStorage.setItem("user-data", JSON.stringify(userData));
+        updateNavUser();
+      });
+
+    function updateNavUser() {
+      const storedUserData = sessionStorage.getItem("user-data");
+      if (!storedUserData) return;
+      const userElement = document.getElementById("nav-user");
+      const userData = JSON.parse(sessionStorage.getItem("user-data"));
+      htmx.swap(userElement, navUserHTML(userData), {
+        swapStyle: "outerHTML",
+      });
+    }
+  })();
+  function navUserHTML(user) {
+    return user.access > 0
+      ? `<div id="nav-user" class="dropdown my-auto mx-auto ms-sm-2 d-none d-sm-block">
+    <button id="dropdown-user" class="material-icons notranslate btn btn-primary btn-sm rounded-5 p-1 dropdown-toggle" type="button"
+        data-bs-toggle="dropdown" aria-expanded="false">
+        person
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end">
+        <li><a class="dropdown-item disabled" href="#">${user.email}</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="/auth/logout">Wyloguj</a></li>
+    </ul>
+</div>
+<div class="d-sm-none">
+    <a class="nav-link text-center disabled" href="#">${user.email}</a>
+    <a class="nav-link text-center" href="/auth/logout">Wyloguj</a>
+</div>
+<style>
+    #dropdown-user::after {
+        content: none;
+    }
+</style>`
+      : `<a id="nav-user" class="btn btn-primary btn-sm my-auto ms-sm-2" href="/auth/login">Zaloguj</a>`;
+  }
+</script>

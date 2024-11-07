@@ -1,0 +1,105 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Home | HTMX Boilerplate</title><script src="/js/theme.js"></script><script src="/js/htmx-2.0.3.min.js"></script><script src="/js/htmx-response-targets.js"></script><script src="/js/bootstrap.bundle.min.js"></script><link rel="stylesheet" href="/css/bootstrap.css"><link rel="stylesheet" href="/css/layout.css"><link rel="stylesheet" href="/css/style.css"></head><body hx-boost="true" hx-ext="response-targets"> <nav class="navbar fixed-top navbar-expand-sm bg-body-tertiary border-bottom"> <div class="container"> <a class="navbar-brand" href="/">😎</a> <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarLinks" aria-controls="navbarLinks" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button> <div class="collapse navbar-collapse" id="navbarLinks"> <div class="navbar-nav ms-auto"> <a class="nav-link text-center" href="/query?show=zxc">Query</a> <a class="nav-link text-center" href="/get">Get</a> <a class="nav-link text-center" href="/form">Form</a> <fragment id="nav-user"></fragment> <script>(function(){const host = "";
+
+  (() => {
+    updateNavUser();
+
+    fetch(`${host}/auth`)
+      .then((response) => response.json())
+      .then((userData) => {
+        sessionStorage.setItem("user-data", JSON.stringify(userData));
+        updateNavUser();
+      });
+
+    function updateNavUser() {
+      const storedUserData = sessionStorage.getItem("user-data");
+      if (!storedUserData) return;
+      const userElement = document.getElementById("nav-user");
+      const userData = JSON.parse(sessionStorage.getItem("user-data"));
+      htmx.swap(userElement, navUserHTML(userData), {
+        swapStyle: "outerHTML",
+      });
+    }
+  })();
+  function navUserHTML(user) {
+    return user.access > 0
+      ? `<div id="nav-user" class="dropdown my-auto mx-auto ms-sm-2 d-none d-sm-block">
+    <button id="dropdown-user" class="material-icons notranslate btn btn-primary btn-sm rounded-5 p-1 dropdown-toggle" type="button"
+        data-bs-toggle="dropdown" aria-expanded="false">
+        person
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end">
+        <li><a class="dropdown-item disabled" href="#">${user.email}</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="/auth/logout">Wyloguj</a></li>
+    </ul>
+</div>
+<div class="d-sm-none">
+    <a class="nav-link text-center disabled" href="#">${user.email}</a>
+    <a class="nav-link text-center" href="/auth/logout">Wyloguj</a>
+</div>
+<style>
+    #dropdown-user::after {
+        content: none;
+    }
+</style>`
+      : `<a id="nav-user" class="btn btn-primary btn-sm my-auto ms-sm-2" href="/auth/login">Zaloguj</a>`;
+  }
+})();</script> </div> </div> </div> </nav>  <main> <div class="container mt-3">  <h1>Homepage</h1> <h2>
+Lorem, ipsum dolor sit amet consectetur adipisicing elit. Labore debitis
+        harum iste repudiandae! Voluptas magnam pariatur consequuntur, adipisci
+        molestias saepe vel rem aut dolor non, expedita fuga dolorem, amet
+        voluptatem.
+</h2> <p>
+Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium
+        quod iste temporibus id ipsa reprehenderit dolore, perferendis libero
+        explicabo omnis blanditiis ducimus mollitia molestiae voluptas ad
+        nesciunt reiciendis, voluptatibus magnam!
+</p> <p>
+Vero, dolorem! Dolorem non pariatur quae necessitatibus voluptates ipsa
+        rerum eos nobis obcaecati amet. Voluptates architecto, cum delectus
+        illum vitae eum! Quas, esse molestias voluptas sint assumenda et
+        quisquam nesciunt!
+</p> <p>
+Expedita qui vel, suscipit similique corrupti cumque distinctio delectus
+        quia! Mollitia praesentium quasi, voluptatum earum vitae totam
+        consectetur repudiandae, fugiat sint voluptatem repellat recusandae modi
+        aspernatur iusto aut perspiciatis sapiente.
+</p> <p>
+Cupiditate nihil illo natus quia, quas eos quae aperiam neque
+        consequatur veritatis. Esse eos blanditiis similique tempora dolore!
+        Itaque nam dolorum deleniti repellendus eaque delectus aut, corporis cum
+        dignissimos ratione.
+</p> <p>
+Enim excepturi quos laudantium totam molestiae dicta dignissimos
+        reiciendis dolorem distinctio in corporis debitis nulla doloribus
+        tenetur alias aliquid, consequuntur beatae asperiores magni? Excepturi
+        unde nam porro, accusamus quod quas.
+</p> <p>
+Laboriosam quibusdam repudiandae ea tempore quaerat obcaecati nesciunt
+        fugit ipsam ipsa aliquid dolorem dolores, cupiditate ex consectetur eius
+        earum facere dolorum. Sint, laborum velit ipsa blanditiis eaque sequi
+        corporis natus!
+</p> <p>
+Voluptas veniam distinctio laborum a, cumque corporis mollitia
+        blanditiis minus dignissimos ducimus et cum doloremque perferendis
+        magnam aliquid explicabo quibusdam. Minima cupiditate repudiandae dicta
+        quibusdam quaerat quis itaque, magni in.
+</p> <p>
+Ab culpa sed consequuntur maxime suscipit. Veniam illo assumenda
+        voluptatibus enim quam iure temporibus molestias distinctio eveniet
+        debitis, dolor voluptatum similique deserunt qui explicabo blanditiis
+        tempore provident vero? Voluptate, omnis.
+</p> <p>
+Minima impedit praesentium iure doloribus architecto optio saepe
+        necessitatibus eligendi eum qui, iusto perspiciatis, nam cum non quos,
+        repudiandae ab earum enim quisquam. Harum, sequi quasi aliquam mollitia
+        cupiditate optio?
+</p> <p>
+Nisi illo esse libero ipsum accusamus porro architecto, quidem, cumque
+        nostrum voluptas sapiente assumenda adipisci odit facilis! Voluptate,
+        repudiandae? Tenetur, maxime mollitia similique officia tempora eius
+        veritatis provident vel! Accusantium!
+</p> </div> </main>  <footer class="text-center bg-root p-3"> <a class="text-decoration-none" href="mailto:matmosci@gmail.com">matmosci</a>
+&copy;
+    2024
+</footer> </body></html>

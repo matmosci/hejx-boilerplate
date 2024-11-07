@@ -8,12 +8,16 @@ const hxRouter = require('./routers/hx.router');
 const pagesRouter = require('./routers/pages.router');
 const user = require('./middleware/user.middleware');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 const { I18n } = require('i18n');
 require('./utils/mailer.utils').verify();
+
 
 app.set('views', './src/views');
 app.set('view engine', 'ejs');
 app.set('trust proxy', global.config.TRUST_PROXY);
+
+if (global.config.NODE_ENV === 'development') app.use(cors());
 
 const store = new MongoDBStore({
     uri: global.config.MONGODB_URI,
@@ -35,6 +39,7 @@ app.use(session({
     secret: global.config.SESSION_SECRET,
     store,
     resave: true,
+    rolling: true,
     saveUninitialized: true,
     cookie: {
         secure: global.config.NODE_ENV !== 'development',
@@ -50,7 +55,6 @@ app.use(i18n.init);
 app.use(user);
 app.use('/hx', hxRouter);
 app.use('/auth', authRouter);
-app.use('/', pagesRouter);
 
 app.listen(port, () => {
     console.log(`Listening at http://localhost:${port}`);

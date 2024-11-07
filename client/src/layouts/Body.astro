@@ -1,0 +1,10 @@
+---
+import Navigation from "./Navigation.astro";
+import Footer from "./Footer.astro";
+---
+
+<body hx-boost="true" hx-ext="response-targets">
+  <Navigation />
+  <slot />
+  <Footer />
+</body>

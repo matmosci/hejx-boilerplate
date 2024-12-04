@@ -1,0 +1,8 @@
+{
+    "watch": [
+        "src",
+        "public"
+    ],
+    "ext": "js,jsx,ts,tsx,astro,css,html",
+    "exec": "npm run build"
+}

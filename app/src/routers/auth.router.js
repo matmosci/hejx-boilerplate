@@ -9,8 +9,6 @@ router.get('/', (req, res) => {
     if (req.session.user?.email) user.email = req.session.user.email;
     res.send(user)
 });
-// router.get('/login', (req, res) => { res.render("components/loginEmailTokenForm") });
-router.get('/login/token', (req, res) => { render(req, res, "login", { form: "loginEmailTokenForm", email: "" }) });
 router.get('/logout', controller.logout);
 router.get('/user/element', (req, res) => { res.render("components/user", { user: req.session.user }) });
 router.get('/login/:hash', isAnonymus, controller.loginByHash);

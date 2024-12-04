@@ -23,6 +23,7 @@ Thumbs.db
 
 # Dist directory
 dist
+app/public
 
 # Cache files
 .cache

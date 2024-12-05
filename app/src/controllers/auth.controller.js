@@ -15,6 +15,7 @@ module.exports = {
             else service.sendLoginToken(email, credentials);
             res.render("components/loginEmailTokenForm", { email });
         } catch (error) {
+            res.set("HX-Reswap", "innerHTML");
             if (error.message === "E_INVALID_CREDENTIALS") return res.status(401).send(res.locals.__(error.message));
             console.log(error);
             res.sendStatus(500);

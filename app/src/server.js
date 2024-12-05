@@ -35,6 +35,7 @@ app.use(session({
     secret: global.config.SESSION_SECRET,
     store,
     resave: true,
+    rolling: true,
     saveUninitialized: true,
     cookie: {
         secure: global.config.NODE_ENV !== 'development',

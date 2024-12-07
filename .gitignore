@@ -27,5 +27,7 @@ dist
 # Cache files
 .cache
 
-# Local database
+# Local development environment
 db
+uploads
+test-assets

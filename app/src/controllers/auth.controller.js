@@ -56,7 +56,7 @@ module.exports = {
         try {
             await service.removeAnonymusUser(req.session.user._id);
             req.session.destroy();
-            res.redirect("/auth/login");
+            res.redirect("/login");
         } catch (error) {
             console.log(error);
             res.sendStatus(500);

@@ -2,50 +2,61 @@
 const host = import.meta.env.VITE_HOST;
 ---
 
-<fragment id="nav-user"></fragment>
-<script is:inline define:vars={{host}}>
-  (() => {
-    updateNavUser();
-
-    fetch(`${host}/auth`)
-      .then((response) => response.json())
-      .then((userData) => {
-        sessionStorage.setItem("user-data", JSON.stringify(userData));
-        updateNavUser();
-      });
-
-    function updateNavUser() {
-      const storedUserData = sessionStorage.getItem("user-data");
-      if (!storedUserData) return;
-      const userElement = document.getElementById("nav-user");
-      const userData = JSON.parse(sessionStorage.getItem("user-data"));
-      htmx.swap(userElement, navUserHTML(userData), {
-        swapStyle: "outerHTML",
-      });
-    }
-  })();
-  function navUserHTML(user) {
-    return user.access > 0
-      ? `<div id="nav-user" class="dropdown my-auto mx-auto ms-sm-2 d-none d-sm-block">
-    <button id="dropdown-user" class="material-icons notranslate btn btn-primary btn-sm rounded-5 p-1 dropdown-toggle" type="button"
-        data-bs-toggle="dropdown" aria-expanded="false">
-        person
-    </button>
-    <ul class="dropdown-menu dropdown-menu-end">
-        <li><a class="dropdown-item disabled" href="#">${user.email}</a></li>
-        <li><hr class="dropdown-divider"></li>
-        <li><a class="dropdown-item" href="/auth/logout">Wyloguj</a></li>
+<a id="nav-auth" class="btn btn-primary btn-sm my-auto ms-sm-2" href="/auth/login">Sign in</a>
+<div id="nav-user" class="dropdown my-auto mx-auto ms-sm-2">
+    <a id="dropdown-user" class="nav-link text-center dropdown-toggle d-sm-none" data-bs-toggle="dropdown" aria-expanded="false" href="#">User</a>
+    <button id="dropdown-user-sm" class="material-icons notranslate btn btn-primary btn-sm rounded-5 p-1 dropdown-toggle d-none d-sm-block" type="button" data-bs-toggle="dropdown" aria-expanded="false">person</button>
+    <ul class="dropdown-menu dropdown-menu-end" hx-get="/auth/user/menu" hx-trigger="load">
+        <li><a class="dropdown-item disabled" href="#">Not signed in</a></li>
+        <li><hr class="dropdown-divider" /></li>
+        <li><div class="text-center px-2"><a id="nav-auth" class="btn btn-primary btn-sm my-auto w-100" href="/auth/login">Sign in</a></div></li>
     </ul>
 </div>
-<div class="d-sm-none">
-    <a class="nav-link text-center disabled" href="#">${user.email}</a>
-    <a class="nav-link text-center" href="/auth/logout">Wyloguj</a>
-</div>
 <style>
-    #dropdown-user::after {
+    #dropdown-user-sm::after {
         content: none;
     }
-</style>`
-      : `<a id="nav-user" class="btn btn-primary btn-sm my-auto ms-sm-2" href="/auth/login">Zaloguj</a>`;
-  }
+</style>
+<script is:inline define:vars={{ host }}>
+    updateNavUser();
+
+    fetch(`/auth`)
+        .then((response) => response.json())
+        .then((userData) => {
+            sessionStorage.setItem("user-data", JSON.stringify(userData));
+            updateNavUser();
+        });
+
+    eventListeners = [
+        {
+            element: document.body,
+            event: "htmx:afterSettle",
+            handler: updateNavUser,
+        },
+        {
+            element: document.body,
+            event: "htmx:beforeSwap",
+            handler: handleBeforeSwap,
+        },
+    ];
+
+    eventListeners.forEach(({ element, event, handler }) => element.addEventListener(event, handler));
+
+    function handleBeforeSwap(e) {
+        if (e.target !== document.body) return;
+        eventListeners.forEach(({ element, event, handler }) => element.removeEventListener(event, handler));
+    }
+
+    function updateNavUser(e) {
+        const storedUserData = sessionStorage.getItem("user-data");
+        if (!storedUserData) return;
+        const userData = JSON.parse(storedUserData);
+        if (userData.access > 0) {
+            document.getElementById("nav-user").classList.remove("d-none");
+            document.getElementById("nav-auth").classList.add("d-none");
+            return;
+        }
+        document.getElementById("nav-user").classList.add("d-none");
+        document.getElementById("nav-auth").classList.remove("d-none");
+    }
 </script>

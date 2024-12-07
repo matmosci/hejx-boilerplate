@@ -48,6 +48,10 @@ module.exports = {
             res.sendStatus(500);
         }
     },
+    getUserMenu: (req, res) => {
+        if (req.session.user.access === 0) return res.sendStatus(204);
+        res.render("components/userMenu", { user: req.session.user })
+    },
     logout: async (req, res) => {
         try {
             await service.removeAnonymusUser(req.session.user._id);

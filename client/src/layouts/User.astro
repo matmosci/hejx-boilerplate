@@ -2,14 +2,14 @@
 const host = import.meta.env.VITE_HOST;
 ---
 
-<a id="nav-auth" class="btn btn-primary btn-sm my-auto ms-sm-2" href="/auth/login">Sign in</a>
+<a id="nav-auth" class="btn btn-primary btn-sm my-auto ms-sm-2" href="/login">Sign in</a>
 <div id="nav-user" class="dropdown my-auto mx-auto ms-sm-2">
     <a id="dropdown-user" class="nav-link text-center dropdown-toggle d-sm-none" data-bs-toggle="dropdown" aria-expanded="false" href="#">User</a>
     <button id="dropdown-user-sm" class="material-icons notranslate btn btn-primary btn-sm rounded-5 p-1 dropdown-toggle d-none d-sm-block" type="button" data-bs-toggle="dropdown" aria-expanded="false">person</button>
     <ul class="dropdown-menu dropdown-menu-end" hx-get="/auth/user/menu" hx-trigger="load">
         <li><a class="dropdown-item disabled" href="#">Not signed in</a></li>
         <li><hr class="dropdown-divider" /></li>
-        <li><div class="text-center px-2"><a id="nav-auth" class="btn btn-primary btn-sm my-auto w-100" href="/auth/login">Sign in</a></div></li>
+        <li><div class="text-center px-2"><a id="nav-auth" class="btn btn-primary btn-sm my-auto w-100" href="/login">Sign in</a></div></li>
     </ul>
 </div>
 <style>

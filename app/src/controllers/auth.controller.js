@@ -69,5 +69,5 @@ async function loginUser(req, res, user) {
     await service.transferUserData(user._id, req.session.user._id);
     await service.removeAnonymusUser(req.session.user._id);
     req.session.user = { _id: user._id, email: user.email, access: user.access };
-    res.redirect("/");
+    res.set("HX-Redirect", "/").end();
 }

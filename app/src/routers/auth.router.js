@@ -10,6 +10,7 @@ router.get('/', (req, res) => {
 });
 router.get('/logout', controller.logout);
 router.get('/user/menu', controller.getUserMenu);
+router.get('/login', (req, res) => { res.redirect("/login"); });
 router.get('/login/:hash', isAnonymus, controller.loginByHash);
 router.post('/login', isAnonymus, controller.createToken);
 router.post('/login/token', isAnonymus, controller.loginByEmailToken);

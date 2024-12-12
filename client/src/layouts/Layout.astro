@@ -1,6 +1,7 @@
 ---
 import Head from "./Head.astro";
 import Body from "./Body.astro";
+import CookieConsent from "../components/CookieConsent.astro";
 
 interface Props {
   title: string;
@@ -14,5 +15,6 @@ const { title } = Astro.props;
   <Head title={title} />
   <Body>
     <slot />
+    <CookieConsent />
   </Body>
 </html>

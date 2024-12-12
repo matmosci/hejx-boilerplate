@@ -1,0 +1,24 @@
+<dialog
+  class="border rounded shadow start-0 bottom-0 m-3 bg-body-tertiary"
+  style="max-width: 900px;"
+>
+  <p>
+    We use cookies to maintain your session and ensure the proper functioning of
+    our site. These cookies are necessary and cannot be disabled. We are not
+    using cookies for tracking purposes.
+  </p>
+  <p>By using this website, you agree to the use of these cookies.</p>
+  <div class="text-center">
+    <button class="btn btn-primary" onclick="accept()">Accept</button>
+  </div>
+</dialog>
+<script is:inline>
+  if (!localStorage.getItem("cookie-consent")) {
+    document.querySelector("dialog").show();
+
+    function accept() {
+      document.querySelector("dialog").close();
+      localStorage.setItem("cookie-consent", "true");
+    }
+  }
+</script>

@@ -20,7 +20,7 @@ const host = import.meta.env.VITE_HOST;
 <script is:inline define:vars={{ host }}>
     updateNavUser();
 
-    fetch(`/auth`)
+    fetch(`${host}/auth`)
         .then((response) => response.json())
         .then((userData) => {
             sessionStorage.setItem("user-data", JSON.stringify(userData));

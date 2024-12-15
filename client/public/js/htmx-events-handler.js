@@ -1,16 +1,21 @@
+const clearEventListener = {
+    element: document,
+    event: "htmx:beforeSwap",
+    handler: unregisterEventListeners
+};
+
+const events = [];
+
 function register(eventListerersData) {
-    Array.isArray(eventListerersData) ? eventListerersData.forEach(registerEventListener) : registerEventListener(eventListerersData);
+    Array.isArray(eventListerersData) ? eventListerersData.forEach(e => events.push(e)) : events.push(eventListerersData);
+    events.push(clearEventListener);
+    events.forEach(({ element, event, handler }) => element.addEventListener(event, handler));
 }
 
-function registerEventListener(eventListener) {
-    eventListener.element.addEventListener(eventListener.event, eventListener.handler);
-    document.body.addEventListener("htmx:beforeSwap", (e) => unregisterEventListener(e, eventListener));
-}
-
-function unregisterEventListener(e, eventListener) {
+function unregisterEventListeners(e) {
     if (e.target !== document.body) return;
-    const { element, event, handler } = eventListener;
-    element.removeEventListener(event, handler);
+    events.forEach(({ element, event, handler }) => element.removeEventListener(event, handler));
+    events.length = 0;
 }
 
 export default { register };

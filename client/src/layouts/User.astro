@@ -17,7 +17,9 @@ const host = import.meta.env.VITE_HOST;
         content: none;
     }
 </style>
-<script is:inline define:vars={{ host }}>
+<script is:inline define:vars={{ host }} type="module">
+    import EventsHandler from "/js/htmx-events-handler.js";
+
     updateNavUser();
 
     fetch(`${host}/auth`)
@@ -27,25 +29,13 @@ const host = import.meta.env.VITE_HOST;
             updateNavUser();
         });
 
-    eventListeners = [
+    EventsHandler.register(
         {
             element: document.body,
             event: "htmx:afterSettle",
             handler: updateNavUser,
-        },
-        {
-            element: document.body,
-            event: "htmx:beforeSwap",
-            handler: handleBeforeSwap,
-        },
-    ];
-
-    eventListeners.forEach(({ element, event, handler }) => element.addEventListener(event, handler));
-
-    function handleBeforeSwap(e) {
-        if (e.target !== document.body) return;
-        eventListeners.forEach(({ element, event, handler }) => element.removeEventListener(event, handler));
-    }
+        }
+    );
 
     function updateNavUser(e) {
         const storedUserData = sessionStorage.getItem("user-data");

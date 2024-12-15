@@ -6,8 +6,8 @@ const clearEventListener = {
 
 const events = [];
 
-function register(eventListerersData) {
-    Array.isArray(eventListerersData) ? eventListerersData.forEach(e => events.push(e)) : events.push(eventListerersData);
+function register(eventListenersData) {
+    Array.isArray(eventListenersData) ? eventListenersData.forEach(e => events.push(e)) : events.push(eventListenersData);
     events.push(clearEventListener);
     events.forEach(({ element, event, handler }) => element.addEventListener(event, handler));
 }

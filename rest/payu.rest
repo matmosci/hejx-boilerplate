@@ -1,0 +1,52 @@
+# @api = https://secure.payu.com
+@api = https://secure.snd.payu.com
+@test = {{$dotenv test}}
+@pos_id = {{$dotenv pos_id}}
+@MD5 = {{$dotenv MD5}}
+@client_id = {{$dotenv client_id}}
+@client_secret = {{$dotenv client_secret}}
+@token = 1898047f-b8af-47e0-9191-0071b24e1cf8
+@orderId = X5FMR2WKNQ241218GUEST000P01
+
+###
+POST {{api}}/pl/standard/user/oauth/authorize
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=client_credentials
+&client_id={{client_id}}
+&client_secret={{client_secret}}
+
+###
+POST {{api}}/api/v2_1/orders
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "notifyUrl": "{{test}}/transaction/notify",
+    "continueUrl": "{{test}}/transaction/status",
+    "customerIp": "127.0.0.1",
+    "merchantPosId": "{{pos_id}}",
+    "description": "RTV market",
+    "currencyCode": "PLN",
+    "totalAmount": "22000",
+    "buyer": {
+        "email": "john.doe@example.com",
+        "phone": "654111654",
+        "firstName": "John",
+        "lastName": "Doe",
+        "language": "pl"
+    },
+    "products": [
+       {
+          "name": "Wireless Mouse for Laptop",
+          "unitPrice": "22000",
+          "quantity": "1"
+        }
+    ]
+}
+
+###
+# @prompt orderId
+GET {{api}}/api/v2_1/orders/{{orderId}}
+Content-Type: application/json
+Authorization: Bearer {{token}}

@@ -51,6 +51,7 @@ app.use(i18n.init);
 app.use(user);
 app.use('/hx', hxRouter);
 app.use('/auth', authRouter);
+app.use('/transaction', require('./routers/transaction.router'));
 app.use('/', pagesRouter);
 
 app.listen(port, () => {

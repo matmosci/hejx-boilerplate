@@ -14,4 +14,16 @@ function signatureHeaderToObject(signatureHeader) {
     }, {});
 };
 
-module.exports = { compare };
+async function generateOAuthToken() {
+    const response = await fetch(`${global.config.PAYU.api_url}/pl/standard/user/oauth/authorize`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: `grant_type=client_credentials&client_id=${global.config.PAYU.client_id}&client_secret=${global.config.PAYU.client_secret}`
+    });
+    const token = await response.json();
+    return token;
+};
+
+module.exports = { compare, generateOAuthToken };

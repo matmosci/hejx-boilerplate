@@ -16,7 +16,7 @@ module.exports = {
         }
 
         res.end();
-        if (!["COMPLETED", "CANCELED"].includes(status)) return;
-        send(`PayU ${status} transaction`, `Transaction ${orderId} has been ${status}`, global.config.CONTACTS.admin.email);
+
+        if (["COMPLETED", "CANCELED"].includes(status)) send(`PayU ${status} transaction`, `Transaction ${orderId} has been ${status}`, global.config.CONTACTS.admin.email);
     },
 };

@@ -5,10 +5,10 @@
 @MD5 = {{$dotenv MD5}}
 @client_id = {{$dotenv client_id}}
 @client_secret = {{$dotenv client_secret}}
+@shopId = {{$dotenv shopId}}
 @token = 1898047f-b8af-47e0-9191-0071b24e1cf8
-@orderId = X5FMR2WKNQ241218GUEST000P01
 
-###
+### Create OAuth Token
 POST {{api}}/pl/standard/user/oauth/authorize
 Content-Type: application/x-www-form-urlencoded
 
@@ -16,7 +16,7 @@ grant_type=client_credentials
 &client_id={{client_id}}
 &client_secret={{client_secret}}
 
-###
+### Create an Order
 POST {{api}}/api/v2_1/orders
 Content-Type: application/json
 Authorization: Bearer {{token}}
@@ -28,7 +28,7 @@ Authorization: Bearer {{token}}
     "merchantPosId": "{{pos_id}}",
     "description": "RTV market",
     "currencyCode": "PLN",
-    "totalAmount": "22000",
+    "totalAmount": "122000",
     "buyer": {
         "email": "john.doe@example.com",
         "phone": "654111654",
@@ -38,6 +38,11 @@ Authorization: Bearer {{token}}
     },
     "products": [
        {
+          "name": "Laptop",
+          "unitPrice": "100000",
+          "quantity": "1"
+        },
+       {
           "name": "Wireless Mouse for Laptop",
           "unitPrice": "22000",
           "quantity": "1"
@@ -45,8 +50,33 @@ Authorization: Bearer {{token}}
     ]
 }
 
-###
+### Retrieve an Order
 # @prompt orderId
 GET {{api}}/api/v2_1/orders/{{orderId}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### Retrieve Shop Data
+GET {{api}}/api/v2_1/shops/{{shopId}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### Create a Payout
+POST {{api}}/api/v2_1/payouts
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "shopId": "{{shopId}}"
+}
+
+### Retrieve a Payout
+# @prompt payoutId
+GET {{api}}/api/v2_1/payouts/{{payoutId}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### Retrieve Reference Rates
+{{api}}/api/v2_1/fx-providers/ecb/fx-rates
 Content-Type: application/json
 Authorization: Bearer {{token}}

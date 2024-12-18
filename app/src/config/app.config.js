@@ -21,6 +21,7 @@ global.config = {
         },
     },
     PAYU: {
+        api_url: process.env.PAYU_API_URL,
         pos_id: process.env.PAYU_POS_ID,
         second_key: process.env.PAYU_MD5,
         client_id: process.env.PAYU_CLIENT_ID,

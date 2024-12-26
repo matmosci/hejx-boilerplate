@@ -3,6 +3,7 @@ const router = express.Router();
 const render = require("../utils/render.utils");
 
 router.get('/', (req, res) => { render(req, res, "home") });
+router.get('/shop', (req, res) => { render(req, res, "shop", { products: require("../../data/products.json") }) });
 router.get('/query', (req, res) => { render(req, res, "query", { show: req.query.show }) });
 router.get('/get', (req, res) => { render(req, res, "get") });
 router.get('/form', (req, res) => { render(req, res, "form") });

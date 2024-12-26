@@ -2,6 +2,14 @@ const crypto = require('crypto');
 
 let oAuthToken = null;
 
+function createOrder(order) {
+    return request({
+        url: `${global.config.PAYU.api_url}/api/v2_1/orders`,
+        method: "POST",
+        body: order
+    });
+};
+
 async function request(config) {
     const response = await fetch(config.url, {
         method: config.method,
@@ -15,7 +23,7 @@ async function request(config) {
         await getOAuthToken(true);
         return request(config);
     };
-    return response.json();
+    return response;
 };
 
 async function getOAuthToken(force = false) {
@@ -34,7 +42,7 @@ async function generateOAuthToken() {
     return response.json();
 };
 
-function compare(object) {
+function compareSignatures(object) {
     const incoming_signature = signatureHeaderToObject(object.signature_header).signature;
     const expected_signature = crypto.createHash('md5').update(object.json + object.second_key).digest('hex');
     return incoming_signature === expected_signature;
@@ -48,4 +56,4 @@ function signatureHeaderToObject(signatureHeader) {
     }, {});
 };
 
-module.exports = { request, compare };
+module.exports = { createOrder, compareSignatures };

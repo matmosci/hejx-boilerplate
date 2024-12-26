@@ -1,0 +1,44 @@
+<%- products.map(product => {
+    return `
+        <div class="product">
+        <h2>${product.name}</h2>
+        <p>
+            ${product.price}
+            <button data-product-name="${product.name}" data-product-price="${product.price}" class="btn btn-sm btn-primary">Add to cart</button>
+        </p>
+        </div>
+    `
+}).join("") %>
+Cart:
+<ul id="cart">
+    Cart is empty
+</ul>
+<script>
+    (() => {        
+        const cart = [];
+        document.querySelectorAll('.product button').forEach(button => {
+            button.addEventListener('click', () => {
+                const productName = button.getAttribute('data-product-name');
+                const productPrice = button.getAttribute('data-product-price');
+                cart.push({ name: productName, price: productPrice });
+                const cartEl = document.getElementById('cart');
+                cartEl.innerHTML = cart.map(item => {
+                    return `<li>${item.name} - ${item.price}</li>`;
+                }).join('');
+                const total = cart.reduce((acc, item) => acc + parseFloat(item.price), 0);
+                cartEl.innerHTML += `<li class="fw-bold">Total: ${total}</li>`;
+                cartEl.innerHTML += `<button onclick="order()">Order</button>`;
+            })
+        });
+        this.order = async () => {
+            const response = await fetch("/transaction/order", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(cart)
+            });
+            location.href = await response.text();
+        };
+    })();
+</script>

@@ -3,11 +3,7 @@ const router = express.Router();
 const controller = require('../controllers/auth.controller');
 const { isAnonymus } = require("../middleware/user.middleware");
 
-router.get('/', (req, res) => {
-    const user = { access: req.session.user?.access };
-    if (req.session.user?.email) user.email = req.session.user.email;
-    res.send(user)
-});
+router.get('/', controller.getUser);
 router.get('/logout', controller.logout);
 router.get('/user/menu', controller.getUserMenu);
 router.get('/login', (req, res) => { res.redirect("/login"); });

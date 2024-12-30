@@ -30,4 +30,4 @@ try {
     console.log("Connecting to database...");
 } catch (err) {
     console.log("Sever initialization failed ", err.message);
-}
+};

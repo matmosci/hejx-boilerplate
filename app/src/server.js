@@ -3,9 +3,6 @@ const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const app = express();
 const port = 9090;
-const authRouter = require('./routers/auth.router');
-const hxRouter = require('./routers/hx.router');
-const pagesRouter = require('./routers/pages.router');
 const user = require('./middleware/user.middleware');
 const cookieParser = require('cookie-parser');
 const { I18n } = require('i18n');
@@ -49,10 +46,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(i18n.init);
 app.use(user);
-app.use('/', pagesRouter);
-app.use('/hx', hxRouter);
-app.use('/auth', authRouter);
+app.use('/', require('./routers/pages.router'));
+app.use('/auth', require('./routers/auth.router'));
 app.use('/transaction', require('./routers/transaction.router'));
+app.use('/products', require('./routers/products.router'));
 
 app.listen(port, () => {
     console.log(`Listening at http://localhost:${port}`);

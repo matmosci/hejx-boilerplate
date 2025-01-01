@@ -1,0 +1,15 @@
+{
+    "name": "electronics",
+    "title": "Electronics",
+    "imageUrl": "https://placehold.co/800x800.jpg",
+    "items": [
+        {
+            "type": "product",
+            "name": "laptops"
+        },
+        {
+            "type": "product",
+            "name": "mouses"
+        }
+    ]
+}

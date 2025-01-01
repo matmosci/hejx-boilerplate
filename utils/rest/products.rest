@@ -1,0 +1,13 @@
+@api={{$dotenv api}}/products
+
+###
+GET {{api}}
+
+###
+GET {{api}}/category/home
+
+###
+GET {{api}}/:product
+
+###
+GET {{api}}/:product/*

@@ -1,0 +1,56 @@
+{
+    "name": "laptops",
+    "title": "Laptops",
+    "description": "Laptops description",
+    "imageUrl": "https://placehold.co/800x800.jpg",
+    "galleryUrls": [
+        "https://placehold.co/1000x800.jpg",
+        "https://placehold.co/1000x800.jpg",
+        "https://placehold.co/1000x800.jpg",
+        "https://placehold.co/1000x800.jpg"
+    ],
+    "parameters": [
+        {
+            "type": "select",
+            "name": "manufacturer",
+            "title": "Manufacturer",
+            "options": [
+                { "name": "lenovo", "title": "Lenovo" },
+                { "name": "apple", "title": "Apple" },
+                { "name": "asus", "title": "Asus" },
+                { "name": "dell", "title": "Dell" }
+            ]
+        },
+        {
+            "type": "select",
+            "name": "model",
+            "title": "Model",
+            "options": [
+                { "name": "lenovo-thinkpad-x1", "title": "ThinkPad X1", "enabled": "F2"  },
+                { "name": "lenovo-ideapad-3", "title": "IdeaPad 3", "enabled": "F3"  },
+                { "name": "lenovo-legion-5", "title": "Legion 5", "enabled": "F4"  },
+                { "name": "apple-macbook-air", "title": "MacBook Air", "enabled": "F5"  },
+                { "name": "apple-macbook-pro", "title": "MacBook Pro", "enabled": "F6"  },
+                { "name": "apple-macbook", "title": "MacBook", "enabled": "F7"  },
+                { "name": "asus-zenbook", "title": "ZenBook", "enabled": "F8"  },
+                { "name": "asus-vivobook", "title": "VivoBook", "enabled": "F9"  },
+                { "name": "asus-rog-strix", "title": "ROG Strix", "enabled": "F10"  },
+                { "name": "dell-xps-13", "title": "XPS 13", "enabled": "F11"  },
+                { "name": "dell-inspiron-15", "title": "Inspiron 15", "enabled": "F12"  },
+                { "name": "dell-latitude-14", "title": "Latitude 14", "enabled": "F13"  }
+            ]
+        },
+        {
+            "type": "number",
+            "name": "quantity",
+            "title": "Quantity",
+            "value": 1,
+            "min": 1,
+            "max": 50
+        }
+    ],
+    "xcalc": {
+        "input": [],
+        "output": []
+    }
+}

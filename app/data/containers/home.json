@@ -1,0 +1,23 @@
+{
+    "name": "main",
+    "title": "Main",
+    "imageUrl": "",
+    "items": [
+        {
+            "type": "product",
+            "name": "laptops"
+        },
+        {
+            "type": "container",
+            "name": "electronics"
+        },
+        {
+            "type": "container",
+            "name": "print"
+        },
+        {
+            "type": "product",
+            "name": "mouses"
+        }
+    ]
+}

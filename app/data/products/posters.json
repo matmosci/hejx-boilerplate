@@ -2,5 +2,39 @@
     "name": "posters",
     "title": "Posters",
     "description": "Posters description",
-    "imageUrl": "https://placehold.co/800x800.jpg"
+    "imageUrl": "https://placehold.co/800x800.jpg",
+    "parameters": [
+        {
+            "type": "select",
+            "name": "format",
+            "title": "Format",
+            "options": [
+                { "title": "A3 (297x420 mm)", "value": "297x420" },
+                { "title": "A2 (420x594 mm)", "value": "420x594" },
+                { "title": "B2 (500x700 mm)", "value": "500x700" },
+                { "title": "A1 (594x841 mm)", "value": "594x841" },
+                { "title": "B1 (700x1000 mm)", "value": "700x1000" },
+                { "title": "A0 (841x1189 mm)", "value": "841x1189" }
+            ]
+        },
+        {
+            "type": "select",
+            "name": "paper",
+            "title": "Paper",
+            "options": [
+              { "title": "Matte 180g", "value": "matte-180" },
+              { "title": "Glossy 190g", "value": "glossy-190" },
+              { "title": "Satin 135g", "value": "satin-135" },
+              { "title": "Satin 200g", "value": "satin-200" }
+            ]
+          },
+        {
+            "type": "number",
+            "name": "quantity",
+            "title": "Quantity",
+            "value": 1,
+            "min": 1,
+            "max": 1000
+        }
+    ]
 }

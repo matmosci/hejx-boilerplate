@@ -1,0 +1,5 @@
+<form action="">
+    <% product.parameters.map(input => { %>
+        <%- include('productFormInput', { input }); %>
+    <% }) %>
+</form>

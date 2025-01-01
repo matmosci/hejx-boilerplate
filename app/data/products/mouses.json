@@ -2,5 +2,15 @@
     "name": "mouses",
     "title": "Mouses",
     "description": "Mouses description",
-    "imageUrl": "https://placehold.co/800x800.jpg"
+    "imageUrl": "https://placehold.co/800x800.jpg",
+    "parameters": [
+        {
+            "type": "number",
+            "name": "quantity",
+            "title": "Quantity",
+            "value": 1,
+            "min": 1,
+            "max": 50
+        }
+    ]
 }

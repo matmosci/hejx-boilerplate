@@ -1,11 +1,11 @@
-const { getContainerGridItems, parseGridItem } = require("../services/products.service");
+const { getProductDefaultValues, getContainerGridItems, parseGridItem } = require("../services/products.service");
 const render = require("../utils/render.utils");
 
 module.exports = {
     getContainer: (req, res) => {
-        const { category } = req.params;
-        const categoryData = parseGridItem(category);
-        render(req, res, "products", { items: getContainerGridItems(categoryData.name), title: categoryData.title });
+        const { category: categoryName } = req.params;
+        const category = parseGridItem(categoryName);
+        render(req, res, "products", { items: getContainerGridItems(category.name), title: category.title });
     },
     getContainerMain: (req, res) => {
         render(req, res, "products", { items: getContainerGridItems("home"), title: "Products" });
@@ -14,7 +14,8 @@ module.exports = {
         res.end('getProduct');
     },
     getProductDefault: (req, res) => {
-        res.end('getProductDefault');
+        const { product: productName } = req.params;
+        const product = getProductDefaultValues(productName);
+        render(req, res, "product", { product, title: product.title });
     },
 };
-

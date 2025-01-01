@@ -2,5 +2,43 @@
     "name": "business-cards",
     "title": "Business cards",
     "description": "Business cards description",
-    "imageUrl": "https://placehold.co/800x800.jpg"
+    "imageUrl": "https://placehold.co/800x800.jpg",
+    "parameters": [
+        {
+            "type": "select",
+            "name": "format",
+            "title": "Format",
+            "options": [
+              { "title": "90x50 mm", "value": "90x50" },
+              { "title": "85x55 mm", "value": "85x55" }
+            ]
+        },
+        {
+            "type": "select",
+            "name": "duplex",
+            "title": "Duplex",
+            "options": [
+                { "title": "Single 4+0", "value": "4+0" },
+                { "title": "Double 4+4", "value": "4+4" }
+            ]
+        },
+        {
+            "type": "select",
+            "name": "paper",
+            "title": "Paper",
+            "options": [
+                { "title": "Matte 350g", "value": "matte-350" },
+                { "title": "Glossy 350g", "value": "glossy-350" }
+            ]
+        },
+        {
+            "type": "number",
+            "name": "quantity",
+            "title": "Quantity",
+            "value": 100,
+            "min": 100,
+            "max": 10000,
+            "step": 100
+        }
+    ]
 }

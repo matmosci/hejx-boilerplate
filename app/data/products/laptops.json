@@ -15,10 +15,10 @@
             "name": "manufacturer",
             "title": "Manufacturer",
             "options": [
-                { "name": "lenovo", "title": "Lenovo" },
-                { "name": "apple", "title": "Apple" },
-                { "name": "asus", "title": "Asus" },
-                { "name": "dell", "title": "Dell" }
+                { "title": "Lenovo", "value": "lenovo" },
+                { "title": "Apple", "value": "apple" },
+                { "title": "Asus", "value": "asus" },
+                { "title": "Dell", "value": "dell" }
             ]
         },
         {
@@ -26,18 +26,18 @@
             "name": "model",
             "title": "Model",
             "options": [
-                { "name": "lenovo-thinkpad-x1", "title": "ThinkPad X1", "enabled": "F2"  },
-                { "name": "lenovo-ideapad-3", "title": "IdeaPad 3", "enabled": "F3"  },
-                { "name": "lenovo-legion-5", "title": "Legion 5", "enabled": "F4"  },
-                { "name": "apple-macbook-air", "title": "MacBook Air", "enabled": "F5"  },
-                { "name": "apple-macbook-pro", "title": "MacBook Pro", "enabled": "F6"  },
-                { "name": "apple-macbook", "title": "MacBook", "enabled": "F7"  },
-                { "name": "asus-zenbook", "title": "ZenBook", "enabled": "F8"  },
-                { "name": "asus-vivobook", "title": "VivoBook", "enabled": "F9"  },
-                { "name": "asus-rog-strix", "title": "ROG Strix", "enabled": "F10"  },
-                { "name": "dell-xps-13", "title": "XPS 13", "enabled": "F11"  },
-                { "name": "dell-inspiron-15", "title": "Inspiron 15", "enabled": "F12"  },
-                { "name": "dell-latitude-14", "title": "Latitude 14", "enabled": "F13"  }
+                { "title": "ThinkPad X1", "value": "lenovo-thinkpad-x1", "enabled": "F2"  },
+                { "title": "IdeaPad 3", "value": "lenovo-ideapad-3", "enabled": "F3"  },
+                { "title": "Legion 5", "value": "lenovo-legion-5", "enabled": "F4"  },
+                { "title": "MacBook Air", "value": "apple-macbook-air", "enabled": "F5"  },
+                { "title": "MacBook Pro", "value": "apple-macbook-pro", "enabled": "F6"  },
+                { "title": "MacBook", "value": "apple-macbook", "enabled": "F7"  },
+                { "title": "ZenBook", "value": "asus-zenbook", "enabled": "F8"  },
+                { "title": "VivoBook", "value": "asus-vivobook", "enabled": "F9"  },
+                { "title": "ROG Strix", "value": "asus-rog-strix", "enabled": "F10"  },
+                { "title": "XPS 13", "value": "dell-xps-13", "enabled": "F11"  },
+                { "title": "Inspiron 15", "value": "dell-inspiron-15", "enabled": "F12"  },
+                { "title": "Latitude 14", "value": "dell-latitude-14", "enabled": "F13"  }
             ]
         },
         {

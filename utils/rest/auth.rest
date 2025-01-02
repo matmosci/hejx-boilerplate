@@ -1,7 +1,7 @@
-@api=http://localhost:9090
+@api={{$dotenv api}}/auth
 
 ### Create login token
-POST {{api}}/auth/login
+POST {{api}}/login
 Content-Type: application/json
 
 {
@@ -9,7 +9,7 @@ Content-Type: application/json
 }
 
 ### Login with email and token
-POST {{api}}/auth/login/token
+POST {{api}}/login/token
 Content-Type: application/json
 
 {
@@ -18,10 +18,10 @@ Content-Type: application/json
 }
 
 ### Login with hash
-GET {{api}}/auth/login/f5e9d74eb4da2ce056bf17aa8f3f53c00da868b0b63032cb3925bf2f8b67f5bf1338cce97dd1e4b3491c20cb0dc23682
+GET {{api}}/login/f5e9d74eb4da2ce056bf17aa8f3f53c00da868b0b63032cb3925bf2f8b67f5bf1338cce97dd1e4b3491c20cb0dc23682
 
 ###
-GET {{api}}/auth
+GET {{api}}
 
 ###
-GET {{api}}/auth/logout
+GET {{api}}/logout

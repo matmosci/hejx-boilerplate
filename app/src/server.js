@@ -53,8 +53,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(i18n.init);
 app.use(user);
+app.use('/', pagesRouter);
 app.use('/hx', hxRouter);
 app.use('/auth', authRouter);
+app.use('/transaction', require('./routers/transaction.router'));
 
 app.listen(port, () => {
     console.log(`Listening at http://localhost:${port}`);

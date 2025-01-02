@@ -1,6 +1,6 @@
 const registry = require('../../data/products-registry.json');
 
-module.exports = { getProductDefinition, getContainerGridItems, parseGridItem };
+module.exports = { getProductDefaultParamValues, getProductDefinition, getContainerGridItems, parseGridItem };
 
 function getContainerGridItems(name) {
     const container = registry.find(item => item.name === name && item.type === 'container');
@@ -27,4 +27,18 @@ function getProductDefinition(name) {
     if (!product?.enabled) return null;
 
     return require(`../../data/products/${name}.json`);
+};
+
+function getProductDefaultParamValues(product) {
+    return product.parameters.map(getProductDefaultParamValue);
+};
+
+function getProductDefaultParamValue(param) {
+    switch (param.type) {
+        case "number":
+            return { name: param.name, value: param.value };
+        case "select":
+            return { name: param.name, value: param.options[0].value };
+    }
+    return param.type;
 };

@@ -1,4 +1,9 @@
-const { getProductDefinition, getContainerGridItems, parseGridItem } = require("../services/products.service");
+const {
+    getProductDefaultParamValues,
+    getProductDefinition,
+    getContainerGridItems,
+    parseGridItem
+} = require("../services/products.service");
 const render = require("../utils/render.utils");
 
 module.exports = {
@@ -16,7 +21,8 @@ module.exports = {
     getProductDefault: (req, res) => {
         const { product: productName } = req.params;
         const product = getProductDefinition(productName);
-        res.set("HX-Push-Url", `${product.name}/option1/option2/1`)
+        const paramURN = getProductDefaultParamValues(product).map(p => p.value).join("/");
+        res.set("HX-Push-Url", `/products/${product.name}/${paramURN}`);
         render(req, res, "product", { product, title: product.title });
     },
 };

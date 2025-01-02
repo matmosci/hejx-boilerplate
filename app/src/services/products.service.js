@@ -1,6 +1,6 @@
 const registry = require('../../data/products-registry.json');
 
-module.exports = { getProductDefaultValues, getContainerGridItems, parseGridItem };
+module.exports = { getProductDefinition, getContainerGridItems, parseGridItem };
 
 function getContainerGridItems(name) {
     const container = registry.find(item => item.name === name && item.type === 'container');
@@ -22,7 +22,7 @@ function parseGridItem(name) {
     return { name, title, imageUrl, link };
 };
 
-function getProductDefaultValues(name) {
+function getProductDefinition(name) {
     const product = registry.find(item => item.name === name && item.type === 'product');
     if (!product?.enabled) return null;
 

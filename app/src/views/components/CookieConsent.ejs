@@ -1,13 +1,9 @@
-<dialog
-  class="border rounded shadow start-0 bottom-0 m-3 bg-body-tertiary position-fixed"
-  style="max-width: 900px;"
->
+<dialog class="border-0 border-top start-0 bottom-0 bg-body-tertiary position-fixed">
   <p>
-    We use cookies to maintain your session and ensure the proper functioning of
-    our app. These cookies are necessary and cannot be disabled. We are not
-    using cookies for tracking purposes.
+    This website uses cookies to ensure secure access to our services. These cookies are essential for authorizing
+    your access and maintaining user sessions. By continuing to use our website, you agree to the use of necessary
+    cookies. If you do not wish to have them stored on your device, please leave the site.
   </p>
-  <p>By using this app, you agree to the use of these cookies.</p>
   <div class="text-center">
     <button class="btn btn-primary" onclick="accept()">Accept</button>
   </div>
@@ -19,6 +15,6 @@
     function accept() {
       document.querySelector("dialog").close();
       localStorage.setItem("cookie-consent", "true");
-    }
-  }
+    };
+  };
 </script>

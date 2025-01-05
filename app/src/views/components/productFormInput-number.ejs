@@ -2,6 +2,7 @@
   type="<%= input.type %>"
   id="product-form-input-<%= input.name %>"
   class="form-control"
+  oninput="if (this.value) htmx.trigger(this.form, 'change')"
   <%= input.value ? `value=${input.value}` : '' %>
   <%= input.min ? `min=${input.min}` : '' %>
   <%= input.max ? `max=${input.max}` : '' %>

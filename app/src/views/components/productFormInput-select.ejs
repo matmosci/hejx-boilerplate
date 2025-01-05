@@ -1,5 +1,5 @@
 <select name="<%= input.name %>" id="product-form-input-<%= input.name %>" class="form-select">
     <% input.options.map(option => { %>
-        <option value="<%= option.value %>"><%= option.title %></option>
+        <option value="<%= option.value %>" <%= option.selected && "selected" %> ><%= option.title %></option>
     <% }) %>
 </select>

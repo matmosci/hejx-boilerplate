@@ -1,5 +1,26 @@
-<form action="">
+<form id="product-form" action="/products/<%= product.name %>" hx-trigger="change delay:500ms" hx-params="none" disabled>
     <% product.parameters.map(input => { %>
         <%- include('productFormInput', { input }); %>
     <% }) %>
 </form>
+<script type="module">
+    import EventsHandler from '/js/htmx-events-handler.js';
+
+    EventsHandler.register([
+        {
+            element: document,
+            event: 'htmx:configRequest',
+            handler: (e) => {
+                console.log('zxc');
+                e.detail.path = `/products/<%= product.name %>/${[...e.target].map(input => input.value).join("/")}`;
+            }
+        },
+        {
+            element: document.getElementById('product-form'),
+            event: 'submit',
+            handler: (e) => {
+                e.preventDefault();
+            }
+        }
+    ]);
+</script>

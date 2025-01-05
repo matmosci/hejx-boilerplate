@@ -1,9 +1,12 @@
 const {
+    getProductConfigured,
+    getProductParamNames,
     getProductDefaultParamValues,
     getProductDefinition,
     getContainerGridItems,
     parseGridItem
 } = require("../services/products.service");
+const { keyValueArraysToObject } = require("../utils/common.utils");
 const render = require("../utils/render.utils");
 
 module.exports = {
@@ -15,14 +18,36 @@ module.exports = {
     getContainerMain: (req, res) => {
         render(req, res, "products", { items: getContainerGridItems("home"), title: "Products" });
     },
-    getProduct: (req, res) => {
-        res.end('getProduct');
+    getProductWithConfig: (req, res) => {
+        const { product: productName, 0: configURN } = req.params;
+        const configArr = configURN.split("/");
+        try {
+            const config = keyValueArraysToObject(getProductParamNames(productName), configArr);
+            const { product, reConfigArr, redirect } = getProductConfigured(productName, config);
+            const url = `/products/${product.name}/${reConfigArr.join("/")}`;
+            if (redirect && !req.headers['hx-request']) return res.redirect(url);
+            res.set("HX-Push-Url", url);
+            render(req, res, "product", { product, title: product.title });
+        } catch (error) {
+            getProductDefault(req, res);
+        }
     },
-    getProductDefault: (req, res) => {
+    getProductDefault
+};
+
+function getProductDefault(req, res) {
+    try {
         const { product: productName } = req.params;
         const product = getProductDefinition(productName);
         const paramURN = getProductDefaultParamValues(product).map(p => p.value).join("/");
-        res.set("HX-Push-Url", `/products/${product.name}/${paramURN}`);
+        const url = `/products/${product.name}/${paramURN}`;
+        if (!req.headers['hx-request']) return res.redirect(url);
+        res.set("HX-Push-Url", url);
         render(req, res, "product", { product, title: product.title });
-    },
+    } catch (error) {
+        const url = `/products`;
+        if (!req.headers['hx-request']) return res.redirect(url);
+        res.set("HX-Push-Url", url);
+        render(req, res, "product", { product, title: product.title });
+    }
 };

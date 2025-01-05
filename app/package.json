@@ -15,6 +15,7 @@
   "author": "matmosci",
   "license": "ISC",
   "dependencies": {
+    "@formulajs/formulajs": "^4.4.9",
     "bcrypt": "^5.1.1",
     "bootstrap": "^5.3.3",
     "connect-mongodb-session": "^5.0.0",
@@ -25,7 +26,9 @@
     "express-session": "^1.18.0",
     "i18n": "^0.15.1",
     "mongoose": "^8.3.4",
-    "nodemailer": "^6.9.13"
+    "nodemailer": "^6.9.13",
+    "xlsx": "^0.18.5",
+    "xlsx-calc": "^0.9.2"
   },
   "devDependencies": {
     "browser-sync": "^3.0.3",

@@ -9,6 +9,15 @@
         "https://placehold.co/1000x800.jpg",
         "https://placehold.co/1000x800.jpg"
     ],
+    "xcalc": {
+        "document": "laptops.xlsx",
+        "sheet": "Sheet1",
+        "customFields": {
+            "width": "B12",
+            "height": "C12",
+            "depth": "D12"
+        }
+    },
     "parameters": [
         {
             "type": "select",
@@ -66,19 +75,8 @@
             "max": 50
         }
     ],
-    "xcalc": {
-        "document": "laptops.xlsx",
-        "sheet": "Sheet1",
-        "output": {
-            "weight": "B10",
-            "prices": [
-                { "id": "B11", "qty": "C11", "type": "json" }
-            ],
-            "custom": {
-                "width": "B12",
-                "height": "C12",
-                "depth": "D12"
-            }
-        }
-    }
+    "weight": "B10",
+    "prices": [
+        { "id": "B11", "qty": "C11", "source": "json" }
+    ]
 }

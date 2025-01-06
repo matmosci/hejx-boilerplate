@@ -23,12 +23,14 @@ module.exports = {
         const configArr = configURN.split("/");
         try {
             const config = keyValueArraysToObject(getProductParamNames(productName), configArr);
+            console.log(config); // dev
             const { product, reConfigArr, redirect } = getProductConfigured(productName, config);
             const url = `/products/${product.name}/${reConfigArr.join("/")}`;
             if (redirect && !req.headers['hx-request']) return res.redirect(url);
             res.set("HX-Push-Url", url);
             render(req, res, "product", { product, title: product.title });
         } catch (error) {
+            console.log(error); // dev
             getProductDefault(req, res);
         }
     },

@@ -1,4 +1,4 @@
-<div class="mb-3">
+<div class="mb-3<%= input.enabled === false ? ' d-none' : '' %>">
     <label for="product-form-input-<%= input.name %>" class="form-label"><%= input.title %></label>
     <%- include(`productFormInput-${input.type}`); %>
 </div>

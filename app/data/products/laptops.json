@@ -14,6 +14,7 @@
             "type": "select",
             "name": "manufacturer",
             "title": "Manufacturer",
+            "cell": "B1",
             "options": [
                 { "title": "Lenovo", "value": "lenovo" },
                 { "title": "Apple", "value": "apple" },
@@ -25,32 +26,59 @@
             "type": "select",
             "name": "model",
             "title": "Model",
+            "cell": "B2",
             "options": [
-                { "title": "ThinkPad X1", "value": "lenovo-thinkpad-x1", "enabled": "F2"  },
-                { "title": "IdeaPad 3", "value": "lenovo-ideapad-3", "enabled": "F3"  },
-                { "title": "Legion 5", "value": "lenovo-legion-5", "enabled": "F4"  },
-                { "title": "MacBook Air", "value": "apple-macbook-air", "enabled": "F5"  },
-                { "title": "MacBook Pro", "value": "apple-macbook-pro", "enabled": "F6"  },
-                { "title": "MacBook", "value": "apple-macbook", "enabled": "F7"  },
-                { "title": "ZenBook", "value": "asus-zenbook", "enabled": "F8"  },
-                { "title": "VivoBook", "value": "asus-vivobook", "enabled": "F9"  },
-                { "title": "ROG Strix", "value": "asus-rog-strix", "enabled": "F10"  },
-                { "title": "XPS 13", "value": "dell-xps-13", "enabled": "F11"  },
-                { "title": "Inspiron 15", "value": "dell-inspiron-15", "enabled": "F12"  },
-                { "title": "Latitude 14", "value": "dell-latitude-14", "enabled": "F13"  }
+                { "title": "ThinkPad X1", "value": "lenovo-thinkpad-x1", "enabled": "G2" },
+                { "title": "IdeaPad 3", "value": "lenovo-ideapad-3", "enabled": "G3" },
+                { "title": "Legion 5", "value": "lenovo-legion-5", "enabled": "G4" },
+                { "title": "MacBook Air", "value": "apple-macbook-air", "enabled": "G5" },
+                { "title": "MacBook Pro", "value": "apple-macbook-pro", "enabled": "G6" },
+                { "title": "MacBook", "value": "apple-macbook", "enabled": "G7" },
+                { "title": "ZenBook", "value": "asus-zenbook", "enabled": "G8" },
+                { "title": "VivoBook", "value": "asus-vivobook", "enabled": "G9" },
+                { "title": "ROG Strix", "value": "asus-rog-strix", "enabled": "G10" },
+                { "title": "XPS 13", "value": "dell-xps-13", "enabled": "G11" },
+                { "title": "Inspiron 15", "value": "dell-inspiron-15", "enabled": "G12" },
+                { "title": "Latitude 14", "value": "dell-latitude-14", "enabled": "G13" }
+            ]
+        },
+        {
+            "type": "select",
+            "name": "color",
+            "title": "Color",
+            "cell": "B3",
+            "enabled": "B13",
+            "options": [
+                { "title": "Black", "value": "black" },
+                { "title": "White", "value": "white" },
+                { "title": "Silver", "value": "silver" },
+                { "title": "Gold", "value": "gold" },
+                { "title": "N/A", "value": "-", "fallback": true }
             ]
         },
         {
             "type": "number",
             "name": "quantity",
             "title": "Quantity",
+            "cell": "B4",
             "value": 1,
             "min": 1,
             "max": 50
         }
     ],
     "xcalc": {
-        "input": [],
-        "output": []
+        "document": "laptops.xlsx",
+        "sheet": "Sheet1",
+        "output": {
+            "weight": "B10",
+            "prices": [
+                { "id": "B11", "qty": "C11", "type": "json" }
+            ],
+            "custom": {
+                "width": "B12",
+                "height": "C12",
+                "depth": "D12"
+            }
+        }
     }
 }

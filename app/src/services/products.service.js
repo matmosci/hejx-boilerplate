@@ -1,4 +1,4 @@
-const registry = require('../../data/products-registry.json');
+const registry = require('../../data/items.json');
 const path = require('path');
 const XLSX = require("xlsx");
 const XLSX_CALC = require("xlsx-calc");

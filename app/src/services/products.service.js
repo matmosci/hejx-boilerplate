@@ -66,7 +66,7 @@ function getProductConfigured(name, config) {
             });
             const selectedOption = param.enabled === false
                 ? getFallbackOption(param.options)
-                : findOption(param.options, workbook.Sheets[sheet][param.cell].v);
+                : findOptionSelectedOrEnabled(param.options, workbook.Sheets[sheet][param.cell].v);
             selectedOption.selected = true;
             reConfigArr.push(selectedOption.value);
         };
@@ -76,7 +76,7 @@ function getProductConfigured(name, config) {
     return { product: { ...product, parameters }, reConfigArr, redirect };
 };
 
-function findOption(options, value) {
+function findOptionSelectedOrEnabled(options, value) {
     return options.find(option => option.value === value && option.enabled !== false) || options.find(option => option.enabled !== false);
 };
 

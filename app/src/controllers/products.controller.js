@@ -1,5 +1,6 @@
 const { keyValueArraysToObject } = require("../utils/common.utils");
 const render = require("../utils/render.utils");
+
 const {
     getProductConfigured,
     getProductParamNames,
@@ -19,9 +20,10 @@ module.exports = {
 function getProductDefault(req, res) {
     const { product: productName } = req.params;
     try {
-        const product = getProductDefinition(productName);
-        const paramURN = getProductDefaultParamValues(product).map(p => p.value).join("/");
-        const url = `/products/${product.name}/${paramURN}`;
+        const defaultProduct = getProductDefinition(productName);
+        const config = keyValueArraysToObject(getProductParamNames(productName), getProductDefaultParamValues(defaultProduct).map(p => p.value));
+        const { product, reConfigArr } = getProductConfigured(productName, config);
+        const url = `/products/${product.name}/${reConfigArr.join("/")}`;
         res.set("HX-Push-Url", url);
         render(req, res, "product", { product, title: product.title });
     } catch (error) {
@@ -34,7 +36,6 @@ function getProductWithConfig(req, res) {
     const configArr = configURN.split("/");
     try {
         const config = keyValueArraysToObject(getProductParamNames(productName), configArr);
-        console.log(config); // dev
         const { product, reConfigArr } = getProductConfigured(productName, config);
         const url = `/products/${product.name}/${reConfigArr.join("/")}`;
         res.set("HX-Push-Url", url);

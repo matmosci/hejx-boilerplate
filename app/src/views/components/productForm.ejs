@@ -11,7 +11,6 @@
             element: document,
             event: 'htmx:configRequest',
             handler: (e) => {
-                console.log('zxc');
                 e.detail.path = `/products/<%= product.name %>/${[...e.target].map(input => input.value).join("/")}`;
             }
         },

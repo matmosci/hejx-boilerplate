@@ -15,18 +15,20 @@ module.exports = {
 };
 
 function getProductConfigured(name, config) {
-    const product = registry.find(item => item.name === name && item.type === 'product');
-    if (!product?.enabled) return null;
+    const item = registry.find(item => item.name === name && item.type === 'product');
+    if (!item?.enabled) return null;
 
-    const productDefinition = structuredClone(require(`../../data/products/${name}.json`));
+    const product = structuredClone(require(`../../data/products/${name}.json`));
     const reConfigArr = [];
     let redirect = false;
 
-    const xdoc_path = path.resolve(__dirname, `../../data/products/${productDefinition.xcalc.document}`);
-    const workbook = XLSX.readFile(xdoc_path);
-    const sheet = workbook.SheetNames[0];
 
-    productDefinition.parameters.map(param => {
+    const { xcalc } = product;
+    const xdoc_path = path.resolve(__dirname, `../../data/products/${xcalc.document}`);
+    const workbook = XLSX.readFile(xdoc_path);
+    const sheet = xcalc.sheet ?? workbook.SheetNames[0];
+
+    product.parameters.map(param => {
         if (param.type === 'select' && !param.options.find(option => option.value === config[param.name])) {
             throw new Error(`Invalid option ${config[param.name]} for parameter ${param.name}`);
         };
@@ -36,7 +38,7 @@ function getProductConfigured(name, config) {
 
     XLSX_CALC(workbook, { continue_after_error: true, log_error: true });
 
-    const parameters = productDefinition.parameters.map(param => {
+    const parameters = product.parameters.map(param => {
         const value = config[param.name];
 
         if (param.enabled) {
@@ -71,7 +73,7 @@ function getProductConfigured(name, config) {
         return param;
     });
 
-    return { product: { ...productDefinition, parameters }, reConfigArr, redirect };
+    return { product: { ...product, parameters }, reConfigArr, redirect };
 };
 
 function findOption(options, value) {
@@ -83,8 +85,8 @@ function getFallbackOption(options) {
 }
 
 function getContainerGridItems(name) {
-    const container = registry.find(item => item.name === name && item.type === 'container');
-    if (!container?.enabled) return null;
+    const item = registry.find(item => item.name === name && item.type === 'container');
+    if (!item?.enabled) return null;
 
     const { items } = require(`../../data/containers/${name}.json`);
 
@@ -103,18 +105,18 @@ function parseGridItem(name) {
 };
 
 function getProductDefinition(name) {
-    const product = registry.find(item => item.name === name && item.type === 'product');
-    if (!product?.enabled) return null;
+    const item = registry.find(item => item.name === name && item.type === 'product');
+    if (!item?.enabled) return null;
 
     return require(`../../data/products/${name}.json`);
 };
 
 function getProductParamNames(name) {
-    const product = registry.find(item => item.name === name && item.type === 'product');
-    if (!product?.enabled) return null;
+    const item = registry.find(item => item.name === name && item.type === 'product');
+    if (!item?.enabled) return null;
 
-    const productDefinition = require(`../../data/products/${name}.json`);
-    const paramNames = productDefinition.parameters.map(param => param.name);
+    const product = require(`../../data/products/${name}.json`);
+    const paramNames = product.parameters.map(param => param.name);
     return paramNames;
 };
 

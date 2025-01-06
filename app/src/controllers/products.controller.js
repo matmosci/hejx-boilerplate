@@ -24,9 +24,8 @@ module.exports = {
         try {
             const config = keyValueArraysToObject(getProductParamNames(productName), configArr);
             console.log(config); // dev
-            const { product, reConfigArr, redirect } = getProductConfigured(productName, config);
+            const { product, reConfigArr } = getProductConfigured(productName, config);
             const url = `/products/${product.name}/${reConfigArr.join("/")}`;
-            if (redirect && !req.headers['hx-request']) return res.redirect(url);
             res.set("HX-Push-Url", url);
             render(req, res, "product", { product, title: product.title });
         } catch (error) {
@@ -43,12 +42,10 @@ function getProductDefault(req, res) {
         const product = getProductDefinition(productName);
         const paramURN = getProductDefaultParamValues(product).map(p => p.value).join("/");
         const url = `/products/${product.name}/${paramURN}`;
-        if (!req.headers['hx-request']) return res.redirect(url);
         res.set("HX-Push-Url", url);
         render(req, res, "product", { product, title: product.title });
     } catch (error) {
         const url = `/products`;
-        if (!req.headers['hx-request']) return res.redirect(url);
         res.set("HX-Push-Url", url);
         render(req, res, "product", { product, title: product.title });
     }

@@ -20,8 +20,6 @@ function getProductConfigured(name, config) {
 
     const product = structuredClone(require(`../../data/products/${name}.json`));
     const reConfigArr = [];
-    let redirect = false;
-
 
     const { xcalc } = product;
     const xdoc_path = path.resolve(__dirname, `../../data/products/${xcalc.document}`);
@@ -49,14 +47,9 @@ function getProductConfigured(name, config) {
             param.value = Number(value);
             if (param.min && typeof param.min === 'string') param.min = workbook.Sheets[sheet][param.min].v;
             if (param.max && typeof param.max === 'string') param.max = workbook.Sheets[sheet][param.max].v;
-            if (Number(value) > param.max) {
-                param.value = param.max;
-                redirect = true;
-            };
-            if (Number(value) < param.min) {
-                param.value = param.min;
-                redirect = true;
-            };
+            if (Number(value) > param.max) param.value = param.max;
+            if (Number(value) < param.min) param.value = param.min;
+
             reConfigArr.push(param.value);
         };
         if (param.type === 'select') {
@@ -73,7 +66,7 @@ function getProductConfigured(name, config) {
         return param;
     });
 
-    return { product: { ...product, parameters }, reConfigArr, redirect };
+    return { product: { ...product, parameters }, reConfigArr };
 };
 
 function findOptionSelectedOrEnabled(options, value) {

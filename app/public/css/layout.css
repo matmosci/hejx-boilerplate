@@ -1,5 +1,6 @@
 :root {
     background-color: var(--bs-dark);
+    --navbar-height: 57px;
 }
 
 html {
@@ -10,7 +11,15 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100%;
-    padding-top: 57px;
+    padding-top: var(--navbar-height);
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+#cart-wrapper {
+    padding-top: var(--navbar-height);
 }
 
 footer {

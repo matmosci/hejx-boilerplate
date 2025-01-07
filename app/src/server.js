@@ -7,6 +7,7 @@ const user = require('./middleware/user.middleware');
 const cookieParser = require('cookie-parser');
 const { I18n } = require('i18n');
 require('./utils/mailer.utils').verify();
+require('./models/Cart.model');
 
 app.set('views', './src/views');
 app.set('view engine', 'ejs');
@@ -50,6 +51,7 @@ app.use('/', require('./routers/pages.router'));
 app.use('/auth', require('./routers/auth.router'));
 app.use('/transaction', require('./routers/transaction.router'));
 app.use('/products', require('./routers/products.router'));
+app.use('/cart', require('./routers/cart.router'));
 
 app.listen(port, () => {
     console.log(`Listening at http://localhost:${port}`);

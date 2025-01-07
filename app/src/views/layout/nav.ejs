@@ -8,7 +8,7 @@
         <div class="collapse navbar-collapse" id="navbarLinks">
             <div class="navbar-nav ms-auto">
                 <a class="nav-link text-center" href="/products">Products</a>
-                <a class="nav-link text-center material-icons" onclick="alert('/cart')" href="#">shopping_cart</a>
+                <a class="nav-link text-center material-icons cursor-pointer user-select-none" data-bs-toggle="collapse" data-bs-target="#cart-wrapper" aria-expanded="false" aria-controls="cart-wrapper">shopping_cart</a>
                 <%- include('../components/user') %>
             </div>
         </div>

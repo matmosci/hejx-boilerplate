@@ -24,7 +24,7 @@ function getProductDefault(req, res) {
         const config = keyValueArraysToObject(getProductParamNames(productName), getProductDefaultParamValues(defaultProduct).map(p => p.value));
         const { product, reConfigArr } = getProductConfigured(productName, config);
         const url = `/products/${product.name}/${reConfigArr.join("/")}`;
-        res.set("HX-Push-Url", url);
+        res.set(req.headers['hx-request'] ? "HX-Push-Url" : "X-Set-Url", url);
         render(req, res, "product", { product, title: product.title });
     } catch (error) {
         getContainerMain(req, res);
@@ -38,10 +38,9 @@ function getProductWithConfig(req, res) {
         const config = keyValueArraysToObject(getProductParamNames(productName), configArr);
         const { product, reConfigArr } = getProductConfigured(productName, config);
         const url = `/products/${product.name}/${reConfigArr.join("/")}`;
-        res.set("HX-Push-Url", url);
+        res.set(req.headers['hx-request'] ? "HX-Push-Url" : "X-Set-Url", url);
         render(req, res, "product", { product, title: product.title });
     } catch (error) {
-        console.log(error); // dev
         getProductDefault(req, res);
     }
 };

@@ -8,7 +8,7 @@
 
     EventsHandler.register([
         {
-            element: document,
+            element: document.getElementById('product-form'),
             event: 'htmx:configRequest',
             handler: (e) => {
                 e.detail.path = `/products/<%= product.name %>/${[...e.target].map(input => input.value).join("/")}`;

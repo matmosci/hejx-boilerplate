@@ -4,6 +4,7 @@ const XLSX = require("xlsx");
 const XLSX_CALC = require("xlsx-calc");
 const formulajs = require("@formulajs/formulajs");
 XLSX_CALC.import_functions(formulajs, { override: true });
+const { keyValueArraysToObject } = require("../utils/common.utils");
 
 module.exports = {
     getProductConfigured,
@@ -14,12 +15,14 @@ module.exports = {
     parseGridItem
 };
 
-function getProductConfigured(name, config) {
+function getProductConfigured(name, urn) {
     const item = registry.find(item => item.name === name && item.type === 'product');
     if (!item?.enabled) return null;
 
     const product = structuredClone(require(`../../data/products/${name}.json`));
-    const reConfigArr = [];
+    const config = getParamConfig(product, urn);
+
+    const urnArr = [];
 
     const { xcalc } = product;
     const xdoc_path = path.resolve(__dirname, `../../data/products/${xcalc.document}`);
@@ -28,7 +31,7 @@ function getProductConfigured(name, config) {
 
     product.parameters.map(param => {
         if (param.type === 'select' && !param.options.find(option => option.value === config[param.name])) {
-            throw new Error(`Invalid option ${config[param.name]} for parameter ${param.name}`);
+            getProductConfigured(name, null);
         };
 
         workbook.Sheets[sheet][param.cell].v = config[param.name];
@@ -50,7 +53,7 @@ function getProductConfigured(name, config) {
             if (Number(value) > param.max) param.value = param.max;
             if (Number(value) < param.min) param.value = param.min;
 
-            reConfigArr.push(param.value);
+            urnArr.push(param.value);
         };
         if (param.type === 'select') {
             param.options.map(o => {
@@ -61,12 +64,22 @@ function getProductConfigured(name, config) {
                 ? getFallbackOption(param.options)
                 : findOptionSelectedOrEnabled(param.options, workbook.Sheets[sheet][param.cell].v);
             selectedOption.selected = true;
-            reConfigArr.push(selectedOption.value);
+            urnArr.push(selectedOption.value);
         };
         return param;
     });
 
-    return { product: { ...product, parameters }, reConfigArr };
+    product.urn = urnArr.join("/")
+    product.parameters = parameters;
+
+    return product;
+};
+
+function getParamConfig(product, urn) {
+    const params = getProductParamNames(product);
+    const values = urn ? urn.replace(/^\/|\/$/g, '').split("/") : getProductDefaultParamValues(product);
+
+    return keyValueArraysToObject(params, values);
 };
 
 function findOptionSelectedOrEnabled(options, value) {
@@ -104,25 +117,20 @@ function getProductDefinition(name) {
     return require(`../../data/products/${name}.json`);
 };
 
-function getProductParamNames(name) {
-    const item = registry.find(item => item.name === name && item.type === 'product');
-    if (!item?.enabled) return null;
-
-    const product = require(`../../data/products/${name}.json`);
-    const paramNames = product.parameters.map(param => param.name);
-    return paramNames;
+function getProductParamNames(product) {
+    return product.parameters.map(param => param.name);
 };
 
 function getProductDefaultParamValues(product) {
-    return product.parameters.map(getProductDefaultParamValue);
+    return product.parameters.map(getProductParamDefaultValue);
 };
 
-function getProductDefaultParamValue(param) {
+function getProductParamDefaultValue(param) {
     switch (param.type) {
         case "number":
-            return { name: param.name, value: param.value };
+            return String(param.value);
         case "select":
-            return { name: param.name, value: param.options[0].value };
-    }
+            return param.options[0].value;
+    };
     return param.type;
 };

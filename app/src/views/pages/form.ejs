@@ -1,5 +1,5 @@
 <main>
-    <div class="container mt-3">
+    <div class="container mt-2">
         <h1>Form test page</h1>
         <form hx-post="/hx/form" hx-target="#form-response" hx-on::after-request="event.detail.successful ? this.reset() : alert('Data incorrect')">
             <input class="form-control mb-1" type="text" name="name" placeholder="Name">

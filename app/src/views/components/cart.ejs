@@ -1,30 +1,27 @@
 <div
   id="cart-wrapper"
-  class="position-absolute z-1 top-0 end-0 h-100 bg-body-tertiary border-start collapse collapse-horizontal overflow-y-auto"
+  class="position-fixed z-1 top-0 end-0 h-100 bg-body-tertiary border-start shadow-lg collapse collapse-horizontal overflow-y-hidden"
 >
-  <div class="bg-body-secondary border-bottom text-secondary">
-    <span
-      class="px-2 py-1 cursor-pointer user-select-none"
-      data-bs-toggle="collapse"
-      data-bs-target="#cart-wrapper"
-      aria-expanded="false"
-      aria-controls="cart-wrapper"
-    >
-      &raquo;
-    </span>
-  </div>
-  <div class="d-flex flex-column flex-shrink-0 p-3 h-100" style="width: 280px">
-    <button class="btn btn-primary">Checkout</button>
-  </div>
-  <div class="bg-body-secondary border-top text-secondary">
-    <span
-      class="px-2 py-1 cursor-pointer user-select-none"
-      data-bs-toggle="collapse"
-      data-bs-target="#cart-wrapper"
-      aria-expanded="false"
-      aria-controls="cart-wrapper"
-    >
-      &raquo;
-    </span>
+  <div class="d-flex flex-column h-100" style="width: 280px; max-width: calc(100vw - 3rem);">
+    <!-- <h2 class="px-3 pb-1 mb-0 border-bottom bg-body-secondary">Cart</h2> -->
+    <div class="overflow-y-auto">
+        <% const q = 3; for (let i=1; i <= q; i++ ) { %>
+            <%- include('./cartProduct', {i,q}); %>
+        <% } %>
+    </div>
+    <div class="p-3 border-top">
+      <button class="btn btn-primary w-100">Checkout</button>
+    </div>
+    <div class="bg-body-secondary border-top text-secondary mt-auto">
+      <span
+        class="px-2 py-1 cursor-pointer user-select-none"
+        data-bs-toggle="collapse"
+        data-bs-target="#cart-wrapper"
+        aria-expanded="false"
+        aria-controls="cart-wrapper"
+      >
+        &raquo;
+      </span>
+    </div>
   </div>
 </div>

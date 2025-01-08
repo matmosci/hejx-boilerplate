@@ -4,7 +4,10 @@
         <div class="navbar-nav ms-auto">
             <a class="nav-link text-center material-icons user-select-none d-sm-none" href="/products">grid_view</a>
             <a class="nav-link text-center d-none d-sm-block" href="/products">Products</a>
-            <a class="nav-link text-center material-icons cursor-pointer user-select-none" data-bs-toggle="collapse" data-bs-target="#cart-wrapper" aria-expanded="false" aria-controls="cart-wrapper">shopping_cart</a>
+            <div hx-get="/cart/length" hx-trigger="load" hx-target="#cart-length" class="position-relative">
+                <a class="nav-link text-center material-icons cursor-pointer user-select-none" data-bs-toggle="collapse" data-bs-target="#cart-wrapper" aria-expanded="false" aria-controls="cart-wrapper">shopping_cart</a>
+                <span id="cart-length" class="badge bg-primary px-1 position-absolute end-0" style="padding: 0.15rem;" hx-preserve></span>
+            </div>
             <%- include('../components/user') %>
         </div>
     </div>

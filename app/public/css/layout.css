@@ -18,6 +18,21 @@ body {
     cursor: pointer;
 }
 
+a.back {
+    --offset: 0.5rem;
+    margin-left: calc(var(--offset) * -1);
+    padding-left: var(--offset);
+    padding-right: 0;
+    transition-duration: 200ms;
+    transition-property: padding-left, padding-right;
+    transition-timing-function: ease-in-out;
+}
+
+a.back:hover {
+    padding-left: 0;
+    padding-right: var(--offset);;
+}
+
 #cart-wrapper {
     padding-top: var(--navbar-height);
 }

@@ -1,22 +1,38 @@
 <div
   id="cart-wrapper"
-  class="position-fixed z-1 top-0 end-0 h-100 bg-body-tertiary border-start shadow-lg collapse collapse-horizontal overflow-y-hidden"
+  class="position-fixed z-1 top-0 end-0 h-100 collapse collapse-horizontal overflow-y-hidden"
 >
-  <div class="d-flex flex-column h-100" style="width: 280px; max-width: calc(100vw - 3rem);">
-    <div id="cart-content" class="overflow-y-auto" hx-get="/cart" hx-trigger="load"></div>
-    <div class="p-3 border-top">
-      <button class="btn btn-primary w-100" onclick="alert('TODO')">Checkout</button>
+<div class="d-flex vw-100 h-100">
+    <div class="flex-fill cursor-pointer z-1"
+      data-bs-toggle="collapse"
+      data-bs-target="#cart-wrapper"
+      aria-expanded="false"
+      aria-controls="cart-wrapper"
+    ></div>
+    <div class="d-flex flex-column z-1 h-100 bg-body-tertiary border-start shadow-lg" style="max-width: calc(100vw - 3rem);">
+      <div id="cart-content" class="overflow-y-auto" hx-get="/cart" hx-trigger="load"></div>
+      <div class="p-3 border-top">
+        <button class="btn btn-primary w-100" onclick="alert('TODO')">Checkout</button>
+      </div>
+      <div class="bg-body-secondary border-top border-bottom text-secondary mt-auto">
+        <span
+          class="px-2 py-1 cursor-pointer user-select-none"
+          data-bs-toggle="collapse"
+          data-bs-target="#cart-wrapper"
+          aria-expanded="false"
+          aria-controls="cart-wrapper"
+        >&raquo;</span>
+      </div>
     </div>
-    <div class="bg-body-secondary border-top text-secondary mt-auto">
-      <span
-        class="px-2 py-1 cursor-pointer user-select-none"
-        data-bs-toggle="collapse"
-        data-bs-target="#cart-wrapper"
-        aria-expanded="false"
-        aria-controls="cart-wrapper"
-      >
-        &raquo;
-      </span>
-    </div>
+    <div class="position-fixed top-0 start-0 w-100 h-100 cart-overlay"></div>
   </div>
 </div>
+<style>
+  #cart-wrapper .cart-overlay {
+    background-color: #0000;
+    transition: background-color 100ms;
+  }
+  #cart-wrapper.show .cart-overlay {
+    -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); background-color: #0002;
+  }
+</style>

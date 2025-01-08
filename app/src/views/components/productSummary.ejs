@@ -1,1 +1,23 @@
-<button class="btn btn-primary w-100" onclick="alert('Not implemented')">Add to cart</button>
+<button id="add-to-cart" class="btn btn-primary w-100" hx-post="/cart/product" hx-target="#cart-wrapper">Add to cart</button>
+<script type="module">
+    import EventsHandler from '/js/htmx-events-handler.js';
+
+    EventsHandler.register([
+        {
+            element: document.getElementById('add-to-cart'),
+            event: 'htmx:configRequest',
+            handler: (e) => {
+                const form = document.getElementById('product-form');
+                e.detail.parameters.product = '<%= product.name %>';
+                e.detail.parameters.path = [...form].map(input => input.value).join("/");
+            }
+        },
+        {
+            element: document.getElementById('add-to-cart'),
+            event: 'htmx:afterRequest',
+            handler: (e) => {
+                htmx.ajax('GET', '/cart/length', '#cart-length')
+            }
+        }
+    ]);
+</script>

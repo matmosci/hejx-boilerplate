@@ -8,8 +8,14 @@ module.exports = {
     updateProduct,
 };
 
-function getCart(req, res) {
-    res.send('getCart');
+async function getCart(req, res) {
+    try {
+        const cart = await service.getUserCart(req.session.user._id);
+        res.render('components/cartContent', { cart });
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
 };
 
 async function getCartLength(req, res) {
@@ -22,8 +28,16 @@ async function getCartLength(req, res) {
     }
 };
 
-function addProduct(req, res) {
-    res.send('addProduct');
+async function addProduct(req, res) {
+    const { product, path } = req.body;
+    try {
+        if (!(product && path)) res.sendStatus(400);
+        const cart = await service.addUserCartProduct(req.session.user._id, { product, path });
+        res.render('components/cart', { cart });
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
 };
 
 function removeProduct(req, res) {

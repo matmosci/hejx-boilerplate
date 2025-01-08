@@ -1,0 +1,11 @@
+<div class="px-3 py-2<%= index !== 0 ? ' border-top' : '' %>">
+    <strong><%= product.title %></strong>
+    <% Object.entries(product.description).map(param => { %>
+        <div class="text-muted">
+            <small>
+                <strong><%= param[0] %>:</strong>
+                <%= param[1] %>
+            </small>
+        </div>
+    <% }); %>
+</div>

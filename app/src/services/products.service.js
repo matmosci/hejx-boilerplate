@@ -11,11 +11,13 @@ module.exports = {
     getProductParamNames,
     getProductDefaultParamValues,
     getProductDefinition,
+    getParamConfig,
+    getParamConfigDescriptive,
     getContainerGridItems,
     parseGridItem
 };
 
-function getProductConfigured(name, urn) {
+function getProductConfigured(name, urn, strict = false) {
     const item = registry.find(item => item.name === name && item.type === 'product');
     if (!item?.enabled) return null;
 
@@ -31,7 +33,12 @@ function getProductConfigured(name, urn) {
 
     product.parameters.map(param => {
         if (param.type === 'select' && !param.options.find(option => option.value === config[param.name])) {
+            if (strict) throw new Error(`Invalid option for parameter ${param.name}`);
             getProductConfigured(name, null);
+        };
+
+        if (strict && param.type === 'number' && (config[param.name] < param.min || config[param.name] > param.max)) {
+            throw new Error(`Invalid value for parameter ${param.name}`);
         };
 
         workbook.Sheets[sheet][param.cell].v = config[param.name];
@@ -82,6 +89,17 @@ function getParamConfig(product, urn) {
     return keyValueArraysToObject(params, values);
 };
 
+function getParamConfigDescriptive(product, urn) {
+    const params = getProductParamTitles(product);
+    const values = urn.replace(/^\/|\/$/g, '').split("/").map((value, index) => {
+        const param = product.parameters[index];
+        if (param.type === 'select') return param.options.find(option => option.value === value).title;
+        return value;
+    });
+
+    return keyValueArraysToObject(params, values);
+};
+
 function findOptionSelectedOrEnabled(options, value) {
     return options.find(option => option.value === value && option.enabled !== false) || options.find(option => option.enabled !== false);
 };
@@ -119,6 +137,10 @@ function getProductDefinition(name) {
 
 function getProductParamNames(product) {
     return product.parameters.map(param => param.name);
+};
+
+function getProductParamTitles(product) {
+    return product.parameters.map(param => param.title);
 };
 
 function getProductDefaultParamValues(product) {

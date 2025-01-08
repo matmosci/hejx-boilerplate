@@ -4,7 +4,8 @@ const products = require("./products.service");
 module.exports = {
     getUserCart,
     getUserCartLength,
-    addUserCartProduct
+    addUserCartProduct,
+    clearUserCart,
 };
 
 async function getUserCartLength(userId) {
@@ -30,3 +31,10 @@ async function addUserCartProduct(userId, productConfig) {
     await cart.save();
     return cart;
 };
+
+async function clearUserCart(userId) {
+    const cart = await getUserCart(userId);
+    cart.content = [];
+    await cart.save();
+    return cart;
+}

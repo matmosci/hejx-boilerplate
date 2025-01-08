@@ -7,7 +7,6 @@ const user = require('./middleware/user.middleware');
 const cookieParser = require('cookie-parser');
 const { I18n } = require('i18n');
 require('./utils/mailer.utils').verify();
-require('./models/Cart.model');
 
 app.set('views', './src/views');
 app.set('view engine', 'ejs');

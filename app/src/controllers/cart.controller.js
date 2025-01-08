@@ -44,7 +44,7 @@ async function addProduct(req, res) {
     try {
         if (!(product && path)) res.sendStatus(400);
         const cart = await service.addUserCartProduct(req.session.user._id, { product, path });
-        res.render('components/cart', { cart });
+        res.render('components/cartContent', { cart });
     } catch (error) {
         console.log(error);
         res.sendStatus(500);

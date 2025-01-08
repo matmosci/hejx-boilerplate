@@ -1,3 +1,29 @@
 <% cart.content.map((product, index) => { %>
-    <%- include('./cartContentProduct', {product, index, length: cart.content.length}); %>
+    <%- include('./cartContentProduct', { product, index, length: cart.content.length }); %>
 <% }); %>
+<% if (cart.content.length === 0) { %>
+    <div class="p-3 text-center text-secondary opacity-50 user-select-none">
+        <p class="text-muted">Your cart is empty</p>
+        <div class="material-icons" style="font-size: 8rem;">
+            remove_shopping_cart
+        </div>
+    </div>
+<% } else { %>
+    <div class="p-3 border-top text-center">
+        <button class="btn btn-primary w-100 d-block" onclick="alert('TODO')">Go to Checkout</button>
+        <button class="btn btn-sm text-muted mt-1" id="clear-cart" hx-delete="/cart" hx-confirm="Are you sure you want to clear your cart?" hx-target="#cart-content">Clear the Cart</button>
+    </div>
+    <script type="module">
+    import EventsHandler from '/js/htmx-events-handler.js';
+
+    EventsHandler.register([
+        {
+            element: document.getElementById('clear-cart'),
+            event: 'htmx:afterRequest',
+            handler: (e) => {
+                htmx.ajax('GET', '/cart/length', '#cart-length')
+            }
+        }
+    ]);
+    </script>
+<% } %>

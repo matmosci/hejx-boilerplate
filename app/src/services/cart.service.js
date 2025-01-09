@@ -7,6 +7,7 @@ module.exports = {
     getUserCartLength,
     addUserCartProduct,
     clearUserCart,
+    removeUserCartProduct,
 };
 
 async function getUserCartLength(userId) {
@@ -39,4 +40,11 @@ async function clearUserCart(userId) {
     cart.content = [];
     await cart.save();
     return cart;
-}
+};
+
+async function removeUserCartProduct(userId, productId) {
+    const cart = await getUserCart(userId);
+    cart.content = cart.content.filter(product => product.id !== productId);
+    await cart.save();
+    return cart;
+};

@@ -7,6 +7,7 @@ module.exports = {
     addProduct,
     removeProduct,
     updateProduct,
+    removeProduct,
 };
 
 async function getCart(req, res) {
@@ -41,8 +42,8 @@ async function getCartLength(req, res) {
 
 async function addProduct(req, res) {
     const { product, path } = req.body;
+    if (!(product && path)) res.sendStatus(400);
     try {
-        if (!(product && path)) res.sendStatus(400);
         const cart = await service.addUserCartProduct(req.session.user._id, { product, path });
         res.render('components/cartContent', { cart });
     } catch (error) {
@@ -51,8 +52,16 @@ async function addProduct(req, res) {
     }
 };
 
-function removeProduct(req, res) {
-    res.send('removeProduct');
+async function removeProduct(req, res) {
+    const productId = req.params.id;
+    if (!productId) res.sendStatus(400);
+    try {
+        const cart = await service.removeUserCartProduct(req.session.user._id, productId);
+        res.render('components/cartContent', { cart });
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
 };
 
 function updateProduct(req, res) {

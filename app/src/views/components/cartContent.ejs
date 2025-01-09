@@ -27,6 +27,16 @@
             }
         }
     ]);
+
+    document.querySelectorAll('.delete-product').forEach(button => {
+        EventsHandler.register({
+            element: button,
+            event: 'htmx:afterRequest',
+            handler: (e) => {
+                htmx.ajax('GET', '/cart/length', '#cart-length')
+            }
+        });
+    });
     </script>
 <% } %>
 <div class="bg-body-secondary border-top border-bottom text-secondary mt-auto">

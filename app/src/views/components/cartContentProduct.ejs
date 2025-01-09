@@ -35,16 +35,3 @@
         </div>
     </div>
 </details>
-<script type="module">
-    import EventsHandler from '/js/htmx-events-handler.js';
-
-    document.querySelectorAll('.delete-product').forEach(button => {
-        EventsHandler.register({
-            element: button,
-            event: 'htmx:afterRequest',
-            handler: (e) => {
-                htmx.ajax('GET', '/cart/length', '#cart-length')
-            }
-        });
-    });
-</script>

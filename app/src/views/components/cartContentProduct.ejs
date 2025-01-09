@@ -12,7 +12,7 @@
                     <% }); %>        
                 </small>
             </div>
-            <div class="ms-2"><%= product.quantity %></div>
+            <div class="fw-bold ms-2"><small><%= product.quantity %></small></div>
         </div>
     </summary>
     <div class="d-flex justify-content-between px-3 mb-2">
@@ -27,7 +27,7 @@
         <div class="cart-product-actions text-end d-flex flex-column">
             <div class="d-flex align-items-center mx-auto">
                 <button class="btn btn-sm py-0 text-secondary border-0">+</button>
-                <div><%= product.quantity %></div>
+                <div class="fw-bold"><%= product.quantity %></div>
                 <button class="btn btn-sm py-0 text-secondary border-0">-</button>
             </div>
             <button class="btn btn-sm d-block py-0 btn-primary mt-auto" onclick="alert('TODO')">Edit</button>

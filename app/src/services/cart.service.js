@@ -1,5 +1,6 @@
 const Cart = require("../models/Cart.model");
 const products = require("./products.service");
+const { randomUUID } = require('crypto');
 
 module.exports = {
     getUserCart,
@@ -21,12 +22,13 @@ async function addUserCartProduct(userId, productConfig) {
     const cart = await getUserCart(userId);
     const { product: productName, path } = productConfig;
     const product = products.getProductConfigured(productName, path, true);
+    const id = randomUUID();
     const name = product.name;
     const title = product.title;
     const config = products.getParamConfig(product, path);
     const description = products.getParamConfigDescriptive(product, path);
     const quantity = Number(config.quantity) ?? null;
-    const cartProduct = { name, title, config, description, quantity };
+    const cartProduct = { id, name, title, config, description, quantity };
     cart.content.push(cartProduct);
     await cart.save();
     return cart;

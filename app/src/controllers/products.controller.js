@@ -2,9 +2,12 @@ const render = require("../utils/render.utils");
 
 const {
     getProductConfigured,
+} = require("../services/products.service");
+
+const {
     getContainerGridItems,
     parseGridItem
-} = require("../services/products.service");
+} = require("../services/catalog.service");
 
 module.exports = {
     getContainerMain,

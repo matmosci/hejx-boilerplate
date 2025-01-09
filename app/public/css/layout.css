@@ -37,6 +37,18 @@ a.back:hover {
     padding-top: var(--navbar-height);
 }
 
+details.cart-product:hover {
+    background-color: var(--bs-light-bg-subtle);
+}
+
+details.cart-product summary::marker {
+    content: '';
+}
+
+details.cart-product[open] summary > small {
+    display: none;
+}
+
 footer {
     margin-top: auto;
 }

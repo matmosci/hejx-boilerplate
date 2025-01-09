@@ -1,11 +1,25 @@
-<div class="px-3 py-2<%= index !== 0 ? ' border-top' : '' %>">
-    <strong><%= product.title %></strong>
-    <% Object.entries(product.description).map(param => { %>
-        <div class="text-muted">
-            <small>
-                <strong><%= param[0] %>:</strong>
-                <%= param[1] %>
-            </small>
+<details class="cart-product py-1<%= index !== 0 ? ' border-top' : '' %>">
+    <summary class="px-3 py-1">
+        <div class="d-flex justify-content-between user-select-none">
+            <div class="text-muted"><%= product.title %></div>
+            <div><%= product.quantity %></div>
         </div>
-    <% }); %>
-</div>
+        <small class="fw-bold">
+            <% Object.entries(product.description).slice(0, -1).filter(param => param[1] !== 'N/A').map(param => { %>
+                <%= param[1] %>
+            <% }); %>        
+        </small>
+    </summary>
+    <div class="px-3 mb-2">
+        <% Object.entries(product.description).filter(param => param[1] !== 'N/A').map(param => { %>
+        <small class="d-block">
+            <span><%= param[0] %>:</span>
+            <strong><%= param[1] %></strong>
+        </small>
+        <% }); %>
+        <div class="cart-product-actions text-end mt-1">
+            <button class="btn btn-sm py-0 btn-primary">Edit</button>
+            <button class="btn btn-sm py-0 text-secondary ms-1">Remove</button>
+        </div>
+    </div>
+</details>

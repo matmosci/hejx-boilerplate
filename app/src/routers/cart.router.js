@@ -5,8 +5,8 @@ const controller = require('../controllers/cart.controller');
 router.get('/', controller.getCart);
 router.delete('/', controller.clearCart);
 router.get('/length', controller.getCartLength);
-router.post('/product', controller.addProduct);
-router.delete('/product/:id', controller.removeProduct);
-router.put('/product/:id', controller.updateProduct);
+router.post('/products', controller.addProduct);
+router.delete('/products/:id', controller.removeProduct);
+router.put('/products/:id', controller.updateProduct);
 
 module.exports = router;

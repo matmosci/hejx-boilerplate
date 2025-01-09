@@ -6,16 +6,26 @@
 <script type="module">
     import EventsHandler from '/js/htmx-events-handler.js';
 
+    const form = document.getElementById('product-form');
+
     EventsHandler.register([
         {
-            element: document.getElementById('product-form'),
+            element: form,
+            event: 'change',
+            handler: (e) => {
+                document.getElementById("add-to-cart").disabled = true;
+                [...form].forEach(element => element.disabled = true);
+            }
+        },
+        {
+            element: form,
             event: 'htmx:configRequest',
             handler: (e) => {
                 e.detail.path = `/products/<%= product.name %>/${[...e.target].map(input => input.value).join("/")}`;
             }
         },
         {
-            element: document.getElementById('product-form'),
+            element: form,
             event: 'submit',
             handler: (e) => {
                 e.preventDefault();

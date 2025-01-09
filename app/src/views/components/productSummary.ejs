@@ -16,7 +16,10 @@
             element: document.getElementById('add-to-cart'),
             event: 'htmx:afterRequest',
             handler: (e) => {
-                htmx.ajax('GET', '/cart/length', '#cart-length')
+                htmx.ajax('GET', '/cart/length', '#cart-length');
+                const cartWrapper = document.getElementById('cart-wrapper');
+                const cartWrapperCollapse = bootstrap.Collapse.getOrCreateInstance(cartWrapper);
+                cartWrapperCollapse.show();
             }
         }
     ]);

@@ -2,24 +2,36 @@
     <summary class="px-3 py-1">
         <div class="d-flex justify-content-between user-select-none">
             <div class="text-muted"><%= product.title %></div>
-            <div><%= product.quantity %></div>
+            <div class="ms-2">0.00 zł</div>
         </div>
-        <small class="fw-bold">
-            <% Object.entries(product.description).slice(0, -1).filter(param => param[1] !== 'N/A').map(param => { %>
-                <%= param[1] %>
-            <% }); %>        
-        </small>
+        <div class="d-flex justify-content-between user-select-none sub-summary">
+            <div>
+                <small class="fw-bold">
+                    <% Object.entries(product.description).slice(0, -1).filter(param => param[1] !== 'N/A').map(param => { %>
+                        <%= param[1] %>
+                    <% }); %>        
+                </small>
+            </div>
+            <div class="ms-2"><%= product.quantity %></div>
+        </div>
     </summary>
-    <div class="px-3 mb-2">
-        <% Object.entries(product.description).filter(param => param[1] !== 'N/A').map(param => { %>
-        <small class="d-block">
-            <span><%= param[0] %>:</span>
-            <strong><%= param[1] %></strong>
-        </small>
-        <% }); %>
-        <div class="cart-product-actions text-end mt-1">
-            <button class="btn btn-sm py-0 btn-primary" onclick="alert('TODO')">Edit</button>
-            <button class="btn btn-sm py-0 text-secondary delete-product" hx-delete="/cart/products/<%= product.id %>" hx-target="#cart-content" hx-confirm="Are you sure you want to remove product <%= product.title %> from your cart?">Remove</button>
+    <div class="d-flex justify-content-between px-3 mb-2">
+        <div>
+            <% Object.entries(product.description).filter(param => param[1] !== 'N/A').map(param => { %>
+            <small class="d-block">
+                <span><%= param[0] %>:</span>
+                <strong><%= param[1] %></strong>
+            </small>
+            <% }); %>
+        </div>
+        <div class="cart-product-actions text-end d-flex flex-column">
+            <div class="d-flex align-items-center mx-auto">
+                <button class="btn btn-sm py-0 text-secondary border-0">+</button>
+                <div><%= product.quantity %></div>
+                <button class="btn btn-sm py-0 text-secondary border-0">-</button>
+            </div>
+            <button class="btn btn-sm d-block py-0 btn-primary mt-auto" onclick="alert('TODO')">Edit</button>
+            <button class="btn btn-sm d-block py-0 mt-1 text-secondary delete-product" hx-delete="/cart/products/<%= product.id %>" hx-target="#cart-content" hx-confirm="Are you sure you want to remove product <%= product.title %> from your cart?">Remove</button>
         </div>
     </div>
 </details>

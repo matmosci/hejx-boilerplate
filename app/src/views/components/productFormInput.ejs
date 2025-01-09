@@ -1,4 +1,9 @@
 <div class="mb-2<%= input.enabled === false ? ' d-none' : '' %>">
-    <label for="product-form-input-<%= input.name %>" class="form-label mb-1"><%= input.title %></label>
+    <label for="product-form-input-<%= input.name %>" class="form-label mb-1">
+        <%= input.title %>
+        <% if (input.min && input.max) { %>
+            <small class="text-muted">(<%= input.min %> - <%= input.max %>)</small>
+        <% } %>
+    </label>
     <%- include(`productFormInput-${input.type}`); %>
 </div>

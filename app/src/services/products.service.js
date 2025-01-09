@@ -1,4 +1,4 @@
-const registry = require('../../data/items.json');
+const registry = require('./registry.service');
 const path = require('path');
 const XLSX = require("xlsx");
 const XLSX_CALC = require("xlsx-calc");
@@ -18,8 +18,7 @@ module.exports = {
 };
 
 function getProductConfigured(name, urn, strict = false) {
-    const item = registry.find(item => item.name === name && item.type === 'product');
-    if (!item?.enabled) return null;
+    if (!registry.findByNameAndType(name, 'product')?.enabled) return null;
 
     const product = structuredClone(require(`../../data/products/${name}.json`));
     const config = getParamConfig(product, urn);
@@ -109,8 +108,7 @@ function getFallbackOption(options) {
 }
 
 function getContainerGridItems(name) {
-    const item = registry.find(item => item.name === name && item.type === 'container');
-    if (!item?.enabled) return null;
+    if (!registry.findByNameAndType(name, 'container')?.enabled) return null;
 
     const { items } = require(`../../data/containers/${name}.json`);
 
@@ -118,7 +116,7 @@ function getContainerGridItems(name) {
 };
 
 function parseGridItem(name) {
-    const item = registry.find(item => item.name === name);
+    const item = registry.findByName(name);
     if (!item?.enabled) return null;
 
     const { type } = item;
@@ -129,8 +127,7 @@ function parseGridItem(name) {
 };
 
 function getProductDefinition(name) {
-    const item = registry.find(item => item.name === name && item.type === 'product');
-    if (!item?.enabled) return null;
+    if (!registry.findByNameAndType(name, 'product')?.enabled) return null;
 
     return require(`../../data/products/${name}.json`);
 };

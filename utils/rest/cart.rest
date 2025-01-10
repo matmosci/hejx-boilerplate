@@ -1,2 +1,13 @@
-@api={{$dotenv api}}/auth
+@api={{$dotenv api}}/cart
 
+###
+GET {{api}}
+
+###
+POST {{api}}/products
+Content-Type: application/json
+
+{
+    "product": "laptops",
+    "path": "lenovo/lenovo-thinkpad-x1/black/1"
+}

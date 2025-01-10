@@ -37,26 +37,25 @@
             "title": "Model",
             "cell": "B2",
             "options": [
-                { "title": "ThinkPad X1", "value": "lenovo-thinkpad-x1", "enabled": "G2" },
-                { "title": "IdeaPad 3", "value": "lenovo-ideapad-3", "enabled": "G3" },
-                { "title": "Legion 5", "value": "lenovo-legion-5", "enabled": "G4" },
-                { "title": "MacBook Air", "value": "apple-macbook-air", "enabled": "G5" },
-                { "title": "MacBook Pro", "value": "apple-macbook-pro", "enabled": "G6" },
-                { "title": "MacBook", "value": "apple-macbook", "enabled": "G7" },
-                { "title": "ZenBook", "value": "asus-zenbook", "enabled": "G8" },
-                { "title": "VivoBook", "value": "asus-vivobook", "enabled": "G9" },
-                { "title": "ROG Strix", "value": "asus-rog-strix", "enabled": "G10" },
-                { "title": "XPS 13", "value": "dell-xps-13", "enabled": "G11" },
-                { "title": "Inspiron 15", "value": "dell-inspiron-15", "enabled": "G12" },
-                { "title": "Latitude 14", "value": "dell-latitude-14", "enabled": "G13" }
+                { "title": "ThinkPad X1", "value": "lenovo-thinkpad-x1", "enabledCell": "G2" },
+                { "title": "IdeaPad 3", "value": "lenovo-ideapad-3", "enabledCell": "G3" },
+                { "title": "Legion 5", "value": "lenovo-legion-5", "enabledCell": "G4" },
+                { "title": "MacBook Air", "value": "apple-macbook-air", "enabledCell": "G5" },
+                { "title": "MacBook Pro", "value": "apple-macbook-pro", "enabledCell": "G6" },
+                { "title": "MacBook", "value": "apple-macbook", "enabledCell": "G7" },
+                { "title": "ZenBook", "value": "asus-zenbook", "enabledCell": "G8" },
+                { "title": "VivoBook", "value": "asus-vivobook", "enabledCell": "G9" },
+                { "title": "ROG Strix", "value": "asus-rog-strix", "enabledCell": "G10" },
+                { "title": "XPS 13", "value": "dell-xps-13", "enabledCell": "G11" },
+                { "title": "Inspiron 15", "value": "dell-inspiron-15", "enabledCell": "G12" },
+                { "title": "Latitude 14", "value": "dell-latitude-14", "enabledCell": "G13" }
             ]
         },
         {
             "type": "select",
             "name": "color",
             "title": "Color",
-            "cell": "B3",
-            "enabled": "B13",
+            "enabledCell": "B13",
             "options": [
                 { "title": "Black", "value": "black" },
                 { "title": "White", "value": "white" },
@@ -77,6 +76,7 @@
     ],
     "weight": "B10",
     "prices": [
-        { "id": "B11", "qty": "C11", "source": "json" }
+        { "source": "json", "id": 1, "qty": "C11" },
+        { "source": "json", "id": "B11", "qty": "C11" }
     ]
 }

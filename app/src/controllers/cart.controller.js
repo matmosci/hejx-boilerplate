@@ -42,12 +42,16 @@ async function getCartLength(req, res) {
 
 async function addProduct(req, res) {
     const { product, path } = req.body;
-    if (!(product && path)) res.sendStatus(400);
     try {
+        if (!product?.length || !path?.length) throw new Error("Product was not added to cart.");
         const cart = await service.addUserCartProduct(req.session.user._id, { product, path });
         cart.content.at(-1).expanded = true;
         res.render('components/cartContent', { cart });
     } catch (error) {
+        if (error.message === "Product was not added to cart.") {
+            const cart = await service.getUserCart(req.session.user._id);
+            return res.render('components/cartContent', { cart, error: error.message });
+        };
         console.log(error);
         res.sendStatus(500);
     }

@@ -23,6 +23,8 @@ async function addUserCartProduct(userId, productConfig) {
     const cart = await getUserCart(userId);
     const { product: productName, path } = productConfig;
     const product = products.getProductConfigured(productName, path, true);
+    if (!product) throw new Error("Product was not added to cart.");
+
     const id = randomUUID();
     const name = product.name;
     const title = product.title;
@@ -48,3 +50,11 @@ async function removeUserCartProduct(userId, productId) {
     await cart.save();
     return cart;
 };
+
+function calculateTotal() {
+    createCartProductGroups()
+};
+
+function createCartProductGroups(
+
+) { };

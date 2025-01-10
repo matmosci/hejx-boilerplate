@@ -6,11 +6,22 @@ GET {{api}}
 ###
 GET {{api}}/category/home
 
-###
+### def
 GET {{api}}/laptops
 
-###
+### defp
 GET {{api}}/laptops/lenovo/lenovo-thinkpad-x1/black/1
 
-###
+
+
+### ndef
+GET {{api}}/laptops/dell/lenovo-thinkpad-x1/black/1
+
+### 1000
+GET {{api}}/laptops/lenovo/lenovo-thinkpad-x1/black/1000
+
+### zxc
 GET {{api}}/laptops/lenovo/zxc/black/1
+
+### asd
+GET {{api}}/laptops/asd/zxc/black/1

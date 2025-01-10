@@ -15,65 +15,109 @@ module.exports = {
 function getProductConfigured(name, urn, strict = false) {
     if (!registry.findByNameAndType(name, 'product')?.enabled) return null;
 
-    const product = structuredClone(require(`../../data/products/${name}.json`));
+    const product = structuredClone(getProductDefinition(name));
     const config = getParamConfig(product, urn);
 
-    const urnArr = [];
+    if (!verifyProductConfig(product, config))
+        if (strict) return null;
+        else fixProductConfig(product, config)
 
     const { xcalc } = product;
     const xdoc_path = path.resolve(__dirname, `../../data/products/${xcalc.document}`);
     const workbook = XLSX.readFile(xdoc_path);
     const sheet = xcalc.sheet ?? workbook.SheetNames[0];
 
+    xCheckProductConfig(product, config, workbook, sheet);
+
     product.parameters.map(param => {
-        if (param.type === 'select' && !param.options.find(option => option.value === config[param.name])) {
-            if (strict) throw new Error(`Invalid option for parameter ${param.name}`);
-            getProductConfigured(name);
-        };
+        const value = config[param.name];
+        switch (param.type) {
+            case 'select':
+                param.options.find(o => o.value === value).selected = true;
+                break;
+            case 'number':
+                param.value = value;
+                break;
+        }
+    });
 
-        if (strict && param.type === 'number' && (config[param.name] < param.min || config[param.name] > param.max)) {
-            throw new Error(`Invalid value for parameter ${param.name}`);
-        };
+    product.urn = Object.values(config).join('/');
 
-        workbook.Sheets[sheet][param.cell].v = config[param.name];
+    return strict && urn !== product.urn ? null : product;
+};
+
+function verifyProductConfig(product, config) {
+    return product.parameters.map(param => {
+        const value = config[param.name];
+        switch (param.type) {
+            case 'select':
+                return !param.options.find(option => option.value === value) ? false : true;
+            case 'number':
+                return !Number(value) ? false : true;
+        }
+    }).every(Boolean);
+};
+
+function fixProductConfig(product, config) {
+    product.parameters.forEach(param => {
+        const value = config[param.name];
+        switch (param.type) {
+            case 'select':
+                if (!param.options.find(option => option.value === value)) {
+                    console.log(value, '->', param.options[0].value);
+                    config[param.name] = param.options[0].value;
+                };
+                break;
+            case 'number':
+                if (Number(value)) {
+                    console.log(value, '->', Number(value));
+                    config[param.name] = Number(value);
+                } else {
+                    console.log(value, '->', Number(param.value));
+                    config[param.name] = Number(param.value);
+                };
+                break;
+        }
+    });
+};
+
+function xCheckProductConfig(product, config, workbook, sheet) {
+    const initial = structuredClone(config);
+
+    product.parameters.map(param => {
+        const value = config[param.name];
+        if (param.cell) workbook.Sheets[sheet][param.cell].v = value;
     });
 
     XLSX_CALC(workbook, { continue_after_error: true, log_error: true });
 
-    const parameters = product.parameters.map(param => {
+    product.parameters.map(param => {
         const value = config[param.name];
 
-        if (param.enabled) {
-            param.enabled = ["TRUE", 1, true].includes(workbook.Sheets[sheet][param.enabled].v);
+        if (param.enabledCell) {
+            param.enabled = ["TRUE", 1, true].includes(workbook.Sheets[sheet][param.enabledCell].v);
         };
 
         if (param.type === 'number') {
-            param.value = Number(value);
-            if (param.min && typeof param.min === 'string') param.min = workbook.Sheets[sheet][param.min].v;
-            if (param.max && typeof param.max === 'string') param.max = workbook.Sheets[sheet][param.max].v;
-            if (Number(value) > param.max) param.value = param.max;
-            if (Number(value) < param.min) param.value = param.min;
-
-            urnArr.push(param.value);
+            if (param.min && typeof param.min === 'string') param.min = Number(workbook.Sheets[sheet][param.min].v);
+            if (param.max && typeof param.max === 'string') param.max = Number(workbook.Sheets[sheet][param.max].v);
+            if (Number(value) > param.max) config[param.name] = param.max;
+            if (Number(value) < param.min) config[param.name] = param.min;
         };
+
         if (param.type === 'select') {
             param.options.map(o => {
                 delete o.selected;
-                if (typeof o.enabled === 'string') o.enabled = ["TRUE", 1, true].includes(workbook.Sheets[sheet][o.enabled].v);
+                if (o.enabledCell) o.enabled = ["TRUE", 1, true].includes(workbook.Sheets[sheet][o.enabledCell].v);
             });
-            const selectedOption = param.enabled === false
+            config[param.name] = (param.enabled === false
                 ? getFallbackOption(param.options)
-                : findOptionSelectedOrEnabled(param.options, workbook.Sheets[sheet][param.cell].v);
-            selectedOption.selected = true;
-            urnArr.push(selectedOption.value);
+                : findOptionSelectedOrEnabled(param.options, value)
+            ).value;
         };
-        return param;
     });
 
-    product.urn = urnArr.join("/")
-    product.parameters = parameters;
-
-    return product;
+    return JSON.stringify(initial) !== JSON.stringify(config) ? xCheckProductConfig(product, config, workbook, sheet) : config;
 };
 
 function getParamConfig(product, urn) {

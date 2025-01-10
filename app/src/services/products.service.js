@@ -28,7 +28,7 @@ function getProductConfigured(name, urn, strict = false) {
     product.parameters.map(param => {
         if (param.type === 'select' && !param.options.find(option => option.value === config[param.name])) {
             if (strict) throw new Error(`Invalid option for parameter ${param.name}`);
-            getProductConfigured(name, null);
+            getProductConfigured(name);
         };
 
         if (strict && param.type === 'number' && (config[param.name] < param.min || config[param.name] > param.max)) {

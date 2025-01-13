@@ -16,11 +16,11 @@ module.exports = {
 };
 
 function getProduct(req, res) {
-    const { name, 0: urn } = req.params;
+    const { name, 0: configPath } = req.params;
 
     try {
-        const product = getProductConfigured(name, urn);
-        const url = `/products/${product.name}/${product.urn}`;
+        const product = getProductConfigured(name, configPath);
+        const url = `/products/${product.name}/${product.configPath}`;
         res.set(req.headers['hx-request'] ? "HX-Push-Url" : "X-Set-Url", url);
         render(req, res, "product", { product, title: product.title });
     } catch (error) {

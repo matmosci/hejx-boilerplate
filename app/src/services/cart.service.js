@@ -21,15 +21,15 @@ async function getUserCart(userId) {
 
 async function addUserCartProduct(userId, productConfig) {
     const cart = await getUserCart(userId);
-    const { product: productName, path } = productConfig;
-    const product = products.getProductConfigured(productName, path, true);
+    const { product: productName, configPath } = productConfig;
+    const product = products.getProductConfigured(productName, configPath, true);
     if (!product) throw new Error("Product was not added to cart.");
 
     const id = randomUUID();
     const name = product.name;
     const title = product.title;
-    const config = products.getParamConfig(product, path);
-    const description = products.getParamConfigDescriptive(product, path);
+    const config = products.getParamConfig(product, configPath);
+    const description = products.getParamConfigDescriptive(product, configPath);
     const quantity = Number(config.quantity) ?? null;
     const cartProduct = { id, name, title, config, description, quantity };
     cart.content.push(cartProduct);

@@ -12,11 +12,11 @@ module.exports = {
     getParamConfigDescriptive,
 };
 
-function getProductConfigured(name, urn, strict = false) {
+function getProductConfigured(name, configPath, strict = false) {
     if (!registry.findByNameAndType(name, 'product')?.enabled) return null;
 
     const product = structuredClone(getProductDefinition(name));
-    const config = getParamConfig(product, urn);
+    const config = getParamConfig(product, configPath);
 
     if (!verifyProductConfig(product, config))
         if (strict) return null;
@@ -41,9 +41,9 @@ function getProductConfigured(name, urn, strict = false) {
         }
     });
 
-    product.urn = Object.values(config).join('/');
+    product.configPath = Object.values(config).join('/');
 
-    return strict && urn !== product.urn ? null : product;
+    return strict && configPath !== product.configPath ? null : product;
 };
 
 function verifyProductConfig(product, config) {
@@ -120,16 +120,16 @@ function xCheckProductConfig(product, config, workbook, sheet) {
     return JSON.stringify(initial) !== JSON.stringify(config) ? xCheckProductConfig(product, config, workbook, sheet) : config;
 };
 
-function getParamConfig(product, urn) {
+function getParamConfig(product, configPath) {
     const params = getProductParamNames(product);
-    const values = urn ? urn.replace(/^\/|\/$/g, '').split("/") : getProductDefaultParamValues(product);
+    const values = configPath ? configPath.replace(/^\/|\/$/g, '').split("/") : getProductDefaultParamValues(product);
 
     return keyValueArraysToObject(params, values);
 };
 
-function getParamConfigDescriptive(product, urn) {
+function getParamConfigDescriptive(product, configPath) {
     const params = getProductParamTitles(product);
-    const values = urn.replace(/^\/|\/$/g, '').split("/").map((value, index) => {
+    const values = configPath.replace(/^\/|\/$/g, '').split("/").map((value, index) => {
         const param = product.parameters[index];
         if (param.type === 'select') return param.options.find(option => option.value === value).title;
         return value;

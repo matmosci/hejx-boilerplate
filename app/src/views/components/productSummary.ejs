@@ -9,7 +9,7 @@
             handler: (e) => {
                 const form = document.getElementById('product-form');
                 e.detail.parameters.product = '<%= product.name %>';
-                e.detail.parameters.path = [...form].map(input => input.value).join("/");
+                e.detail.parameters.configPath = [...form].map(input => input.value).join("/");
             }
         },
         {

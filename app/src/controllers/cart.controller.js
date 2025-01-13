@@ -41,10 +41,10 @@ async function getCartLength(req, res) {
 };
 
 async function addProduct(req, res) {
-    const { product, path } = req.body;
+    const { product, configPath } = req.body;
     try {
-        if (!product?.length || !path?.length) throw new Error("Product was not added to cart.");
-        const cart = await service.addUserCartProduct(req.session.user._id, { product, path });
+        if (!product?.length || !configPath?.length) throw new Error("Product was not added to cart.");
+        const cart = await service.addUserCartProduct(req.session.user._id, { product, configPath });
         cart.content.at(-1).expanded = true;
         res.render('components/cartContent', { cart });
     } catch (error) {

@@ -2,6 +2,7 @@ const service = require('../services/cart.service');
 
 module.exports = {
     getCart,
+    getCartJSON,
     getCartLength,
     clearCart,
     addProduct,
@@ -14,6 +15,16 @@ async function getCart(req, res) {
     try {
         const cart = await service.getUserCart(req.session.user._id);
         res.render('components/cartContent', { cart });
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+};
+
+async function getCartJSON(req, res) {
+    try {
+        const cart = await service.getUserCart(req.session.user._id);
+        res.json(cart);
     } catch (error) {
         console.log(error);
         res.sendStatus(500);

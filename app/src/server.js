@@ -46,7 +46,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(i18n.init);
 app.use(user);
-app.use('/', require('./routers/pages.router'));
+app.use('/', [
+    require('./routers/pages.router'),
+    require('./routers/json.router'),
+]);
 app.use('/auth', require('./routers/auth.router'));
 app.use('/transaction', require('./routers/transaction.router'));
 app.use('/products', require('./routers/products.router'));

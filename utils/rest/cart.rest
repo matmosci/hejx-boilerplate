@@ -4,6 +4,9 @@
 GET {{api}}
 
 ###
+GET {{api}}.json
+
+###
 POST {{api}}/products
 Content-Type: application/json
 

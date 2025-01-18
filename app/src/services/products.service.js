@@ -38,6 +38,9 @@ function getProductConfigured(name, configPath, strict = false) {
             case 'number':
                 param.value = value;
                 break;
+            case 'quantity':
+                param.value = value;
+                break;
         }
     });
 
@@ -54,6 +57,8 @@ function verifyProductConfig(product, config) {
                 return !param.options.find(option => option.value === value) ? false : true;
             case 'number':
                 return !Number(value) ? false : true;
+            case 'quantity':
+                return !Number(value) ? false : true;
         }
     }).every(Boolean);
 };
@@ -69,6 +74,15 @@ function fixProductConfig(product, config) {
                 };
                 break;
             case 'number':
+                if (Number(value)) {
+                    console.log(value, '->', Number(value));
+                    config[param.name] = Number(value);
+                } else {
+                    console.log(value, '->', Number(param.value));
+                    config[param.name] = Number(param.value);
+                };
+                break;
+            case 'quantity':
                 if (Number(value)) {
                     console.log(value, '->', Number(value));
                     config[param.name] = Number(value);
@@ -98,7 +112,7 @@ function xCheckProductConfig(product, config, workbook, sheet) {
             param.enabled = ["TRUE", 1, true].includes(workbook.Sheets[sheet][param.enabledCell].v);
         };
 
-        if (param.type === 'number') {
+        if (['number', 'quantity'].includes(param.type)) {
             if (param.min && typeof param.min === 'string') param.min = Number(workbook.Sheets[sheet][param.min].v);
             if (param.max && typeof param.max === 'string') param.max = Number(workbook.Sheets[sheet][param.max].v);
             if (Number(value) > param.max) config[param.name] = param.max;
@@ -166,10 +180,12 @@ function getProductDefaultParamValues(product) {
 
 function getProductParamDefaultValue(param) {
     switch (param.type) {
-        case "number":
-            return String(param.value);
         case "select":
             return param.options[0].value;
+        case "number":
+            return String(param.value);
+        case "quantity":
+            return String(param.value);
     };
     return param.type;
 };

@@ -65,7 +65,7 @@
             ]
         },
         {
-            "type": "number",
+            "type": "quantity",
             "name": "quantity",
             "title": "Quantity",
             "cell": "B4",

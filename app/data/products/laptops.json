@@ -61,7 +61,7 @@
                 { "title": "White", "value": "white" },
                 { "title": "Silver", "value": "silver" },
                 { "title": "Gold", "value": "gold" },
-                { "title": "N/A", "value": "-", "fallback": true }
+                { "title": "N/A", "value": "-", "isFallback": true }
             ]
         },
         {

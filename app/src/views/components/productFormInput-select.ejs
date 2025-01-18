@@ -1,6 +1,6 @@
 <select name="<%= input.name %>" id="product-form-input-<%= input.name %>" class="form-select">
     <% input.options.map(option => { %>
-        <% if (option.enabled !== false && (!option.fallback || input.enabled === false)) { %>
+        <% if (option.enabled !== false && (!option.isFallback || input.enabled === false)) { %>
             <option value="<%= option.value %>"<%= option.selected && " selected" %>><%= option.title %></option>
         <% } %>
     <% }) %>

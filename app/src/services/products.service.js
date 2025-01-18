@@ -131,7 +131,7 @@ function findOptionSelectedOrEnabled(options, value) {
 };
 
 function getFallbackOption(options) {
-    return options.find(option => option.fallback === true);
+    return options.find(option => option.isFallback === true);
 }
 
 function getProductDefinition(name) {

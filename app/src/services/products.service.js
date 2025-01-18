@@ -65,17 +65,14 @@ function fixProductConfig(product, config) {
         switch (param.type) {
             case 'select':
                 if (!param.options.find(option => option.value === value)) {
-                    console.log(value, '->', param.options[0].value);
                     config[param.name] = param.options[0].value;
                 };
                 break;
             case 'number':
             case 'quantity':
                 if (Number(value)) {
-                    console.log(value, '->', Number(value));
                     config[param.name] = Number(value);
                 } else {
-                    console.log(value, '->', Number(param.value));
                     config[param.name] = Number(param.value);
                 };
                 break;

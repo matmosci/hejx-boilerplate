@@ -35,8 +35,6 @@ function getProductConfigured(name, configPath, strict = false) {
                 param.options.find(o => o.value === value).selected = true;
                 break;
             case 'number':
-                param.value = value;
-                break;
             case 'quantity':
                 param.value = value;
                 break;
@@ -55,7 +53,6 @@ function verifyProductConfig(product, config) {
             case 'select':
                 return !param.options.find(option => option.value === value) ? false : true;
             case 'number':
-                return !Number(value) ? false : true;
             case 'quantity':
                 return !Number(value) ? false : true;
         }
@@ -73,14 +70,6 @@ function fixProductConfig(product, config) {
                 };
                 break;
             case 'number':
-                if (Number(value)) {
-                    console.log(value, '->', Number(value));
-                    config[param.name] = Number(value);
-                } else {
-                    console.log(value, '->', Number(param.value));
-                    config[param.name] = Number(param.value);
-                };
-                break;
             case 'quantity':
                 if (Number(value)) {
                     console.log(value, '->', Number(value));
@@ -171,7 +160,6 @@ function getProductParamDefaultValue(param) {
         case "select":
             return param.options[0].value;
         case "number":
-            return String(param.value);
         case "quantity":
             return String(param.value);
     };

@@ -29,7 +29,7 @@ async function addUserCartProduct(userId, productConfig) {
     const name = product.name;
     const title = product.title;
     const config = getCartProductConfig(product);
-    const quantity = getCartProductQuantity(product);
+    const quantity = product.quantity;
     const cartProduct = { id, name, title, config, quantity };
     cart.content.push(cartProduct);
     await cart.save();
@@ -75,10 +75,6 @@ function getCartProductConfig(product) {
         };
     });
     return config;
-};
-
-function getCartProductQuantity(product) {
-    return Number(product.parameters.find(p => p.type === 'quantity').value) || null;
 };
 
 function calculateTotal() {

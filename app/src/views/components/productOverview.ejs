@@ -1,7 +1,7 @@
 <div class="row mx-n1">
     <% product.galleryUrls?.map(src => { %>
-        <div class="col-3 px-1">
-            <img src="<%= src %>" alt="" class="w-100 rounded-1">
+        <div class="col-3 px-1 overflow-hidden">
+            <img src="<%= src %>" alt="" class="w-100 h-100 object-fit-cover rounded-1">
         </div>
     <% }) %>
 </div>

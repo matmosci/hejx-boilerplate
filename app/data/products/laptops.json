@@ -5,9 +5,9 @@
     "imageUrl": "https://placehold.co/800x800.jpg",
     "galleryUrls": [
         "https://placehold.co/1000x800.jpg",
-        "https://placehold.co/1000x800.jpg",
-        "https://placehold.co/1000x800.jpg",
-        "https://placehold.co/1000x800.jpg"
+        "https://placehold.co/1000x500.jpg",
+        "https://placehold.co/500x300.jpg",
+        "https://placehold.co/200x150.jpg"
     ],
     "xcalc": {
         "document": "laptops.xlsx",

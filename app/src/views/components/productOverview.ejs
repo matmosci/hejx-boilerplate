@@ -7,8 +7,10 @@
 </div>
 <div class="row mx-n1">
     <% product.galleryUrls?.map((src, i) => { %>
-        <div class="col-3 px-1 overflow-hidden">
-            <img src="<%= src %>" alt="" data-index="<%= i %>" class="w-100 h-100 object-fit-cover rounded-1 product-gallery-thumbnail cursor-pointer">
+        <div class="col-3 px-1">
+            <div class="product-gallery-thumbnail-wrapper w-100 h-100 overflow-hidden rounded-1">
+                <img src="<%= src %>" alt="" data-index="<%= i %>" class="w-100 h-100 object-fit-cover product-gallery-thumbnail cursor-pointer">
+            </div>
         </div>
     <% }) %>
 </div>
@@ -16,14 +18,20 @@
 import EventsHandler from '/js/htmx-events-handler.js';
 
 const main = document.querySelector('#product-gallery-main');
-const thumbnails = document.querySelectorAll('.product-gallery-thumbnail');
+const thumbnails = document.querySelectorAll('.product-gallery-thumbnail-wrapper');
+thumbnails[0].classList.add('selected');
 
 [...thumbnails].forEach(thumbnail => {
     EventsHandler.register({
         element: thumbnail,
         event: 'click',
         handler: e => {
-            main.src = e.target.src;
+            const image = thumbnail.querySelector('img');
+            main.src = image.src;
+            [...thumbnails].forEach(thumbnail => {
+                thumbnail.classList.remove('selected');    
+            });
+            thumbnail.classList.add('selected');
         }
     });
 });

@@ -36,3 +36,8 @@
     /* Support for IE. */
     font-feature-settings: 'liga';
 }
+
+.product-gallery-thumbnail-wrapper.selected {
+    outline: 2px solid var(--bs-primary);
+    outline-offset: 1px;
+}

@@ -1,8 +1,32 @@
+<div class="row">
+    <div class="col mb-2">
+        <!-- <div class="ratio ratio-4x3"> -->
+            <img id="product-gallery-main" src="<%= product.galleryUrls[0] %>" alt="" class="w-100 h-100 rounded-1 object-fit-cover">
+        <!-- </div> -->
+    </div>
+</div>
 <div class="row mx-n1">
-    <% product.galleryUrls?.map(src => { %>
+    <% product.galleryUrls?.map((src, i) => { %>
         <div class="col-3 px-1 overflow-hidden">
-            <img src="<%= src %>" alt="" class="w-100 h-100 object-fit-cover rounded-1">
+            <img src="<%= src %>" alt="" data-index="<%= i %>" class="w-100 h-100 object-fit-cover rounded-1 product-gallery-thumbnail cursor-pointer">
         </div>
     <% }) %>
 </div>
+<script type="module">
+import EventsHandler from '/js/htmx-events-handler.js';
+
+const main = document.querySelector('#product-gallery-main');
+const thumbnails = document.querySelectorAll('.product-gallery-thumbnail');
+
+[...thumbnails].forEach(thumbnail => {
+    EventsHandler.register({
+        element: thumbnail,
+        event: 'click',
+        handler: e => {
+            main.src = e.target.src;
+        }
+    });
+});
+
+</script>
 <%= product.description %>

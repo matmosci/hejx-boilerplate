@@ -1,6 +1,7 @@
 const Cart = require("../models/Cart.model");
 const products = require("./products.service");
 const { randomUUID } = require('crypto');
+const { getPrice } = require("./prices.service");
 
 module.exports = {
     getUserCart,
@@ -16,7 +17,10 @@ async function getUserCartLength(userId) {
 };
 
 async function getUserCart(userId) {
-    return await Cart.findOne({ userId }) ?? await Cart.create({ userId });
+    const cart = await Cart.findOne({ userId }) ?? await Cart.create({ userId });
+    calculateCartSubtotal(cart);
+    await cart.save();
+    return cart;
 };
 
 async function addUserCartProduct(userId, productConfig) {
@@ -26,14 +30,26 @@ async function addUserCartProduct(userId, productConfig) {
     if (!product) throw new Error("Product was not added to cart.");
 
     const id = randomUUID();
-    const name = product.name;
-    const title = product.title;
     const config = getCartProductConfig(product);
-    const quantity = product.quantity;
-    const cartProduct = { id, name, title, config, quantity };
+    const { name, title, quantity, prices } = product;
+    const cartProduct = { id, name, title, config, prices, quantity };
     cart.content.push(cartProduct);
+    calculateCartSubtotal(cart);
     await cart.save();
     return cart;
+};
+
+function calculateCartSubtotal(cart) {
+    cart.costSubtotal = 0;
+    const prices = [];
+    cart.content.map(product => {
+        product.prices.map(price => {
+            prices.push(price);
+        });
+    });
+    prices.map(price => {
+        cart.costSubtotal += getPrice[price.source](price.id, price.qty) * price.qty;
+    });
 };
 
 async function clearUserCart(userId) {

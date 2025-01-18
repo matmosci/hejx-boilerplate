@@ -12,7 +12,13 @@
         </div>
     </div>
 <% } else { %>
-    <div class="p-3 pb-2 border-top text-center">
+    <div class="px-3 py-1 border-top text-end">
+        <div class="d-flex fw-bold">
+            <div class="me-2">Subtotal</div>
+            <div class="ms-auto"><%= cart.costSubtotal.toFixed(2) %> zł</div>
+        </div>
+    </div>
+    <div class="px-3 pb-2 text-center">
         <button class="btn btn-primary w-100 d-block" onclick="alert('TODO')">Checkout</button>
         <button class="btn btn-sm text-secondary mt-2 py-0" id="clear-cart" hx-delete="/cart" hx-confirm="Are you sure you want to clear your cart?" hx-target="#cart-content">Clear</button>
     </div>

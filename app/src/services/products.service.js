@@ -144,10 +144,6 @@ function getProductParamNames(product) {
     return product.parameters.map(param => param.name);
 };
 
-function getProductParamTitles(product) {
-    return product.parameters.map(param => param.title);
-};
-
 function getProductDefaultParamValues(product) {
     return product.parameters.map(getProductParamDefaultValue);
 };

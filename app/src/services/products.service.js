@@ -54,7 +54,7 @@ function processProductAttributes(product, config, workbook, sheet) {
     product.quantity = Number(product.parameters.find(p => p.type === 'quantity').value) || null;
     switch (typeof product.weight) {
         case 'string':
-            product.weight = workbook.Sheets[sheet][product.weight].v;
+            product.weight = Number(workbook.Sheets[sheet][product.weight].v);
             break;
         case 'number':
             product.weight = Number(product.weight) * (product.quantity ?? 1);
@@ -65,7 +65,7 @@ function processProductAttributes(product, config, workbook, sheet) {
         typeof price.id === 'string' && (price.id = workbook.Sheets[sheet][price.id].v);
         switch (typeof price.qty) {
             case 'string':
-                price.qty = workbook.Sheets[sheet][price.qty].v;
+                price.qty = Number(workbook.Sheets[sheet][price.qty].v);
                 break;
             case 'number':
                 price.qty = Number(price.qty) * (product.quantity ?? 1);

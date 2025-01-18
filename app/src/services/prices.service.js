@@ -1,6 +1,6 @@
 const prices = require("../../data/prices.json");
 
-function getPrice(id, quantity) {
+function getJsonPrice(id, quantity) {
     const price = prices.find(p => p.id === id)?.price;
     if (!price) return null;
 
@@ -17,4 +17,4 @@ function getPrice(id, quantity) {
     return null;
 };
 
-module.exports.getPrice = getPrice;
+module.exports.getPrice = { json: getJsonPrice };

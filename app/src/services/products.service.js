@@ -9,7 +9,6 @@ const { keyValueArraysToObject } = require("../utils/common.utils");
 module.exports = {
     getProductConfigured,
     getParamConfig,
-    getParamConfigDescriptive,
 };
 
 function getProductConfigured(name, configPath, strict = false) {
@@ -137,17 +136,6 @@ function xCheckProductConfig(product, config, workbook, sheet) {
 function getParamConfig(product, configPath) {
     const params = getProductParamNames(product);
     const values = configPath ? configPath.replace(/^\/|\/$/g, '').split("/") : getProductDefaultParamValues(product);
-
-    return keyValueArraysToObject(params, values);
-};
-
-function getParamConfigDescriptive(product, configPath) {
-    const params = getProductParamTitles(product);
-    const values = configPath.replace(/^\/|\/$/g, '').split("/").map((value, index) => {
-        const param = product.parameters[index];
-        if (param.type === 'select') return param.options.find(option => option.value === value).title;
-        return value;
-    });
 
     return keyValueArraysToObject(params, values);
 };

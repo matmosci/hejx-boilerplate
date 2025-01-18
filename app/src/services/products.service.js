@@ -82,7 +82,7 @@ function verifyProductConfig(product, config) {
                 return !param.options.find(option => option.value === value) ? false : true;
             case 'number':
             case 'quantity':
-                return !Number(value) ? false : true;
+                return !!Number(value);
         }
     }).every(Boolean);
 };

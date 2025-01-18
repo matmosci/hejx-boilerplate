@@ -28,10 +28,9 @@ async function addUserCartProduct(userId, productConfig) {
     const id = randomUUID();
     const name = product.name;
     const title = product.title;
-    const config = products.getParamConfig(product, configPath);
-    const description = products.getParamConfigDescriptive(product, configPath);
-    const quantity = Number(config.quantity) ?? null;
-    const cartProduct = { id, name, title, config, description, quantity };
+    const config = getCartProductConfig(product);
+    const quantity = getCartProductQuantity(product);
+    const cartProduct = { id, name, title, config, quantity };
     cart.content.push(cartProduct);
     await cart.save();
     return cart;
@@ -49,6 +48,37 @@ async function removeUserCartProduct(userId, productId) {
     cart.content = cart.content.filter(product => product.id !== productId);
     await cart.save();
     return cart;
+};
+
+function getCartProductConfig(product) {
+    const config = [];
+    product.parameters.map(param => {
+        const configObject = {
+            param: {
+                name: param.name,
+                title: param.title
+            },
+            value: {}
+        };
+        switch (param.type) {
+            case 'select':
+                const selectedOption = param.options.find(o => o.selected);
+                configObject.value.value = selectedOption.value;
+                configObject.value.title = selectedOption.title;
+                config.push(configObject);
+                break;
+            case 'number':
+                configObject.value.value = Number(param.value);
+                configObject.value.title = String(param.value);
+                config.push(configObject);
+                break;
+        };
+    });
+    return config;
+};
+
+function getCartProductQuantity(product) {
+    return Number(product.parameters.find(p => p.type === 'quantity').value) || null;
 };
 
 function calculateTotal() {

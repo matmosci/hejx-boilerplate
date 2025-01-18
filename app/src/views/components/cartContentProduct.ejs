@@ -7,9 +7,9 @@
         <div class="d-flex justify-content-between user-select-none sub-summary">
             <div>
                 <small class="fw-bold">
-                    <% Object.entries(product.description).slice(0, -1).filter(param => param[1] !== 'N/A').map(param => { %>
-                        <%= param[1] %>
-                    <% }); %>        
+                    <% product.config.filter(param => param.value.value !== '-').map(param => { %>
+                        <%= param.value.title %>
+                    <% }); %>
                 </small>
             </div>
             <div class="fw-bold ms-2"><small><%= product.quantity %></small></div>
@@ -17,10 +17,10 @@
     </summary>
     <div class="d-flex justify-content-between px-3 mb-2">
         <div>
-            <% Object.entries(product.description).filter(param => param[1] !== 'N/A').map(param => { %>
+            <% product.config.filter(param => param.value.value !== '-').map(param => { %>
             <small class="d-block">
-                <span><%= param[0] %>:</span>
-                <strong><%= param[1] %></strong>
+                <span><%= param.param.title %>:</span>
+                <strong><%= param.value.title %></strong>
             </small>
             <% }); %>
         </div>

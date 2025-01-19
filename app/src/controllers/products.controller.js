@@ -19,7 +19,7 @@ function getProduct(req, res) {
     const { name, 0: configPath } = req.params;
 
     try {
-        const product = getProductConfigured(name, configPath);
+        const product = getProductConfigured(name, { configPath });
         const url = `/products/${product.name}/${product.configPath}`;
         res.set(req.headers['hx-request'] ? "HX-Push-Url" : "X-Set-Url", url);
         render(req, res, "product", { product, title: product.title });

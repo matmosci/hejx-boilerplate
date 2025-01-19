@@ -11,14 +11,14 @@ module.exports = {
     getParamConfig,
 };
 
-function getProductConfigured(name, configPath, strict = false) {
+function getProductConfigured(name, options = { configPath, strict: false }) {
     if (!registry.findByNameAndType(name, 'product')?.enabled) return null;
 
     const product = structuredClone(getProductDefinition(name));
-    const config = getParamConfig(product, configPath);
+    const config = getParamConfig(product, options.configPath);
 
     if (!verifyProductConfig(product, config))
-        if (strict) return null;
+        if (options.strict) return null;
         else fixProductConfig(product, config)
 
     const { xcalc } = product;
@@ -31,7 +31,7 @@ function getProductConfigured(name, configPath, strict = false) {
 
     product.configPath = Object.values(config).join('/');
 
-    if (strict && configPath !== product.configPath) return null;
+    if (options.strict && options.configPath !== product.configPath) return null;
 
     processProductAttributes(product, config, xcalc?.workbook, xcalc?.sheet ?? xcalc?.workbook.SheetNames[0]);
 

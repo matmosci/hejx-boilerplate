@@ -45,6 +45,10 @@ details.cart-product summary::marker {
     content: '';
 }
 
+details.cart-product summary::-webkit-details-marker {
+    display: none;
+}
+
 details.cart-product[open] .sub-summary {
     display: none !important;
 }

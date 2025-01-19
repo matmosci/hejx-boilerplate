@@ -24,9 +24,12 @@ function createCartProductGroup(product, content) {
         });
     });
 
+    productGroup.subtotal = 0;
+
     Object.keys(productGroup).map(source => {
         Object.keys(productGroup[source]).map(id => {
             productGroup[source][id].price = getPrice[source](id, productGroup[source][id].qty);
+            productGroup.subtotal += productGroup[source][id].price * productGroup[source][id].qty;
         });
     });
 
@@ -40,11 +43,15 @@ function calculateCartSubtotal(cart) {
     });
 
     cart.costSubtotal = 0;
+
     cart.content.map(product => {
         product.prices.map(price => {
             price.price = groups[product.name][price.source][price.id].price;
-            cart.costSubtotal += price.price * price.qty;
         });
+    });
+
+    Object.keys(groups).map(group => {
+        cart.costSubtotal += groups[group].subtotal;
     });
 };
 

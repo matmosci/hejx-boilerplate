@@ -5,13 +5,14 @@ const XLSX_CALC = require("xlsx-calc");
 const formulajs = require("@formulajs/formulajs");
 XLSX_CALC.import_functions(formulajs, { override: true });
 const { keyValueArraysToObject } = require("../utils/common.utils");
+const { getUserCart, createCartProductGroup } = require("../utils/cart.utils");
 
 module.exports = {
     getProductConfigured,
     getParamConfig,
 };
 
-function getProductConfigured(name, options = { configPath, strict: false }) {
+async function getProductConfigured(name, options) {
     if (!registry.findByNameAndType(name, 'product')?.enabled) return null;
 
     const product = structuredClone(getProductDefinition(name));
@@ -34,8 +35,19 @@ function getProductConfigured(name, options = { configPath, strict: false }) {
     if (options.strict && options.configPath !== product.configPath) return null;
 
     processProductAttributes(product, config, xcalc?.workbook, xcalc?.sheet ?? xcalc?.workbook.SheetNames[0]);
+    if (options.userId) await calculateProductPrice(product, options.userId);
 
     return product;
+};
+
+async function calculateProductPrice(product, userId) {
+    const cart = await getUserCart(userId);
+    cart.content.push(product);
+    const provisionalGroup = createCartProductGroup(product.name, cart.content);
+    product.prices.map(p => {
+        p.price = provisionalGroup[p.source][p.id].price;
+    });
+    product.price = product.prices.reduce((acc, p) => acc + p.price * p.qty, 0);
 };
 
 function processProductAttributes(product, config, workbook, sheet) {

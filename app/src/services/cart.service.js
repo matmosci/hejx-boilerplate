@@ -22,7 +22,7 @@ async function getUserCartLength(userId) {
 async function addUserCartProduct(userId, productConfig) {
     const cart = await getUserCart(userId);
     const { product: productName, configPath } = productConfig;
-    const product = getProductConfigured(productName, { configPath, strict: true });
+    const product = await getProductConfigured(productName, { configPath, strict: true });
     if (!product) throw new Error("Product was not added to cart.");
 
     const id = randomUUID();
@@ -76,11 +76,3 @@ function getCartProductConfig(product) {
     });
     return config;
 };
-
-function calculateTotal() {
-    createCartProductGroups()
-};
-
-function createCartProductGroups(
-
-) { };

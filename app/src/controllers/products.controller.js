@@ -15,11 +15,11 @@ module.exports = {
     getProduct
 };
 
-function getProduct(req, res) {
+async function getProduct(req, res) {
     const { name, 0: configPath } = req.params;
 
     try {
-        const product = getProductConfigured(name, { configPath });
+        const product = await getProductConfigured(name, { configPath, userId: req.session.user._id });
         const url = `/products/${product.name}/${product.configPath}`;
         res.set(req.headers['hx-request'] ? "HX-Push-Url" : "X-Set-Url", url);
         render(req, res, "product", { product, title: product.title });

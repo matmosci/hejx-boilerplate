@@ -12,7 +12,7 @@
         </div>
     </div>
 <% } else { %>
-    <div class="px-3 py-1 border-top text-end">
+    <div class="px-3 py-2 border-top text-end">
         <div class="d-flex fw-bold">
             <div class="me-2">Subtotal</div>
             <div class="ms-auto"><%= cart.costSubtotal.toFixed(2) %> zł</div>
@@ -30,7 +30,16 @@
             element: document.getElementById('clear-cart'),
             event: 'htmx:afterRequest',
             handler: (e) => {
-                htmx.ajax('GET', '/cart/length', '#cart-length')
+                htmx.ajax('GET', '/cart/length', '#cart-length');
+                htmx.ajax(
+                    'GET',
+                    location.pathname,
+                    {
+                        select: "#product-price",
+                        target: "#product-price",
+                        swap: "outerHTML"
+                    }
+                );
             }
         }
     ]);
@@ -40,7 +49,16 @@
             element: button,
             event: 'htmx:afterRequest',
             handler: (e) => {
-                htmx.ajax('GET', '/cart/length', '#cart-length')
+                htmx.ajax('GET', '/cart/length', '#cart-length');
+                htmx.ajax(
+                    'GET',
+                    location.pathname,
+                    {
+                        select: "#product-price",
+                        target: "#product-price",
+                        swap: "outerHTML"
+                    }
+                );
             }
         });
     });

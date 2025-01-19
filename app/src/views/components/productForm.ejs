@@ -1,4 +1,4 @@
-<form id="product-form" action="/products/<%= product.name %>" hx-trigger="change delay:1000ms" hx-params="none" disabled>
+<form id="product-form" hx-get="/products/<%= product.name %>" hx-trigger="change delay:1000ms" hx-target="body">
     <% product.parameters.map(input => { %>
         <%- include('productFormInput', { input }); %>
     <% }) %>
@@ -14,9 +14,6 @@
             event: 'change',
             handler: (e) => {
                 document.getElementById("add-to-cart").disabled = true;
-                [...form].forEach(element => element.disabled = true);
-                e.target.disabled = false;
-                e.target.focus();
             }
         },
         {

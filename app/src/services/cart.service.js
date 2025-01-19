@@ -1,5 +1,5 @@
 const Cart = require("../models/Cart.model");
-const products = require("./products.service");
+const { getProductConfigured } = require("./products.service");
 const { randomUUID } = require('crypto');
 const { getPrice } = require("./prices.service");
 
@@ -27,7 +27,7 @@ async function getUserCart(userId) {
 async function addUserCartProduct(userId, productConfig) {
     const cart = await getUserCart(userId);
     const { product: productName, configPath } = productConfig;
-    const product = products.getProductConfigured(productName, { configPath, strict: true });
+    const product = getProductConfigured(productName, { configPath, strict: true });
     if (!product) throw new Error("Product was not added to cart.");
 
     const id = randomUUID();

@@ -2,6 +2,7 @@
   type="number"
   id="product-form-input-<%= input.name %>"
   class="form-control"
+  inputmode="numeric"
   oninput="if (this.value) htmx.trigger(this.form, 'change')"
   <%= input.value ? `value=${input.value}` : '' %>
   <%= input.min ? `min=${input.min}` : '' %>

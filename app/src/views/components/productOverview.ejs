@@ -21,7 +21,7 @@ import EventsHandler from '/js/htmx-events-handler.js';
 
 const main = document.querySelector('#product-gallery-main');
 const thumbnails = document.querySelectorAll('.product-gallery-thumbnail-wrapper');
-thumbnails[0].classList.add('selected');
+thumbnails[0]?.classList.add('selected');
 
 [...thumbnails].forEach(thumbnail => {
     EventsHandler.register({

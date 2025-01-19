@@ -1,7 +1,10 @@
-const Cart = require("../models/Cart.model");
 const { getProductConfigured } = require("./products.service");
 const { randomUUID } = require('crypto');
-const { getPrice } = require("./prices.service");
+
+const {
+    getUserCart,
+    calculateCartSubtotal,
+} = require("../utils/cart.utils");
 
 module.exports = {
     getUserCart,
@@ -9,19 +12,11 @@ module.exports = {
     addUserCartProduct,
     clearUserCart,
     removeUserCartProduct,
-    createCartProductGroup,
 };
 
 async function getUserCartLength(userId) {
     const cart = await getUserCart(userId);
     return cart.content.length;
-};
-
-async function getUserCart(userId) {
-    const cart = await Cart.findOne({ userId }) ?? await Cart.create({ userId });
-    calculateCartSubtotal(cart);
-    await cart.save();
-    return cart;
 };
 
 async function addUserCartProduct(userId, productConfig) {
@@ -38,44 +33,6 @@ async function addUserCartProduct(userId, productConfig) {
     calculateCartSubtotal(cart);
     await cart.save();
     return cart;
-};
-
-function calculateCartSubtotal(cart) {
-    const groups = {};
-    getCartContentGroups(cart.content).map(group => {
-        groups[group] = createCartProductGroup(group, cart.content);
-    });
-
-    cart.costSubtotal = 0;
-    cart.content.map(product => {
-        product.prices.map(price => {
-            price.price = groups[product.name][price.source][price.id].price;
-            cart.costSubtotal += price.price * price.qty;
-        });
-    });
-};
-
-function createCartProductGroup(product, content) {
-    const productGroup = {};
-    content.filter(p => p.name === product).map(p => {
-        p.prices.map(price => {
-            productGroup[price.source] ??= {};
-            productGroup[price.source][price.id] ??= { qty: 0 };
-            productGroup[price.source][price.id].qty += price.qty;
-        });
-    });
-
-    Object.keys(productGroup).map(source => {
-        Object.keys(productGroup[source]).map(id => {
-            productGroup[source][id].price = getPrice[source](id, productGroup[source][id].qty);
-        });
-    });
-
-    return productGroup;
-};
-
-function getCartContentGroups(content) {
-    return Array.from(new Set(content.map(p => p.name)));
 };
 
 async function clearUserCart(userId) {

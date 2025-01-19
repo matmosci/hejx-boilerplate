@@ -29,12 +29,17 @@
             ]
           },
         {
-            "type": "number",
+            "type": "quantity",
             "name": "quantity",
             "title": "Quantity",
             "value": 1,
             "min": 1,
-            "max": 1000
+            "max": 10000
         }
+    ],
+    "weight": 0.02,
+    "prices": [
+        { "source": "json", "id": 4, "qty": 1 },
+        { "source": "json", "id": 5, "qty": 0.02 }
     ]
 }

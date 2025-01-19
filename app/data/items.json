@@ -2,8 +2,8 @@
     { "type": "product", "name": "laptops", "enabled": true },
     { "type": "product", "name": "mouses", "enabled": false },
     { "type": "product", "name": "business-cards", "enabled": false },
-    { "type": "product", "name": "posters", "enabled": false },
+    { "type": "product", "name": "posters", "enabled": true },
     { "type": "container", "name": "home", "enabled": true },
     { "type": "container", "name": "electronics", "enabled": true },
-    { "type": "container", "name": "print", "enabled": false }
+    { "type": "container", "name": "print", "enabled": true }
 ]

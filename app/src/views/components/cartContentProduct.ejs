@@ -2,7 +2,9 @@
     <summary class="px-3 py-1">
         <div class="d-flex justify-content-between user-select-none">
             <div class="text-muted"><%= product.title %></div>
-            <div class="ms-2">0.00 zł</div>
+            <div class="ms-2">
+                <%= product.prices.reduce((acc, curr) => acc + curr.price * curr.qty, 0).toFixed(2) %>&nbsp;zł
+            </div>
         </div>
         <div class="d-flex justify-content-between user-select-none sub-summary">
             <div>

@@ -76,7 +76,6 @@
     ],
     "weight": "B10",
     "prices": [
-        { "source": "json", "id": 1, "qty": "C11" },
         { "source": "json", "id": "B11", "qty": "C11" }
     ]
 }

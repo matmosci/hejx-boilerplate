@@ -1,11 +1,15 @@
-<div id="product-weight"><%= product.weight %> kg</div>
-<button id="add-to-cart" class="btn btn-primary w-100" hx-post="/cart/products" hx-target="#cart-content">Add to cart</button>
+<div id="product-weight" class="d-flex">
+    <div class="me-2">Weight</div>
+    <div class="ms-auto"><%= product.weight %>&nbsp;kg</div>
+</div>
 <div id="product-prices">
     todo remove
     <% product.prices.map(price => { %>
         <div>{ id: <%= price.id %>, qty: <%= price.qty %> }</div>
     <% }); %>
 </div>
+<%= product.price %>
+<button id="add-to-cart" class="btn btn-primary w-100" hx-post="/cart/products" hx-target="#cart-content">Add to cart</button>
 <script type="module">
     import EventsHandler from '/js/htmx-events-handler.js';
 

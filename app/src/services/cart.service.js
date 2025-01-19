@@ -9,6 +9,7 @@ module.exports = {
     addUserCartProduct,
     clearUserCart,
     removeUserCartProduct,
+    createCartProductGroup,
 };
 
 async function getUserCartLength(userId) {
@@ -40,16 +41,41 @@ async function addUserCartProduct(userId, productConfig) {
 };
 
 function calculateCartSubtotal(cart) {
+    const groups = {};
+    getCartContentGroups(cart.content).map(group => {
+        groups[group] = createCartProductGroup(group, cart.content);
+    });
+
     cart.costSubtotal = 0;
-    const prices = [];
     cart.content.map(product => {
         product.prices.map(price => {
-            prices.push(price);
+            price.price = groups[product.name][price.source][price.id].price;
+            cart.costSubtotal += price.price * price.qty;
         });
     });
-    prices.map(price => {
-        cart.costSubtotal += getPrice[price.source](price.id, price.qty) * price.qty;
+};
+
+function createCartProductGroup(product, content) {
+    const productGroup = {};
+    content.filter(p => p.name === product).map(p => {
+        p.prices.map(price => {
+            productGroup[price.source] ??= {};
+            productGroup[price.source][price.id] ??= { qty: 0 };
+            productGroup[price.source][price.id].qty += price.qty;
+        });
     });
+
+    Object.keys(productGroup).map(source => {
+        Object.keys(productGroup[source]).map(id => {
+            productGroup[source][id].price = getPrice[source](id, productGroup[source][id].qty);
+        });
+    });
+
+    return productGroup;
+};
+
+function getCartContentGroups(content) {
+    return Array.from(new Set(content.map(p => p.name)));
 };
 
 async function clearUserCart(userId) {
@@ -62,6 +88,7 @@ async function clearUserCart(userId) {
 async function removeUserCartProduct(userId, productId) {
     const cart = await getUserCart(userId);
     cart.content = cart.content.filter(product => product.id !== productId);
+    calculateCartSubtotal(cart);
     await cart.save();
     return cart;
 };

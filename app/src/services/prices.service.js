@@ -1,7 +1,7 @@
 const prices = require("../../data/prices.json");
 
 function getJsonPrice(id, quantity) {
-    const price = prices.find(p => p.id === id)?.price;
+    const price = prices.find(p => p.id === Number(id))?.price;
     if (!price) return null;
 
     if (typeof price === 'number') return price;

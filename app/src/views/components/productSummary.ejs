@@ -1,8 +1,15 @@
 <div id="product-price" class="d-flex">
     <div class="me-2">Price</div>
-    <div class="ms-auto"><%= product.price.toFixed(2) %>&nbsp;zł</div>
+    <div class="ms-auto text-end">
+        <div><%= product.price.toFixed(2) %>&nbsp;zł</div>
+        <% if (product.quantity > 1) { %>
+            <div class="text-muted mt-n1">
+                <small>p/u&nbsp;<%= (product.price / product.quantity).toFixed(2) %>&nbsp;zł</small>
+            </div>
+        <% }; %>
+    </div>
 </div>
-<div id="product-weight" class="d-flex text-muted">
+<div id="product-weight" class="d-flex">
     <div class="me-2">Weight</div>
     <div class="ms-auto"><%= product.weight.toFixed(2) %>&nbsp;kg</div>
 </div>

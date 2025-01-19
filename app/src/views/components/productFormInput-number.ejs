@@ -3,9 +3,25 @@
   id="product-form-input-<%= input.name %>"
   class="form-control"
   inputmode="numeric"
-  oninput="if (this.value) htmx.trigger(this.form, 'change')"
   <%= input.value ? `value=${input.value}` : '' %>
   <%= input.min ? `min=${input.min}` : '' %>
   <%= input.max ? `max=${input.max}` : '' %>
   <%= input.step ? `step=${input.step}` : '' %>
 />
+<script type="module">
+  import EventsHandler from '/js/htmx-events-handler.js';
+
+  const form = document.getElementById('product-form');
+
+  EventsHandler.register([
+    {
+      element: document.getElementById(`product-form-input-<%= input.name %>`),
+      event: 'input',
+      handler: (e) => {
+        if (!e.target.value) return;
+        if (Number(e.target.value) < Number(e.target.min) || Number(e.target.value) > Number(e.target.max)) e.target.classList.add('border-danger');
+        htmx.trigger(form, 'change');
+      }
+    }
+  ]);
+</script>

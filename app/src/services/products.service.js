@@ -22,17 +22,18 @@ function getProductConfigured(name, configPath, strict = false) {
         else fixProductConfig(product, config)
 
     const { xcalc } = product;
-    const xdoc_path = path.resolve(__dirname, `../../data/products/${xcalc.document}`);
-    const workbook = XLSX.readFile(xdoc_path);
-    const sheet = xcalc.sheet ?? workbook.SheetNames[0];
+    if (xcalc) {
+        const xdoc_path = path.resolve(__dirname, `../../data/products/${xcalc.document}`);
+        xcalc.workbook = XLSX.readFile(xdoc_path);
 
-    xCheckProductConfig(product, config, workbook, sheet);
+        xCheckProductConfig(product, config, xcalc.workbook, xcalc.sheet ?? workbook.SheetNames[0]);
+    };
 
     product.configPath = Object.values(config).join('/');
 
     if (strict && configPath !== product.configPath) return null;
 
-    processProductAttributes(product, config, workbook, sheet)
+    processProductAttributes(product, config, xcalc?.workbook, xcalc?.sheet ?? xcalc?.workbook.SheetNames[0]);
 
     return product;
 };
@@ -52,8 +53,10 @@ function processProductAttributes(product, config, workbook, sheet) {
     });
 
     product.quantity = Number(product.parameters.find(p => p.type === 'quantity').value) || null;
+
     switch (typeof product.weight) {
         case 'string':
+            if (!workbook) throw new Error("Product weight is not a number and no workbook was provided.");
             product.weight = Number(workbook.Sheets[sheet][product.weight].v);
             break;
         case 'number':
@@ -62,9 +65,15 @@ function processProductAttributes(product, config, workbook, sheet) {
     };
 
     product.prices.map(price => {
-        typeof price.id === 'string' && (price.id = workbook.Sheets[sheet][price.id].v);
+        switch (typeof price.id) {
+            case 'string':
+                if (!workbook) throw new Error("Price ID is not a number and no workbook was provided.");
+                price.id = workbook.Sheets[sheet][price.id].v;
+                break;
+        }
         switch (typeof price.qty) {
             case 'string':
+                if (!workbook) throw new Error("Price quantity is not a number and no workbook was provided.");
                 price.qty = Number(workbook.Sheets[sheet][price.qty].v);
                 break;
             case 'number':

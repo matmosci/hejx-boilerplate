@@ -55,6 +55,10 @@ app.use('/transaction', require('./routers/transaction.router'));
 app.use('/products', require('./routers/products.router'));
 app.use('/cart', require('./routers/cart.router'));
 
+app.use((req, res) => {
+    require('./utils/render.utils')(req, res, '404');
+});
+
 app.listen(port, () => {
     console.log(`Listening at http://localhost:${port}`);
 });

@@ -54,6 +54,10 @@ app.use('/hx', hxRouter);
 app.use('/auth', authRouter);
 app.use('/transaction', require('./routers/transaction.router'));
 
+app.use((req, res) => {
+    require('./utils/render.utils')(req, res, '404');
+});
+
 app.listen(port, () => {
     console.log(`Listening at http://localhost:${port}`);
 });

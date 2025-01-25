@@ -1,17 +1,21 @@
-<div id="product-price" class="d-flex">
-    <div class="me-2">Price</div>
-    <div class="ms-auto text-end">
-        <div><%= product.price.toFixed(2) %>&nbsp;zł</div>
+<div class="rounded-2 p-3 bg-body-tertiary border">
+    <div id="product-price">
+        <div class="d-flex">
+            <div class="me-2">Price</div>
+            <div class="ms-auto text-end">
+                <div><%= product.price.toFixed(2) %>&nbsp;zł</div>
+            </div>
+        </div>
         <% if (product.quantity > 1) { %>
-            <div class="text-muted mt-n1">
-                <small><%= (product.price / product.quantity).toFixed(2) %>&nbsp;zł&nbsp;/&nbsp;unit</small>
+            <div class="text-muted d-flex mt-n1">
+                <small class="d-block ms-auto"><%= (product.price / product.quantity).toFixed(2) %>&nbsp;zł&nbsp;/&nbsp;unit</small>
             </div>
         <% }; %>
     </div>
-</div>
-<div id="product-weight" class="d-flex">
-    <div class="me-2">Weight</div>
-    <div class="ms-auto"><%= product.weight.toFixed(2) %>&nbsp;kg</div>
+    <div id="product-weight" class="d-flex mt-2">
+        <div class="me-2">Weight</div>
+        <div class="ms-auto"><%= product.weight.toFixed(2) %>&nbsp;kg</div>
+    </div>
 </div>
 <button id="add-to-cart" class="btn btn-primary w-100 mt-2" hx-post="/cart/products" hx-target="#cart-content">Add to cart</button>
 <script type="module">

@@ -5,15 +5,30 @@
   .bg-cover {
     background-repeat: no-repeat;
     background-position: center center;
-    background-size: cover;
+    background-size: 100% 100%;
+    transition-duration: 400ms;
   }
-  .product-tile {
-    transition-duration: 200ms;
-    transition-property: scale;
-    transition-timing-function: cubic-bezier();
+  .product-tile > a .shadow-gradient-bottom {
+    background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0) 50%
+    );
+    opacity: 0.8;
+    transition-duration: 400ms;
   }
-  .product-tile > a:hover > div {
-    outline: 0.25rem solid var(--bs-primary);
-    outline-offset: 0.25rem;
+  .product-tile > a:hover .shadow-gradient-bottom {
+    opacity: 0.4;
+  }
+  .product-tile > a .title {
+    transition-duration: 400ms;
+    color: var(--bs-light);
+    text-shadow: 0 2px 3px rgb(0 0 0 / 75%);
+  }
+  .product-tile > a:hover .title {
+    scale: 1.1;
+  }
+  .product-tile > a:hover .bg-cover {
+    background-size: 110% 110%;
   }
 </style>

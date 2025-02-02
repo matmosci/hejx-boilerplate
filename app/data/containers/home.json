@@ -18,6 +18,10 @@
         {
             "type": "product",
             "name": "mouses"
+        },
+        {
+            "type": "container",
+            "name": "beauty"
         }
     ]
 }

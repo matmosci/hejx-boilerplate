@@ -1,0 +1,53 @@
+{
+    "name": "lakiery",
+    "title": "Lakier hybrydowy Luna",
+    "description": "Idealny pigmentowany lakier hybrydowy, który można nakładać w jednej lub dwóch cienkich warstwach. Nie tworzy smug po nałożeniu i łatwo się samopoziomuje. Posiada średnio gęstą konsystencję.\nAplikacja:\n— Przed nałożeniem bazy należy przygotować płytkę paznokcia.\n— Nałóż bazę i wyrównaj płytkę paznokcia.\n— Przed nałożeniem lakieru hybrydowego wytrzyj lepkość z bazy.\n— Nałóż średnią warstwę lakieru hybrydowego i susz w lampie przez 30 sekund. W razie potrzeby nałóż drugą warstwę.\n– Przykryć topem.\nDzięki zróżnicowanej palecie odcieni zawsze znajdziesz kolor, który uzupełni Twoją kolekcję i pozwoli urozmaicić wybór dla klientów.",
+    "imageUrl": "/img/products/lakier-0.png",
+    "galleryUrls": [
+        "/img/products/lakier-1.png",
+        "/img/products/lakier-2.png",
+        "/img/products/lakier-3.png",
+        "/img/products/lakier-4.png"
+    ],
+    "xcalc": {
+        "document": "lakiery.xlsx"
+    },
+    "parameters": [
+        {
+            "type": "select",
+            "name": "color",
+            "title": "Color",
+            "options": [
+                { "title": "#83", "value": "83" },
+                { "title": "#64", "value": "64" },
+                { "title": "#85", "value": "85" },
+                { "title": "#86", "value": "86" },
+                { "title": "#87", "value": "87" },
+                { "title": "#89", "value": "89" },
+                { "title": "#90", "value": "90" }
+            ]
+        },
+        {
+            "type": "select",
+            "name": "size",
+            "title": "Size",
+            "cell": "B2",
+            "options": [
+                { "title": "13 ml", "value": "13ml" },
+                { "title": "30 ml", "value": "30ml" }
+            ]
+        },
+        {
+            "type": "quantity",
+            "name": "quantity",
+            "title": "Quantity",
+            "value": 1,
+            "min": 1,
+            "max": 50
+        }
+    ],
+    "weight": 0.1,
+    "prices": [
+        { "source": "json", "id": "B10", "qty": 1 }
+    ]
+}

@@ -3,7 +3,9 @@
     { "type": "product", "name": "mouses", "enabled": true },
     { "type": "product", "name": "business-cards", "enabled": false },
     { "type": "product", "name": "posters", "enabled": true },
+    { "type": "product", "name": "lakiery", "enabled": true },
     { "type": "container", "name": "home", "enabled": true },
     { "type": "container", "name": "electronics", "enabled": true },
-    { "type": "container", "name": "print", "enabled": true }
+    { "type": "container", "name": "print", "enabled": true },
+    { "type": "container", "name": "beauty", "enabled": true }
 ]

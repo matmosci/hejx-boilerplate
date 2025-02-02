@@ -1,0 +1,11 @@
+{
+    "name": "beauty",
+    "title": "Beauty",
+    "imageUrl": "https://placehold.co/800x800.jpg",
+    "items": [
+        {
+            "type": "product",
+            "name": "lakiery"
+        }
+    ]
+}

@@ -1,4 +1,4 @@
-<div class="mb-2<%= input.enabled === false ? ' d-none' : '' %>">
+<div class="<%= i + 1 < product.parameters.length ? 'mb-2' : '' %><%= input.enabled === false ? ' d-none' : '' %>">
     <label for="product-form-input-<%= input.name %>" class="form-label mb-1">
         <%= input.title %>
         <% if (input.min && input.max) { %>

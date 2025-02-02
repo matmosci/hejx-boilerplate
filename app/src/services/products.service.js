@@ -27,7 +27,7 @@ async function getProductConfigured(name, options) {
         const xdoc_path = path.resolve(__dirname, `../../data/products/${xcalc.document}`);
         xcalc.workbook = XLSX.readFile(xdoc_path);
 
-        xCheckProductConfig(product, config, xcalc.workbook, xcalc.sheet ?? workbook.SheetNames[0]);
+        xCheckProductConfig(product, config, xcalc.workbook, xcalc.sheet ?? xcalc.workbook.SheetNames[0]);
     };
 
     product.configPath = Object.values(config).join('/');

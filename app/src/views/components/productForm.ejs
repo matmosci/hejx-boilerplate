@@ -1,4 +1,4 @@
-<form id="product-form" hx-get="/products/<%= product.name %>" hx-trigger="change delay:1000ms" hx-target="body" class="rounded-2 p-3 bg-body-tertiary">
+<form id="product-form" hx-get="/products/<%= product.name %>" hx-trigger="change delay:1000ms" hx-target="body" class="rounded-2 p-3 pt-2 bg-body-tertiary">
     <% product.parameters.map((input, i) => { %>
         <%- include('productFormInput', { input, i }); %>
     <% }) %>

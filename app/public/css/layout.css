@@ -34,7 +34,7 @@ a.back:hover {
 }
 
 #cart-wrapper {
-    margin-top: var(--navbar-height);
+    max-width: calc(100% - 2rem);
 }
 
 details.cart-product:hover {

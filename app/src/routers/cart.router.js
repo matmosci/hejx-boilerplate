@@ -8,5 +8,7 @@ router.get('/length', controller.getCartLength);
 router.post('/products', controller.addProduct);
 router.delete('/products/:id', controller.removeProduct);
 router.put('/products/:id', controller.updateProduct);
+router.get('/checkout', controller.checkout);
+router.get('/shipment', controller.getShipment);
 
 module.exports = router;

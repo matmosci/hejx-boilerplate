@@ -1,0 +1,6 @@
+<% if (user.access === 0) { %>
+    <p class="mb-1">You have to confirm your e-mail address in order to place an order.</p>
+    <%- include(`../components/loginEmailForm`); %>
+<% } else { %>
+    <%= user.email %>
+<% } %>

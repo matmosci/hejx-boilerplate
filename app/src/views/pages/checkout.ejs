@@ -1,0 +1,57 @@
+<main>
+    <div class="container mt-2">
+        <div class="row">
+            <h1>
+                <a class="back text-decoration-none text-primary" href="/products">&larr;</a>
+                Checkout
+            </h1>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card mb-2">
+                    <div class="card-header">Cart</div>
+                    <div class="card-body p-0 pb-2">
+                        <%- include('../components/cartCheckoutContent'); %>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-2">
+                    <div class="card-header">Contact</div>
+                    <div class="card-body pt-2">
+                        <%- include('../components/cartCheckoutUser'); %>
+                    </div>
+                </div>
+                <div class="card mb-2">
+                    <div class="card-header">Shipping</div>
+                    <div class="card-body">
+                        <%- include('../components/cartCheckoutShipment'); %>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-2">
+                    <div class="card-header">Summary</div>
+                    <div class="card-body py-2">
+                        <div class="d-flex">
+                            <div class="me-2">Subtotal</div>
+                            <div class="ms-auto fw-bold"><%= cart.costSubtotal.toFixed(2) %> zł</div>
+                        </div>
+                        <div class="d-flex">
+                            <div class="me-2">Shipping</div>
+                            <div class="ms-auto fw-bold">0.00 zł</div>
+                        </div>
+                        <div class="d-flex">
+                            <div class="me-2">Total</div>
+                            <div class="ms-auto fw-bold"><%= cart.costSubtotal.toFixed(2) %> zł</div>
+                        </div>
+                        <div class="text-center">
+                            <a class="btn btn-primary w-100 d-block mt-2" href="/cart/order">Place an Order</a>
+                            <button class="btn btn-sm text-secondary mt-2 py-0" id="clear-cart" hx-delete="/cart" hx-confirm="Are you sure you want to clear your cart?" hx-target="#cart-content">Clear</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

@@ -1,4 +1,5 @@
 const service = require('../services/cart.service');
+const render = require("../utils/render.utils");
 
 module.exports = {
     getCart,
@@ -9,6 +10,8 @@ module.exports = {
     removeProduct,
     updateProduct,
     removeProduct,
+    checkout,
+    getShipment,
 };
 
 async function getCart(req, res) {
@@ -78,6 +81,22 @@ async function removeProduct(req, res) {
         console.log(error);
         res.sendStatus(500);
     }
+};
+
+async function checkout(req, res) {
+    try {
+        const cart = await service.getUserCart(req.session.user._id);
+        render(req, res, "checkout", { cart });
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+};
+
+async function getShipment(req, res) {
+    const selectedShipmentMethod = req.query['selected-shipment-method'];
+    if (!selectedShipmentMethod) return res.end();
+    res.send(`[${selectedShipmentMethod} details]`);
 };
 
 function updateProduct(req, res) {

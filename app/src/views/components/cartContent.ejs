@@ -5,21 +5,16 @@
     <% }); %>
 </div>
 <% if (cart.content.length === 0) { %>
-    <div class="p-3 text-center text-secondary opacity-50 user-select-none">
-        <h1 class="fs-4">Your cart is empty</h1>
-        <div class="material-icons" style="font-size: 12rem;">
-            remove_shopping_cart
-        </div>
-    </div>
+    <%- include('./cartContentEmpty'); %>
 <% } else { %>
     <div class="px-3 py-2 border-top text-end">
-        <div class="d-flex fw-bold">
+        <div class="d-flex">
             <div class="me-2">Subtotal</div>
-            <div class="ms-auto"><%= cart.costSubtotal.toFixed(2) %> zł</div>
+            <div class="ms-auto fw-bold"><%= cart.costSubtotal.toFixed(2) %> zł</div>
         </div>
     </div>
     <div class="px-3 pb-2 text-center">
-        <button class="btn btn-primary w-100 d-block" onclick="alert('TODO')">Checkout</button>
+        <a class="btn btn-primary w-100 d-block" href="/cart/checkout">Checkout</a>
         <button class="btn btn-sm text-secondary mt-2 py-0" id="clear-cart" hx-delete="/cart" hx-confirm="Are you sure you want to clear your cart?" hx-target="#cart-content">Clear</button>
     </div>
     <script type="module">

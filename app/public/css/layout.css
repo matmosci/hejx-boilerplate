@@ -33,7 +33,7 @@ a.back:hover {
     padding-right: var(--offset);;
 }
 
-#cart-wrapper, .offcanvas-backdrop {
+#cart-wrapper {
     margin-top: var(--navbar-height);
 }
 

@@ -1,10 +1,6 @@
 <% if (cart.content.length===0) { %>
     <%- include('./cartContentEmpty'); %>
 <% } else { %>
-    <div>
-        <%= cart.error %>
-    </div>
-    <% cart.content.reverse().map((product, index)=> { %>
-        <%- include('../components/cartContentProduct', { product, index, length: cart.content.length }); %>
-    <% }); %>
+    <div><%= cart.error %></div>
+    <%- include('./cartContentProducts'); %>
 <% } %>

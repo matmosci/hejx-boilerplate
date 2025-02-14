@@ -1,8 +1,6 @@
 <div class="overflow-y-auto">
     <div><%= cart.error %></div>
-    <% cart.content.reverse().map((product, index) => { %>
-        <%- include('./cartContentProduct', { product, index, length: cart.content.length }); %>
-    <% }); %>
+    <%- include('./cartContentProducts'); %>
 </div>
 <% if (cart.content.length === 0) { %>
     <%- include('./cartContentEmpty'); %>

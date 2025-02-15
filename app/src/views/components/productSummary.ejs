@@ -39,15 +39,23 @@
                 const cartWrapperElement = document.getElementById('cart-wrapper');
                 const cartOffcanvas = bootstrap.Offcanvas.getOrCreateInstance(cartWrapperElement);
                 cartOffcanvas.show();
-                htmx.ajax(
-                    'GET',
-                    location.pathname,
-                    {
-                        select: "#product-price",
-                        target: "#product-price",
-                        swap: "outerHTML"
-                    }
-                );
+            }
+        },
+        {
+            element: document,
+            event: 'htmx:afterRequest',
+            handler: (e) => {
+                if (e.detail.target === document.getElementById('cart-content')) {
+                    htmx.ajax(
+                        'GET',
+                        location.pathname,
+                        {
+                            select: "#product-price",
+                            target: "#product-price",
+                            swap: "outerHTML"
+                        }
+                    );
+                }
             }
         }
     ]);

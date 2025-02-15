@@ -1,20 +1,12 @@
 <form id="cart-checkout-shipment-form" hx-trigger="change, load" hx-get="/cart/shipment" hx-target="#cart-checkout-shipment-details">
-    <div class="form-check">
-        <input class="form-check-input" type="radio" name="selected-shipment-method" id="shipment-method-courier" value="courier">
-        <label class="form-check-label" for="shipment-method-courier">
+    <div class="form-check bg-secondary p-1 gap-1 rounded-3 d-flex">
+        <input class="btn-check" type="radio" name="selected-shipment-method" id="shipment-method-courier" value="courier">
+        <label class="btn btn-secondary w-100" for="shipment-method-courier">
             Courier
         </label>
-    </div>
-    <div class="form-check">
-        <input class="form-check-input" type="radio" name="selected-shipment-method" id="shipment-method-parcel-locker" value="parcel-locker">
-        <label class="form-check-label" for="shipment-method-parcel-locker">
+        <input class="btn-check" type="radio" name="selected-shipment-method" id="shipment-method-parcel-locker" value="parcel-locker">
+        <label class="btn btn-secondary w-100" for="shipment-method-parcel-locker">
             Parcel Locker
-        </label>
-    </div>
-    <div class="form-check">
-        <input class="form-check-input" type="radio" name="selected-shipment-method" id="shipment-method-self-pickup" value="self-pickup">
-        <label class="form-check-label" for="shipment-method-self-pickup">
-            Self Pickup
         </label>
     </div>
 </form>

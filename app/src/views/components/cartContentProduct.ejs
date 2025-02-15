@@ -33,7 +33,20 @@
                 <button class="btn btn-sm py-0 text-secondary border-0">-</button>
             </div>
             <button class="btn btn-sm d-block py-0 btn-primary mt-auto" onclick="alert('TODO')">Edit</button>
-            <button class="btn btn-sm d-block py-0 mt-1 text-secondary delete-product" hx-delete="/cart/products/<%= product.id %>" hx-target="#cart-content" hx-confirm="Are you sure you want to remove product <%= product.title %> from your cart?">Remove</button>
+            <button
+                class="btn btn-sm d-block py-0 mt-1 text-secondary delete-product"
+                hx-delete="/cart/products/<%= product.id %>"
+                hx-target="#cart-content"
+                hx-trigger="confirmed"
+                onClick="Swal.fire({
+                    text:'Are you sure you want to remove product <%= product.title %> from your cart?',
+                    showCancelButton: true
+                }).then((result)=>{
+                    if(result.isConfirmed){
+                      htmx.trigger(this, 'confirmed');  
+                    } 
+                })"
+            >Remove</button>
         </div>
     </div>
 </details>

@@ -4,6 +4,9 @@
 </div>
 <% if (cart.content.length === 0) { %>
     <%- include('./cartContentEmpty'); %>
+    <div class="card-body p-0 pb-2" id="checkout-cart-content" hx-swap-oob="true">
+        <%- include('./cartContentEmpty'); %>
+    </div>
 <% } else { %>
     <div class="px-3 py-2 border-top text-end">
         <div class="d-flex">
@@ -13,7 +16,21 @@
     </div>
     <div class="px-3 pb-2 text-center">
         <a class="btn btn-primary w-100 d-block" href="/cart/checkout">Checkout</a>
-        <button class="btn btn-sm text-secondary mt-2 py-0" id="clear-cart" hx-delete="/cart" hx-confirm="Are you sure you want to clear your cart?" hx-target="#cart-content">Clear</button>
+        <button
+            class="btn btn-sm text-secondary mt-2 py-0"
+            id="clear-cart"
+            hx-delete="/cart"
+            hx-target="#cart-content"
+            hx-trigger="confirmed"
+            onClick="Swal.fire({
+                text:'Are you sure you want to clear your cart?',
+                showCancelButton: true
+            }).then((result)=>{
+                if(result.isConfirmed){
+                  htmx.trigger(this, 'confirmed');  
+                } 
+            })"
+        >Clear</button>
     </div>
     <script type="module">
     import EventsHandler from '/js/htmx-events-handler.js';

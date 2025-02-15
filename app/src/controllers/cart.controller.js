@@ -1,5 +1,6 @@
 const service = require('../services/cart.service');
 const render = require("../utils/render.utils");
+const shipmentMethods = require("../../data/shipmentMethods"); // TODO to service
 
 module.exports = {
     getCart,
@@ -75,7 +76,7 @@ async function removeProduct(req, res) {
 async function checkout(req, res) {
     try {
         const cart = await service.getUserCart(req.session.user._id);
-        render(req, res, "checkout", { cart });
+        render(req, res, "checkout", { cart, shipmentMethods });
     } catch (error) {
         console.log(error);
         res.sendStatus(500);

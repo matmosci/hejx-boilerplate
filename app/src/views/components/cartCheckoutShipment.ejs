@@ -1,13 +1,11 @@
 <form id="cart-checkout-shipment-form" hx-trigger="change, load" hx-get="/cart/shipment" hx-target="#cart-checkout-shipment-details">
     <div class="form-check bg-secondary p-1 gap-1 rounded-3 d-flex">
-        <input class="btn-check" type="radio" name="selected-shipment-method" id="shipment-method-courier" value="courier">
-        <label class="btn btn-secondary w-100" for="shipment-method-courier">
-            Courier
-        </label>
-        <input class="btn-check" type="radio" name="selected-shipment-method" id="shipment-method-parcel-locker" value="parcel-locker">
-        <label class="btn btn-secondary w-100" for="shipment-method-parcel-locker">
-            Parcel Locker
-        </label>
+        <% shipmentMethods.map(method => { %>
+            <input class="btn-check" type="radio" name="selected-shipment-method" id="shipment-method-<%= method.name %>" value="<%= method.name %>">
+            <label class="btn btn-secondary w-100" for="shipment-method-<%= method.name %>">
+                <%= method.title %>
+            </label>
+        <% }) %>
     </div>
 </form>
 <div id="cart-checkout-shipment-details"></div>

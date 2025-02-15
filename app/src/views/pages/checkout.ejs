@@ -69,25 +69,3 @@
         </div>
     </div>
 </main>
-<script type="module">
-    import EventsHandler from '/js/htmx-events-handler.js';
-
-    EventsHandler.register([
-        {
-            element: document.getElementById('clear-cart'),
-            event: 'htmx:afterRequest',
-            handler: (e) => {
-                htmx.ajax('GET', '/cart/length', '#cart-length');
-                htmx.ajax(
-                    'GET',
-                    location.pathname,
-                    {
-                        select: "#product-price",
-                        target: "#product-price",
-                        swap: "outerHTML"
-                    }
-                );
-            }
-        }
-    ]);
-</script>

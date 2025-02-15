@@ -4,7 +4,6 @@ const render = require("../utils/render.utils");
 module.exports = {
     getCart,
     getCartJSON,
-    getCartLength,
     clearCart,
     addProduct,
     removeProduct,
@@ -41,16 +40,6 @@ async function clearCart(req, res) {
     } catch (error) {
         console.log(error);
         res.sendStatus(500);
-    }
-};
-
-async function getCartLength(req, res) {
-    try {
-        const length = await service.getUserCartLength(req.session.user._id);
-        res.send(length > 0 ? String(length) : '');
-    } catch (error) {
-        console.log(error);
-        res.sendStatus(500);;
     }
 };
 

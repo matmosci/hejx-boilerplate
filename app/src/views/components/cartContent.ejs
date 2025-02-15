@@ -32,47 +32,6 @@
             })"
         >Clear</button>
     </div>
-    <script type="module">
-    import EventsHandler from '/js/htmx-events-handler.js';
-
-    EventsHandler.register([
-        {
-            element: document.getElementById('clear-cart'),
-            event: 'htmx:afterRequest',
-            handler: (e) => {
-                htmx.ajax('GET', '/cart/length', '#cart-length');
-                htmx.ajax(
-                    'GET',
-                    location.pathname,
-                    {
-                        select: "#product-price",
-                        target: "#product-price",
-                        swap: "outerHTML"
-                    }
-                );
-            }
-        }
-    ]);
-
-    document.querySelectorAll('.delete-product').forEach(button => {
-        EventsHandler.register({
-            element: button,
-            event: 'htmx:afterRequest',
-            handler: (e) => {
-                htmx.ajax('GET', '/cart/length', '#cart-length');
-                htmx.ajax(
-                    'GET',
-                    location.pathname,
-                    {
-                        select: "#product-price",
-                        target: "#product-price",
-                        swap: "outerHTML"
-                    }
-                );
-            }
-        });
-    });
-    </script>
 <% } %>
 <div class="bg-body-secondary border-top border-bottom text-secondary mt-auto cursor-pointer user-select-none"
     data-bs-dismiss="offcanvas"
@@ -81,3 +40,4 @@
       class="px-2 py-1"
     >&raquo;</span>
 </div>
+<span hx-swap-oob="true" id="cart-length" class="badge bg-primary px-1 position-absolute end-0" style="padding: 0.15rem;"><%= cart.content.length %></span>

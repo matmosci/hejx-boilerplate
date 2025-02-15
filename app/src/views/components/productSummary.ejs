@@ -36,7 +36,6 @@
             element: document.getElementById('add-to-cart'),
             event: 'htmx:afterRequest',
             handler: (e) => {
-                htmx.ajax('GET', '/cart/length', '#cart-length');
                 const cartWrapperElement = document.getElementById('cart-wrapper');
                 const cartOffcanvas = bootstrap.Offcanvas.getOrCreateInstance(cartWrapperElement);
                 cartOffcanvas.show();

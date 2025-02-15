@@ -1,13 +1,16 @@
-<div class="overflow-y-auto">
-    <div><%= cart.error %></div>
-    <%- include('./cartContentProducts'); %>
-</div>
 <% if (cart.content.length === 0) { %>
     <%- include('./cartContentEmpty'); %>
     <div class="card-body p-0 pb-2" id="checkout-cart-content" hx-swap-oob="true">
         <%- include('./cartContentEmpty'); %>
     </div>
 <% } else { %>
+    <div class="overflow-y-auto">
+        <div><%= cart.error %></div>
+        <%- include('./cartContentProducts'); %>
+        <div class="card-body p-0 pb-2" id="checkout-cart-content" hx-swap-oob="true">
+            <%- include('./cartContentProducts'); %>
+        </div>
+    </div>
     <div class="px-3 py-2 border-top text-end">
         <div class="d-flex">
             <div class="me-2">Subtotal</div>

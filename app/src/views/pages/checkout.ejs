@@ -47,21 +47,6 @@
                         </div>
                         <div class="text-center">
                             <a class="btn btn-primary w-100 d-block mt-2" href="/cart/order">Place an Order</a>
-                            <button
-                                class="btn btn-sm text-secondary mt-2 py-0"
-                                id="clear-cart"
-                                hx-delete="/cart"
-                                hx-target="#cart-content"
-                                hx-trigger="confirmed"
-                                onClick="Swal.fire({
-                                    text:'Are you sure you want to clear your cart?',
-                                    showCancelButton: true
-                                }).then((result)=>{
-                                    if(result.isConfirmed){
-                                      htmx.trigger(this, 'confirmed');  
-                                    } 
-                                })"
-                            >Clear</button>
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,92 @@
+<div id="cart-checkout-shipping-selected">
+  <%- include('./cartCheckoutShippingSelected'); %>
+  <% if (!cart.shipping.selectedMethod) { %>
+    <button
+      class="btn btn-primary w-100"
+      data-bs-toggle="modal"
+      data-bs-target="#shipping-modal"
+    >
+      Select Shipping Method
+    </button>
+  <% } %>
+</div>
+<div id="shipping-modal" class="modal">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Shipping</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form
+          id="cart-checkout-shipping-form"
+          hx-put="/cart/shipping"
+          hx-boost="false"
+          hx-target="#cart-checkout-shipping-selected"
+        >
+          <div id="cart-checkout-shipping-form-methods" class="d-flex justify-content-around">
+            <% shippingMethods.map(method => { %>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="selected-shipping-method"
+                id="shipping-method-<%= method.name %>"
+                value="<%= method.name %>"
+                hx-get="/cart/shipping"
+                hx-target="#cart-checkout-shipping-form-details"
+                <%= cart.shipping.selectedMethod === method.name ? "checked" : "" %>
+              />
+              <label
+                class="form-check-label"
+                for="shipping-method-<%= method.name %>"
+              >
+                <%= method.title %>
+              </label>
+            </div>
+            <% }); %>
+          </div>
+          <div id="cart-checkout-shipping-form-details">
+            <% if (cart.shipping.selectedMethod) { %>
+              <%- include('./cartCheckoutShippingMethod', { method: shippingMethods.find(method => method.name === cart.shipping.selectedMethod) }); %>
+            <% } %>
+          </div>
+          <input
+            id="cart-checkout-shipping-form-submit"
+            type="submit"
+            value="Save"
+            class="d-none"
+            data-bs-dismiss="modal"
+          />
+        </form>
+      </div>
+      <div class="modal-footer">
+        <div class="d-flex w-100 gap-2">
+          <button
+            class="btn btn-primary w-100"
+            onclick="document.getElementById('cart-checkout-shipping-form-submit').click();"
+          >Save</button>
+          <button
+            type="button"
+            class="btn btn-secondary w-100"
+            data-bs-dismiss="modal"
+            onclick="[...document.querySelectorAll('#cart-checkout-shipping-form-methods input[name=selected-shipping-method]')].forEach(input => {
+              if (input.value === '<%= cart.shipping.selectedMethod %>') {
+                  input.checked = true;
+                  input.dispatchEvent(new Event('change'));
+              }
+              else input.checked = false
+            });"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

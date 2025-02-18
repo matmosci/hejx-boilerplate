@@ -1,0 +1,23 @@
+<% method.fields.map((field, i) => { %>
+<div class="form-floating<%= i < method.fields.length - 1 ? " mb-2" : "" %><%= i === 0 ? " mt-3" : "" %>">
+  <input
+    class="form-control"
+    type="<%= field.type %>"
+    name="<%= field.name %>"
+    placeholder="<%= field.title %>"
+    id="shipping-method-<%= method.name %>-<%= field.name %>"
+    value="<%= field.readonly || !cart.shipping.details.get(method.name)
+      ? field.name === 'contactName' && user.firstname && user.lastname ? `${user.firstname} ${user.firstname}`
+      : field.name === 'email' && user.email ? user.email
+      : field.name === 'phone' && user.phone ? user.phone
+      : field.value
+      : cart.shipping.details.get(method.name)[field.name]
+      || "" %>"
+    <%= field.readonly && "readonly" %>
+  />
+  <label for="shipping-method-<%= method.name %>-<%= field.name %>">
+    <%= field.title %>
+    <%- !field.optional ? '<span class="text-danger">*</span>' : "" %>
+  </label>
+</div>
+<% }); %>

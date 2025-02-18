@@ -1,0 +1,15 @@
+<% if (cart.shipping.selectedMethod) { %>
+    <div class="mb-2">
+        <h4><%= shippingMethods.find(method => method.name === cart.shipping.selectedMethod).title %></h4>
+        <% Object.entries(cart.shipping.details.get(cart.shipping.selectedMethod)).map(entry => { %>
+            <div><%= shippingMethods.find(method => method.name === cart.shipping.selectedMethod).fields.find(field => field.name === entry[0]).title %>: <strong><%= entry[1] %></strong></div>
+        <% }); %>
+    </div>
+    <button
+        class="btn btn-primary w-100"
+        data-bs-toggle="modal"
+        data-bs-target="#shipping-modal"
+    >
+        Change
+    </button>
+<% } %>

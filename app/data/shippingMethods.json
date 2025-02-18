@@ -3,24 +3,24 @@
         "name": "courier",
         "title": "Courier",
         "fields": [
-            { "name": "country", "title": "Country", "type": "text" },
+            { "name": "country", "title": "Country", "type": "text", "value": "Poland", "readonly": true },
             { "name": "postalCode", "title": "Postal Code", "type": "text" },
             { "name": "town", "title": "Town", "type": "text" },
             { "name": "street", "title": "Street", "type": "text" },
             { "name": "numberHouse", "title": "House Number", "type": "text" },
             { "name": "numberAppartment", "title": "Appartment Number", "type": "text", "optional": true },
-            { "name": "companyName", "title": "Name Company", "type": "text", "optional": true },
-            { "name": "contactName", "title": "Name Contact", "type": "text" },
+            { "name": "companyName", "title": "Company Name", "type": "text", "optional": true },
+            { "name": "contactName", "title": "Recipient Name", "type": "text" },
             { "name": "phone", "title": "Phone", "type": "tel" },
             { "name": "email", "title": "E-mail", "type": "email" }
         ]
     },
     {
-        "name": "inpost",
-        "title": "InPost",
+        "name": "pickup-point",
+        "title": "Pickup Point",
         "fields": [
             { "name": "lockerId", "title": "Locker ID", "type": "inpost" },
-            { "name": "contactName", "title": "Contact Name", "type": "text" },
+            { "name": "contactName", "title": "Recipient Name", "type": "text" },
             { "name": "phone", "title": "Phone", "type": "tel" },
             { "name": "email", "title": "E-mail", "type": "email" }
         ]

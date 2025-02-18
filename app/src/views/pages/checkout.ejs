@@ -17,22 +17,22 @@
             </div>
             <div class="col-md-4">
                 <div class="card mb-2">
-                    <div class="card-header">Contact</div>
-                    <div class="card-body pt-2">
+                    <div class="card-header">Customer</div>
+                    <div class="card-body">
                         <%- include('../components/cartCheckoutUser'); %>
                     </div>
                 </div>
                 <div class="card mb-2">
                     <div class="card-header">Shipping</div>
                     <div class="card-body">
-                        <%- include('../components/cartCheckoutShipment'); %>
+                        <%- include('../components/cartCheckoutShipping'); %>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card mb-2">
                     <div class="card-header">Summary</div>
-                    <div class="card-body py-2">
+                    <div class="card-body">
                         <div class="d-flex">
                             <div class="me-2">Subtotal</div>
                             <div class="ms-auto fw-bold"><%= cart.costSubtotal.toFixed(2) %> zł</div>

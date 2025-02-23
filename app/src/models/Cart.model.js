@@ -22,7 +22,7 @@ const cartProductSchema = new mongoose.Schema(
 
 const schema = new mongoose.Schema(
     {
-        userId: { type: mongoose.Types.ObjectId, required: true },
+        user: { type: mongoose.Types.ObjectId, ref: "User", required: true },
         content: { type: [cartProductSchema], default: [] },
         shipping: { type: shippingSchema, default: { selectedMethod: "", details: new Map() } },
         costSubtotal: { type: Number, default: 0 },

@@ -8,7 +8,7 @@ module.exports = {
 };
 
 async function getUserCart(user) {
-    const cart = await Cart.findOne({ user }) ?? await Cart.create({ user });
+    const cart = await Cart.findOne({ user }).populate('user') ?? await (await Cart.create({ user })).populate('user');
     calculateCartSubtotal(cart);
     await cart.save();
     return cart;

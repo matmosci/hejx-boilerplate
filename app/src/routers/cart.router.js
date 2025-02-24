@@ -10,5 +10,6 @@ router.put('/products/:id', controller.updateProduct);
 router.get('/checkout', controller.checkout);
 router.get('/shipping', controller.getShipping);
 router.put('/shipping', controller.updateShipping);
+router.post('/order', controller.postOrder);
 
 module.exports = router;

@@ -1,6 +1,10 @@
 const service = require('../services/cart.service');
 const render = require("../utils/render.utils");
-const shippingMethods = require("../../data/shippingMethods"); // TODO to service
+const shippingMethods = require("../../data/shippingMethods"); // TODO create shipping service
+// TODO create order service
+const OrderNumber = require('../models/OrderNumber.model');
+const Order = require('../models/Order.model');
+const payu = require('../services/payu.service');
 
 module.exports = {
     getCart,
@@ -13,6 +17,7 @@ module.exports = {
     checkout,
     getShipping,
     updateShipping,
+    postOrder,
 };
 
 async function getCart(req, res) {
@@ -106,20 +111,45 @@ async function updateShipping(req, res) {
     res.render('components/cartCheckoutShippingSelected', { cart, shippingMethods });
 };
 
-(async () => {
-    const Cart = require("../models/Cart.model");
-    // const cart = await Cart.findOne({userId:"6784ec390dc80aa431160cf9"});
-    // const cart = await Cart.create({userId:"6784ec390dc80aa431160cf9"});
-    // console.log(cart);
-    // await Cart.findByIdAndDelete(cart._id);
-    // await Cart.findOneAndDelete({ userId: "6784ec390dc80aa431160cf9" });
+async function postOrder(req, res) {
+    try {
+        const cart = await service.getUserCart(req.session.user._id);
+        const order = await (await Order.create(Object.assign({}, cart.toObject(), { _id: null }, { number: await OrderNumber.add() }))).populate('user');
 
-    // cart.shipping.selectedMethod = "curier";
-    // cart.shipping.details.set('curier', {town: "asd", street: "asd", number: "asd", postalCode: "asd"});
-    // await cart.save();
-    // console.log(cart.shipping);
+        if (!order) throw new Error("Order was not created.");
 
-    // console.log(await Cart.find({ userId: "6784ec390dc80aa431160cf9" }));
-    // console.log((await Cart.findOne({userId:"6784ec390dc80aa431160cf9"})).shipping);
+        const payUorder = {
+            "notifyUrl": `${global.config.BASE_URL}/transaction/notify`,
+            "continueUrl": `${global.config.BASE_URL}/transaction/status`,
+            "customerIp": "127.0.0.1",
+            "merchantPosId": `${global.config.PAYU.pos_id}`,
+            "description": order.number,
+            "currencyCode": "PLN",
+            "totalAmount": Math.ceil(order.costSubtotal * 100),
+            "buyer": {
+                "email": order.user.email,
+                "phone": "654111654",
+                "firstName": "John",
+                "lastName": "Doe",
+                "language": "pl"
+            },
+            "products": [
+                {
+                    "name": "Order",
+                    "unitPrice": Math.ceil(order.costSubtotal * 100),
+                    "quantity": "1"
+                }
+            ]
+        }
 
-})();
+        const response = await payu.createOrder(payUorder);
+        if (!response.ok) console.log(await response.text());
+
+        res.set('HX-Redirect', response.url);
+        await service.clearUserCart(req.session.user._id);
+        res.end();
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    };
+};

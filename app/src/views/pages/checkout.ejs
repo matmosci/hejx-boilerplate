@@ -46,7 +46,7 @@
                             <div class="ms-auto fw-bold"><%= cart.costSubtotal.toFixed(2) %> zł</div>
                         </div>
                         <div class="text-center">
-                            <a class="btn btn-primary w-100 d-block mt-2" href="/cart/order">Place an Order</a>
+                            <a class="btn btn-primary w-100 d-block mt-2" hx-post="/cart/order">Place an Order</a>
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,14 @@
+<main>
+  <div class="container mt-2">
+    <div class="text-center">
+      <h1>
+        Transaction <% if (error) { %> failed <% } else { %> completed <% } %>
+      </h1>
+      <p>
+        <% if (error) { %> Something gone wrong. <% } else { %> Shopping with you is a pleasure. <% } %>
+        <a href="/" class="text-decoration-none d-block">View Orders</a>
+      </p>
+      <a href="/" class="text-decoration-none d-block">&larr;&nbsp;Back</a>
+    </div>
+  </div>
+</main>

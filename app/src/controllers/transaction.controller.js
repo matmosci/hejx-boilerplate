@@ -1,5 +1,6 @@
 const { send } = require("../utils/mailer.utils");
 const payu = require("../services/payu.service");
+const render = require("../utils/render.utils");
 
 module.exports = {
     createOrder: async (req, res) => {
@@ -34,8 +35,7 @@ module.exports = {
         res.send(response.url);
     },
     getStatus: (req, res) => {
-        if (req.query.error) return res.send(`Payment failed. <a href='${global.config.BASE_URL}'>[Back]</a>`);
-        res.send(`Thank you for your payment. <a href='${global.config.BASE_URL}'>[Back]</a>`);
+        render(req, res, "transaction-status", { error: req.query.error });
     },
     onNotification: (req, res) => {
         const signature_header = req.get("OpenPayu-Signature");

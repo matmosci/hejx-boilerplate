@@ -10,6 +10,7 @@ module.exports = {
     getUserCart,
     getUserCartLength,
     addUserCartProduct,
+    updateUserCartProduct,
     clearUserCart,
     removeUserCartProduct,
 };
@@ -32,6 +33,36 @@ async function addUserCartProduct(userId, productConfig) {
     cart.content.push(cartProduct);
     calculateCartSubtotal(cart);
     await cart.save();
+    return cart;
+};
+
+async function updateUserCartProduct(userId, productId, productConfig) {
+    const cart = await getUserCart(userId);
+    const cartProduct = cart.content.find(product => product.id === productId);
+    const cartProductEdited = JSON.parse(JSON.stringify(cartProduct));
+    for (const configParam of Object.entries(productConfig)) {
+        if (configParam[0] === 'quantity') {
+            if (configParam[1] === "++") {
+                cartProductEdited.quantity++;
+            } else if (configParam[1] === "--") {
+                cartProductEdited.quantity--;
+            } else {
+                cartProductEdited.quantity = Number(configParam[1]);
+            }
+            continue;
+        }
+    }
+
+    const product = await getProductConfigured(cartProductEdited.name, { configPath: [...cartProductEdited.config.map(cp => cp.value.value), cartProductEdited.quantity].join("/"), strict: true });
+    if (product) {
+        Object.assign(cartProduct, product)
+
+        calculateCartSubtotal(cart);
+        await cart.save();
+    };
+
+    cartProduct.expanded = true;
+
     return cart;
 };
 

@@ -11,7 +11,6 @@ module.exports = {
     getCartJSON,
     clearCart,
     addProduct,
-    removeProduct,
     updateProduct,
     removeProduct,
     checkout,
@@ -67,8 +66,16 @@ async function addProduct(req, res) {
     }
 };
 
-function updateProduct(req, res) {
-    res.send('updateProduct');
+async function updateProduct(req, res) {
+    const productId = req.params.id;
+    if (!productId) return res.sendStatus(400);
+    try {
+        const cart = await service.updateUserCartProduct(req.session.user._id, productId, req.body);
+        res.render('components/cartContent', { cart });
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
 };
 
 async function removeProduct(req, res) {

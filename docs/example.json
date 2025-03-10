@@ -1,0 +1,22 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Product A",
+      "description": "Description of Product A",
+      "price": 19.99,
+      "quantity": 100,
+      "category": "Category 1",
+      "image_url": "http://example.com/image1.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Product B",
+      "description": "Description of Product B",
+      "price": 29.99,
+      "quantity": 50,
+      "category": "Category 2",
+      "image_url": "http://example.com/image2.jpg"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<products>
+  <product>
+    <id>1</id>
+    <name>Product A</name>
+    <description>Description of Product A</description>
+    <price>19.99</price>
+    <quantity>100</quantity>
+    <category>Category 1</category>
+    <image_url>http://example.com/image1.jpg</image_url>
+  </product>
+  <product>
+    <id>2</id>
+    <name>Product B</name>
+    <description>Description of Product B</description>
+    <price>29.99</price>
+    <quantity>50</quantity>
+    <category>Category 2</category>
+    <image_url>http://example.com/image2.jpg</image_url>
+  </product>
+</products>

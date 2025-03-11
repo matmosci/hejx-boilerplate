@@ -22,7 +22,7 @@ module.exports = {
 async function getCart(req, res) {
     try {
         const cart = await service.getUserCart(req.session.user._id);
-        res.render('components/cartContent', { cart });
+        res.render('components/CartResponse', { cart });
     } catch (error) {
         console.log(error);
         res.sendStatus(500);
@@ -42,7 +42,7 @@ async function getCartJSON(req, res) {
 async function clearCart(req, res) {
     try {
         const cart = await service.clearUserCart(req.session.user._id);
-        res.render('components/cartContent', { cart });
+        res.render('components/CartResponse', { cart });
     } catch (error) {
         console.log(error);
         res.sendStatus(500);
@@ -55,11 +55,11 @@ async function addProduct(req, res) {
         if (!product?.length || !configPath?.length) throw new Error("Product was not added to cart.");
         const cart = await service.addUserCartProduct(req.session.user._id, { product, configPath });
         cart.content.at(-1).expanded = true;
-        res.render('components/cartContent', { cart });
+        res.render('components/CartResponse', { cart });
     } catch (error) {
         if (error.message === "Product was not added to cart.") {
             const cart = await service.getUserCart(req.session.user._id);
-            return res.render('components/cartContent', { cart, error: error.message });
+            return res.render('components/CartResponse', { cart, error: error.message });
         };
         console.log(error);
         res.sendStatus(500);
@@ -71,7 +71,7 @@ async function updateProduct(req, res) {
     if (!productId) return res.sendStatus(400);
     try {
         const cart = await service.updateUserCartProduct(req.session.user._id, productId, req.body);
-        res.render('components/cartContent', { cart });
+        res.render('components/CartResponse', { cart });
     } catch (error) {
         console.log(error);
         res.sendStatus(500);
@@ -83,7 +83,7 @@ async function removeProduct(req, res) {
     if (!productId) res.sendStatus(400);
     try {
         const cart = await service.removeUserCartProduct(req.session.user._id, productId);
-        res.render('components/cartContent', { cart });
+        res.render('components/CartResponse', { cart });
     } catch (error) {
         console.log(error);
         res.sendStatus(500);

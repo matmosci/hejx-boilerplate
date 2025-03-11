@@ -45,7 +45,7 @@
             element: document,
             event: 'htmx:afterRequest',
             handler: (e) => {
-                if (e.detail.target === document.getElementById('cart-content')) {
+                if (e.detail.select !== "#product-price") {
                     htmx.ajax(
                         'GET',
                         location.pathname,

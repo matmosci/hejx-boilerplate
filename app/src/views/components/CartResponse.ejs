@@ -1,0 +1,21 @@
+<span id="cart-length" class="badge bg-primary px-1 position-absolute end-0" style="padding: 0.15rem;" hx-swap-oob="true"><%= cart.content.length || "" %></span>
+
+<div id="cart-checkout-content" class="card-body p-0 pb-2" hx-swap-oob="true">
+    <% if (cart.content.length === 0) { %>
+        <%- include('./cartContentEmpty'); %>
+    <% } else { %>
+        <%- include('./cartContentProducts'); %>
+    <% } %>    
+</div>
+
+<div id="cart-checkout-summary" class="card-body" hx-swap-oob="true">
+    <%- include('./cartCheckoutSummary');%>
+</div>
+
+<div
+    id="cart-content"
+    class="offcanvas-body p-0 d-flex flex-column bg-body-tertiary overflow-y-hidden"
+    hx-swap-oob="true"
+>
+    <%- include('./cartContent'); %>
+</div>

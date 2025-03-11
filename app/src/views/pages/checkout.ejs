@@ -10,9 +10,7 @@
             <div class="col-md-4">
                 <div class="card mb-2">
                     <div class="card-header">Cart</div>
-                    <div class="card-body p-0 pb-2" id="checkout-cart-content">
-                        <%- include('../components/cartCheckoutContent'); %>
-                    </div>
+                    <div id="cart-checkout-content" class="card-body p-0 pb-2"></div>
                 </div>
             </div>
             <div class="col-md-4">
@@ -32,23 +30,7 @@
             <div class="col-md-4">
                 <div class="card mb-2">
                     <div class="card-header">Summary</div>
-                    <div class="card-body">
-                        <div class="d-flex">
-                            <div class="me-2">Subtotal</div>
-                            <div class="ms-auto fw-bold"><%= cart.costSubtotal.toFixed(2) %> zł</div>
-                        </div>
-                        <div class="d-flex">
-                            <div class="me-2">Shipping</div>
-                            <div class="ms-auto fw-bold">0.00 zł</div>
-                        </div>
-                        <div class="d-flex">
-                            <div class="me-2">Total</div>
-                            <div class="ms-auto fw-bold"><%= cart.costSubtotal.toFixed(2) %> zł</div>
-                        </div>
-                        <div class="text-center">
-                            <a class="btn btn-primary w-100 d-block mt-2" hx-post="/cart/order">Place an Order</a>
-                        </div>
-                    </div>
+                    <div id="cart-checkout-summary"></div>
                 </div>
             </div>
         </div>

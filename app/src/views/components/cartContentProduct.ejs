@@ -28,9 +28,9 @@
         </div>
         <div class="cart-product-actions text-end d-flex flex-column">
             <div class="d-flex align-items-center mx-auto mb-1">
-                <button class="btn btn-sm py-0 text-secondary border-0" hx-put="/cart/products/<%= product.id %>" hx-vars="quantity:'++'">+</button>
-                <div class="fw-bold"><%= product.quantity %></div>
                 <button class="btn btn-sm py-0 text-secondary border-0" hx-put="/cart/products/<%= product.id %>" hx-vars="quantity:'--'">-</button>
+                <div class="fw-bold"><%= product.quantity %></div>
+                <button class="btn btn-sm py-0 text-secondary border-0" hx-put="/cart/products/<%= product.id %>" hx-vars="quantity:'++'">+</button>
             </div>
             <button class="btn btn-sm d-block py-0 btn-primary mt-auto" onclick="alert('TODO')">Edit</button>
             <button

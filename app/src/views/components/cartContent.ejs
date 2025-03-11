@@ -1,15 +1,9 @@
 <% if (cart.content.length === 0) { %>
     <%- include('./cartContentEmpty'); %>
-    <div class="card-body p-0 pb-2" id="checkout-cart-content" hx-swap-oob="true">
-        <%- include('./cartContentEmpty'); %>
-    </div>
 <% } else { %>
     <div class="overflow-y-auto">
         <div><%= cart.error %></div>
         <%- include('./cartContentProducts'); %>
-        <div class="card-body p-0 pb-2" id="checkout-cart-content" hx-swap-oob="true">
-            <%- include('./cartContentProducts'); %>
-        </div>
     </div>
     <div class="px-3 py-2 border-top text-end">
         <div class="d-flex">
@@ -43,4 +37,3 @@
       class="px-2 py-1"
     >&raquo;</span>
 </div>
-<span hx-swap-oob="true" id="cart-length" class="badge bg-primary px-1 position-absolute end-0" style="padding: 0.15rem;"><%= cart.content.length || "" %></span>

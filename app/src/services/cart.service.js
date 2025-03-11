@@ -69,6 +69,7 @@ async function updateUserCartProduct(userId, productId, productConfig) {
 async function clearUserCart(userId) {
     const cart = await getUserCart(userId);
     cart.content = [];
+    calculateCartSubtotal(cart);
     await cart.save();
     return cart;
 };

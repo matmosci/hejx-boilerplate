@@ -1,0 +1,6 @@
+id,name,description,price,weight,quantity,category,image_0,image_1,image_2,image_3,image_4
+1,Product A,Description of Product A,19.99,0.1,100,Category 1,https://placehold.co/1000x800?text=A0,https://placehold.co/1000x800?text=A1,https://placehold.co/1000x800?text=A2,https://placehold.co/1000x800?text=A3,https://placehold.co/1000x800?text=A4
+2,Product B,Description of Product B,29.99,0.4,50,Category 2,https://placehold.co/1000x800?text=B0,https://placehold.co/1000x800?text=B1,https://placehold.co/1000x800?text=B2,https://placehold.co/1000x800?text=B3,https://placehold.co/1000x800?text=B4
+3,Product C,Description of Product C,39.99,1,25,Category 3,https://placehold.co/1000x800?text=C0,https://placehold.co/1000x800?text=C1,https://placehold.co/1000x800?text=C2,https://placehold.co/1000x800?text=C3,https://placehold.co/1000x800?text=C4
+4,Product D,Description of Product D,49.99,4,10,Category 4,https://placehold.co/1000x800?text=D0,https://placehold.co/1000x800?text=D1,https://placehold.co/1000x800?text=D2,https://placehold.co/1000x800?text=D3,https://placehold.co/1000x800?text=D4
+5,Product E,Description of Product E,59.99,1.5,5,Category 5,https://placehold.co/1000x800?text=E0,https://placehold.co/1000x800?text=E1,https://placehold.co/1000x800?text=E2,https://placehold.co/1000x800?text=E3,https://placehold.co/1000x800?text=E4

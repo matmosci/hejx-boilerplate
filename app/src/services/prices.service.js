@@ -1,3 +1,7 @@
+const { parse } = require("csv-parse/sync");
+const fs = require('fs');
+const path = require('path');
+
 function getJsonPrice(source, id, quantity) {
     const prices = require(`../../data/${source}`);
     const price = prices.find(p => p.id === Number(id))?.price;
@@ -16,11 +20,20 @@ function getJsonPrice(source, id, quantity) {
     return null;
 };
 
+function getCsvPrice(source, id, quantity) {
+    const filePath = path.join(__dirname, `../../data/${source}`);
+    data = fs.readFileSync(filePath);
+    const json = parse(data, { columns: true, skip_empty_lines: true, relax_column_count: true });
+    return json.find(product => product.id === id)?.price;
+}
+
 function getPrice(source, id, quantity) {
     const type = source.split('.')[1];
     switch (type) {
         case 'json':
             return getJsonPrice(source, id, quantity);
+        case 'csv':
+            return getCsvPrice(source, id, quantity);
     };
 }
 

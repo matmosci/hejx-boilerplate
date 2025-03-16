@@ -1,5 +1,7 @@
 const registry = require('./registry.service');
+const fs = require('fs');
 const path = require('path');
+const { parse } = require("csv-parse/sync");
 const XLSX = require("xlsx");
 const XLSX_CALC = require("xlsx-calc");
 const formulajs = require("@formulajs/formulajs");
@@ -12,10 +14,47 @@ module.exports = {
     getParamConfig,
 };
 
-async function getProductConfigured(name, options) {
-    if (!registry.findByNameAndType(name, 'product')?.enabled) return null;
+function cvsJsonToJson(csvJson) {
+    return {
+        "name": csvJson.name.toLowerCase().replace(/ /g, '-'),
+        "title": csvJson.name,
+        "description": csvJson.description,
+        "imageUrl": csvJson.image_0,
+        "galleryUrls": [
+            csvJson.image_1,
+            csvJson.image_2,
+            csvJson.image_3,
+            csvJson.image_4,
+        ],
+        "parameters": [
+            {
+                "type": "quantity",
+                "name": "quantity",
+                "title": "Quantity",
+                "value": 1,
+                "min": 1,
+                "max": Number(csvJson.quantity)
+            }
+        ],
+        "weight": Number(csvJson.weight),
+        "prices": [
+            { "source": "example.csv", "id": Number(csvJson.id), "qty": 1 }
+        ]
+    }
+}
 
-    const product = structuredClone(getProductDefinition(name));
+async function getProductConfigured(name, options) {
+    let product;
+    if (registry.findByNameAndType(name, 'product')?.enabled) {
+        product = structuredClone(getProductDefinition(name));
+    } else {
+        const filePath = path.join(__dirname, `../../data/${'example'}.csv`);
+        data = fs.readFileSync(filePath);
+        const json = parse(data, { columns: true, skip_empty_lines: true, relax_column_count: true });
+        const csvJson = json.find(product => product.name.toLowerCase().replace(/ /g, '-') === name);
+        product = cvsJsonToJson(csvJson);
+    };
+
     const config = getParamConfig(product, options.configPath);
 
     if (!verifyProductConfig(product, config))
@@ -45,7 +84,9 @@ async function calculateProductPrice(product, userId) {
     cart.content.push(product);
     const provisionalGroup = createCartProductGroup(product.name, cart.content);
     product.prices.map(p => {
-        p.price = provisionalGroup[p.source][p.id].price;
+        if (!isNaN(p)) p.price = p;
+        else
+            p.price = provisionalGroup[p.source][p.id].price;
     });
     product.price = product.prices.reduce((acc, p) => acc + p.price * p.qty, 0);
 };

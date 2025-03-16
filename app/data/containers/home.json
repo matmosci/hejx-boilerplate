@@ -14,6 +14,10 @@
         {
             "type": "container",
             "name": "beauty"
+        },
+        {
+            "type": "container",
+            "name": "csv"
         }
     ]
 }

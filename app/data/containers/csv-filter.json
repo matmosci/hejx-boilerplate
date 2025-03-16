@@ -1,0 +1,14 @@
+{
+    "name": "csv-filter",
+    "title": "Filtered CSV A & B",
+    "imageUrl": "https://placehold.co/800x800.jpg",
+    "items": [
+        {
+            "type": "csv",
+            "name": "example",
+            "filter": {
+                "category": ["Category 1", "Category 2"]
+            }
+        }
+    ]
+}

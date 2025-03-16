@@ -7,5 +7,7 @@
     { "type": "container", "name": "home", "enabled": true },
     { "type": "container", "name": "electronics", "enabled": true },
     { "type": "container", "name": "print", "enabled": true },
+    { "type": "container", "name": "csv", "enabled": true },
+    { "type": "container", "name": "csv-filter", "enabled": true },
     { "type": "container", "name": "beauty", "enabled": true }
 ]

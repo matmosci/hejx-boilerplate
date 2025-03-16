@@ -6,6 +6,12 @@ GET {{api}}
 ###
 GET {{api}}/category/home
 
+### mouses
+GET {{api}}/mouses
+
+### product-d
+GET {{api}}/product-d
+
 ### def
 GET {{api}}/laptops
 

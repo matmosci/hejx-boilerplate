@@ -6,13 +6,13 @@ const {
 
 const {
     getContainerGridItems,
-    parseGridItem
+    parseGridItem,
 } = require("../services/catalog.service");
 
 module.exports = {
     getContainerMain,
     getContainer,
-    getProduct
+    getProduct,
 };
 
 async function getProduct(req, res) {
@@ -31,11 +31,23 @@ async function getProduct(req, res) {
 };
 
 function getContainer(req, res) {
-    const { category: categoryName } = req.params;
-    const category = parseGridItem(categoryName);
-    render(req, res, "products", { items: getContainerGridItems(category.name), title: category.title });
+    try {
+        const { category: categoryName } = req.params;
+        const category = parseGridItem(categoryName);
+        render(req, res, "products", { items: getContainerGridItems(category.name), title: category.title });
+    } catch (error) {
+        console.log(error);
+        res.set(req.headers['hx-request'] ? "HX-Push-Url" : "X-Set-Url", "/products");
+        getContainerMain(req, res);
+    }
 };
 
 function getContainerMain(req, res) {
-    render(req, res, "products", { items: getContainerGridItems("home"), title: "Products" });
+    try {
+        render(req, res, "products", { items: getContainerGridItems("home"), title: "Products" });
+    } catch (error) {
+        console.log(error);
+        res.set(req.headers['hx-request'] ? "HX-Push-Url" : "X-Set-Url", "/");
+        render(req, res, "home")
+    }
 };

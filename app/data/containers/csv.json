@@ -1,0 +1,19 @@
+{
+    "name": "csv",
+    "title": "CSV",
+    "imageUrl": "https://placehold.co/800x800.jpg",
+    "items": [
+        {
+            "type": "csv",
+            "name": "example"
+        },
+        {
+            "type": "product",
+            "name": "lakiery"
+        },
+        {
+            "type": "container",
+            "name": "csv-filter"
+        }
+    ]
+}

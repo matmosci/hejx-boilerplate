@@ -4,7 +4,7 @@
     <% if (cart.content.length === 0) { %>
         <%- include('./cartContentEmpty'); %>
     <% } else { %>
-        <%- include('./cartContentProducts'); %>
+        <%- include('./cartContentProducts', { parent: "checkout" }); %>
     <% } %>    
 </div>
 

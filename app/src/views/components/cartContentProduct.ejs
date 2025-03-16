@@ -1,52 +1,60 @@
-<details class="cart-product py-1<%= index !== 0 ? ' border-top' : '' %>"<%= product.expanded ? ' open' : '' %>>
-    <summary class="px-3 py-1">
-        <div class="d-flex justify-content-between user-select-none">
-            <div class="text-muted"><%= product.title %></div>
-            <div class="ms-2">
-                <%= product.prices.reduce((acc, curr) => acc + curr.price * curr.qty, 0).toFixed(2) %>&nbsp;zł
+<div class="accordion-item cart-product bg-body-tertiary">
+    <div class="accordion-header">
+        <button class="accordion-button<%= product.expanded ? '' : ' collapsed' %>" type="button" data-bs-toggle="collapse" data-bs-target="#<%= parent %>-product-<%= product.id %>" aria-expanded="<%= product.expanded ? 'true' : 'false' %>" aria-controls="<%= parent %>-product-<%= product.id %>">
+            <div class="w-100 text-body pe-3">
+                <div class="d-flex justify-content-between user-select-none">
+                    <div class="fw-bold"><%= product.title %></div>
+                    <div class="ms-2">
+                        <%= product.prices.reduce((acc, curr) => acc + curr.price * curr.qty, 0).toFixed(2) %>&nbsp;zł
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between user-select-none sub-summary">
+                    <div>
+                        <small class="text-muted">
+                            <% product.config.filter(param => param.value.value !== '-').map(param => { %>
+                                <%= param.value.title %>
+                            <% }); %>
+                        </small>
+                    </div>
+                    <div class="fw-bold ms-2"><small><%= product.quantity %></small></div>
+                </div>
             </div>
-        </div>
-        <div class="d-flex justify-content-between user-select-none sub-summary">
-            <div>
-                <small class="fw-bold">
+        </button>
+    </div>
+    <div id="<%= parent %>-product-<%= product.id %>" class="accordion-collapse collapse<%= product.expanded ? ' show' : '' %>" data-bs-parent="#<%= parent %>-products-accordion">
+        <div class="accordion-body">
+            <div class="d-flex justify-content-between">
+                <div>
                     <% product.config.filter(param => param.value.value !== '-').map(param => { %>
-                        <%= param.value.title %>
+                    <small class="d-block">
+                        <span><%= param.param.title %>:</span>
+                        <strong><%= param.value.title %></strong>
+                    </small>
                     <% }); %>
-                </small>
+                </div>
+                <div class="cart-product-actions text-end d-flex flex-column">
+                    <div class="d-flex align-items-center mx-auto mb-1">
+                        <button class="btn btn-sm py-0 text-secondary border-0" hx-put="/cart/products/<%= product.id %>" hx-vars="quantity:'--'">-</button>
+                        <div class="fw-bold"><%= product.quantity %></div>
+                        <button class="btn btn-sm py-0 text-secondary border-0" hx-put="/cart/products/<%= product.id %>" hx-vars="quantity:'++'">+</button>
+                    </div>
+                    <button class="btn btn-sm d-block py-0 btn-primary mt-auto" onclick="alert('TODO')">Edit</button>
+                    <button
+                        class="btn btn-sm d-block py-0 mt-1 text-secondary delete-product"
+                        hx-delete="/cart/products/<%= product.id %>"
+                        hx-target="#cart-content"
+                        hx-trigger="confirmed"
+                        onClick="Swal.fire({
+                            text:'Are you sure you want to remove product <%= product.title %> from your cart?',
+                            showCancelButton: true
+                        }).then((result)=>{
+                            if(result.isConfirmed){
+                              htmx.trigger(this, 'confirmed');  
+                            } 
+                        })"
+                    >Remove</button>
+                </div>
             </div>
-            <div class="fw-bold ms-2"><small><%= product.quantity %></small></div>
-        </div>
-    </summary>
-    <div class="d-flex justify-content-between px-3 mb-2">
-        <div>
-            <% product.config.filter(param => param.value.value !== '-').map(param => { %>
-            <small class="d-block">
-                <span><%= param.param.title %>:</span>
-                <strong><%= param.value.title %></strong>
-            </small>
-            <% }); %>
-        </div>
-        <div class="cart-product-actions text-end d-flex flex-column">
-            <div class="d-flex align-items-center mx-auto mb-1">
-                <button class="btn btn-sm py-0 text-secondary border-0" hx-put="/cart/products/<%= product.id %>" hx-vars="quantity:'--'">-</button>
-                <div class="fw-bold"><%= product.quantity %></div>
-                <button class="btn btn-sm py-0 text-secondary border-0" hx-put="/cart/products/<%= product.id %>" hx-vars="quantity:'++'">+</button>
-            </div>
-            <button class="btn btn-sm d-block py-0 btn-primary mt-auto" onclick="alert('TODO')">Edit</button>
-            <button
-                class="btn btn-sm d-block py-0 mt-1 text-secondary delete-product"
-                hx-delete="/cart/products/<%= product.id %>"
-                hx-target="#cart-content"
-                hx-trigger="confirmed"
-                onClick="Swal.fire({
-                    text:'Are you sure you want to remove product <%= product.title %> from your cart?',
-                    showCancelButton: true
-                }).then((result)=>{
-                    if(result.isConfirmed){
-                      htmx.trigger(this, 'confirmed');  
-                    } 
-                })"
-            >Remove</button>
         </div>
     </div>
-</details>
+</div>

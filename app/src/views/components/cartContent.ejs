@@ -3,7 +3,7 @@
 <% } else { %>
     <div class="overflow-y-auto">
         <div><%= cart.error %></div>
-        <%- include('./cartContentProducts'); %>
+        <%- include('./cartContentProducts', { parent: "cart" }); %>
     </div>
     <div class="px-3 py-2 border-top text-end">
         <div class="d-flex">

@@ -1,6 +1,4 @@
-const { parse } = require("csv-parse/sync");
-const fs = require('fs');
-const path = require('path');
+const csv = require('../utils/csv.utils');
 
 function getJsonPrice(source, id, quantity) {
     const prices = require(`../../data/${source}`);
@@ -21,9 +19,7 @@ function getJsonPrice(source, id, quantity) {
 };
 
 function getCsvPrice(source, id, quantity) {
-    const filePath = path.join(__dirname, `../../data/${source}`);
-    data = fs.readFileSync(filePath);
-    const json = parse(data, { columns: true, skip_empty_lines: true, relax_column_count: true });
+    const json = csv.toJson(source);
     return json.find(product => product.id === id)?.price;
 }
 

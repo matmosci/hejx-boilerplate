@@ -1,7 +1,5 @@
 const registry = require('./registry.service');
-const fs = require('fs');
-const path = require('path');
-const { parse } = require("csv-parse/sync");
+const csv = require('../utils/csv.utils');
 
 module.exports = {
     getContainerGridItems,
@@ -48,10 +46,7 @@ function parseGridItem(name) {
 };
 
 function getContainerGridItemsCsv(fileName) {
-    const filePath = path.join(__dirname, `../../data/${fileName}.csv`);
-    data = fs.readFileSync(filePath);
-    const json = parse(data, { columns: true, skip_empty_lines: true, relax_column_count: true });
-    return json;
+    return csv.toJson(`${fileName}.csv`);
 };
 
 function parseGridItemCsv(item) {

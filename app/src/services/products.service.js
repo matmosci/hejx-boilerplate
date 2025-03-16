@@ -1,7 +1,6 @@
 const registry = require('./registry.service');
-const fs = require('fs');
 const path = require('path');
-const { parse } = require("csv-parse/sync");
+const csv = require('../utils/csv.utils');
 const XLSX = require("xlsx");
 const XLSX_CALC = require("xlsx-calc");
 const formulajs = require("@formulajs/formulajs");
@@ -14,45 +13,14 @@ module.exports = {
     getParamConfig,
 };
 
-function cvsJsonToJson(csvJson) {
-    return {
-        "name": csvJson.name.toLowerCase().replace(/ /g, '-'),
-        "title": csvJson.name,
-        "description": csvJson.description,
-        "imageUrl": csvJson.image_0,
-        "galleryUrls": [
-            csvJson.image_1,
-            csvJson.image_2,
-            csvJson.image_3,
-            csvJson.image_4,
-        ],
-        "parameters": [
-            {
-                "type": "quantity",
-                "name": "quantity",
-                "title": "Quantity",
-                "value": 1,
-                "min": 1,
-                "max": Number(csvJson.quantity)
-            }
-        ],
-        "weight": Number(csvJson.weight),
-        "prices": [
-            { "source": "example.csv", "id": Number(csvJson.id), "qty": 1 }
-        ]
-    }
-}
-
 async function getProductConfigured(name, options) {
     let product;
     if (registry.findByNameAndType(name, 'product')?.enabled) {
         product = structuredClone(getProductDefinition(name));
     } else {
-        const filePath = path.join(__dirname, `../../data/${'example'}.csv`);
-        data = fs.readFileSync(filePath);
-        const json = parse(data, { columns: true, skip_empty_lines: true, relax_column_count: true });
-        const csvJson = json.find(product => product.name.toLowerCase().replace(/ /g, '-') === name);
-        product = cvsJsonToJson(csvJson);
+        const json = csv.toJson(`${'example'}.csv`);
+        const csvProduct = json.find(product => product.name.toLowerCase().replace(/ /g, '-') === name);
+        product = csv.getProduct(csvProduct);
     };
 
     const config = getParamConfig(product, options.configPath);

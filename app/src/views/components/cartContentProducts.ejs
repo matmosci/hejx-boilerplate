@@ -1,5 +1,5 @@
 <div class="accordion accordion-flush" id="<%= parent %>-products-accordion">
-<% cart.content.reverse().map((product, index) => { %>
+<% [...cart.content].reverse().map((product, index) => { %>
     <%- include('./cartContentProduct', { product, index, length: cart.content.length }); %>
 <% }); %>
 </div>

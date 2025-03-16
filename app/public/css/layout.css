@@ -38,13 +38,18 @@ a.back:hover {
 }
 
 .cart-product:hover .accordion-button {
-    background-color: var(--bs-light-bg-subtle) !important;
+    background-color: var(--bs-muted) !important;
 }
 
 .cart-product .accordion-button::after {
     display: none;
 }
 
+.cart-product .accordion-button:not(.collapsed) {
+    background-color: var(--bs-light-bg-subtle) !important;
+    box-shadow: 0 2px 4px #0004;
+}
+    
 .cart-product .accordion-button:not(.collapsed) .sub-summary {
     display: none !important;
 }

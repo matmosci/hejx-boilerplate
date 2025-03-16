@@ -24,36 +24,16 @@
     <div id="<%= parent %>-product-<%= product.id %>" class="accordion-collapse collapse<%= product.expanded ? ' show' : '' %>" data-bs-parent="#<%= parent %>-products-accordion">
         <div class="accordion-body">
             <div class="d-flex justify-content-between">
+                <% const params = product.config.filter(param => param.value.value !== '-'); %>
                 <div>
-                    <% product.config.filter(param => param.value.value !== '-').map(param => { %>
+                    <% params.map(param => { %>
                     <small class="d-block">
                         <span><%= param.param.title %>:</span>
                         <strong><%= param.value.title %></strong>
                     </small>
                     <% }); %>
                 </div>
-                <div class="cart-product-actions text-end d-flex flex-column">
-                    <div class="d-flex align-items-center mx-auto mb-1">
-                        <button class="btn btn-sm py-0 text-secondary border-0" hx-put="/cart/products/<%= product.id %>" hx-vars="quantity:'--'">-</button>
-                        <div class="fw-bold"><%= product.quantity %></div>
-                        <button class="btn btn-sm py-0 text-secondary border-0" hx-put="/cart/products/<%= product.id %>" hx-vars="quantity:'++'">+</button>
-                    </div>
-                    <button class="btn btn-sm d-block py-0 btn-primary mt-auto" onclick="alert('TODO')">Edit</button>
-                    <button
-                        class="btn btn-sm d-block py-0 mt-1 text-secondary delete-product"
-                        hx-delete="/cart/products/<%= product.id %>"
-                        hx-target="#cart-content"
-                        hx-trigger="confirmed"
-                        onClick="Swal.fire({
-                            text:'Are you sure you want to remove product <%= product.title %> from your cart?',
-                            showCancelButton: true
-                        }).then((result)=>{
-                            if(result.isConfirmed){
-                              htmx.trigger(this, 'confirmed');  
-                            } 
-                        })"
-                    >Remove</button>
-                </div>
+                <%- include(`./cartContentProductActions-${ params.length ? 'column' : 'row'}`); %>
             </div>
         </div>
     </div>

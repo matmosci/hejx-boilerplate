@@ -76,7 +76,7 @@ function processProductAttributes(product, config, workbook, sheet) {
             break;
     };
 
-    product.prices.map(price => {
+    product.prices?.map(price => {
         switch (typeof price.id) {
             case 'string':
                 if (!workbook) throw new Error("Price ID is not a number and no workbook was provided.");

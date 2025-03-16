@@ -1,6 +1,5 @@
-const prices = require("../../data/prices.json");
-
-function getJsonPrice(id, quantity) {
+function getJsonPrice(source, id, quantity) {
+    const prices = require(`../../data/${source}`);
     const price = prices.find(p => p.id === Number(id))?.price;
     if (!price) return null;
 
@@ -17,4 +16,12 @@ function getJsonPrice(id, quantity) {
     return null;
 };
 
-module.exports.getPrice = { json: getJsonPrice };
+function getPrice(source, id, quantity) {
+    const type = source.split('.')[1];
+    switch (type) {
+        case 'json':
+            return getJsonPrice(source, id, quantity);
+    };
+}
+
+module.exports = { getPrice };

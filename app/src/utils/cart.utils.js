@@ -28,7 +28,7 @@ function createCartProductGroup(product, content) {
 
     Object.keys(productGroup).map(source => {
         Object.keys(productGroup[source]).map(id => {
-            productGroup[source][id].price = getPrice[source](id, productGroup[source][id].qty);
+            productGroup[source][id].price = getPrice(source, id, productGroup[source][id].qty);
             productGroup.subtotal += productGroup[source][id].price * productGroup[source][id].qty;
         });
     });

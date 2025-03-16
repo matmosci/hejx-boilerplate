@@ -48,6 +48,6 @@
     ],
     "weight": 0.1,
     "prices": [
-        { "source": "json", "id": "B10", "qty": 1 }
+        { "source": "prices.json", "id": "B10", "qty": 1 }
     ]
 }

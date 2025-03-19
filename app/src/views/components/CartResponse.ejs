@@ -1,4 +1,4 @@
-<span id="cart-length" class="badge bg-primary px-1 position-absolute end-0" style="padding: 0.15rem;" hx-swap-oob="true"><%= cart.content.length || "" %></span>
+<span id="cart-length" class="badge bg-primary p-1 position-absolute end-0" hx-swap-oob="true"><%= cart.content.length || "" %></span>
 
 <div id="cart-checkout-content" class="card-body p-0" hx-swap-oob="true">
     <% if (cart.content.length === 0) { %>

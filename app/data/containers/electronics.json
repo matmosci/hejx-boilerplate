@@ -1,7 +1,7 @@
 {
     "name": "electronics",
     "title": "Electronics",
-    "imageUrl": "https://placehold.co/800x800.jpg",
+    "imageUrl": "/img/products/electronics.jpg",
     "items": [
         {
             "type": "product",

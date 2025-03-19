@@ -1,7 +1,7 @@
 {
     "name": "print",
     "title": "Print",
-    "imageUrl": "https://placehold.co/800x800.jpg",
+    "imageUrl": "/img/products/print.jpg",
     "items": [
         {
             "type": "product",

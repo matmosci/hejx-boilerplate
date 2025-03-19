@@ -2,7 +2,7 @@
     "name": "mouses",
     "title": "Mouses",
     "description": "Mouses description",
-    "imageUrl": "https://placehold.co/800x800.jpg",
+    "imageUrl": "/img/products/mouses.jpg",
     "parameters": [
         {
             "type": "quantity",

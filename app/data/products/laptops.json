@@ -1,8 +1,9 @@
+
 {
     "name": "laptops",
     "title": "Laptops",
     "description": "Laptops description",
-    "imageUrl": "https://placehold.co/800x800.jpg",
+    "imageUrl": "/img/products/laptops.jpg",
     "galleryUrls": [
         "https://placehold.co/1000x800.jpg",
         "https://placehold.co/1000x500.jpg",

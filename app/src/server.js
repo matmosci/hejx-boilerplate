@@ -6,6 +6,7 @@ const port = 9090;
 const user = require('./middleware/user.middleware');
 const cookieParser = require('cookie-parser');
 const { I18n } = require('i18n');
+const morgan = require('morgan');
 require('./utils/mailer.utils').verify();
 
 app.set('views', './src/views');
@@ -27,6 +28,8 @@ const i18n = new I18n({
     defaultLocale: global.config.LOCALES[0],
     cookie: 'lang'
 });
+
+app.use(morgan(global.config.NODE_ENV === 'development' ? 'dev' : 'short'));
 
 app.use(session({
     secret: global.config.SESSION_SECRET,

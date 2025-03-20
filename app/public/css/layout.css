@@ -34,7 +34,7 @@ a.back:hover {
 }
 
 #cart-wrapper {
-    max-width: calc(100% - 2rem);
+    max-width: calc(100% - 4rem);
 }
 
 .cart-product:hover .accordion-button {

@@ -30,10 +30,14 @@
         >Clear</button>
     </div>
 <% } %>
-<div class="bg-body-secondary border-top border-bottom text-secondary mt-auto cursor-pointer user-select-none"
-    data-bs-dismiss="offcanvas"
-    aria-label="Close">
-    <span
-      class="px-2 py-1"
-    >&raquo;</span>
+<div class="d-flex justify-content-between align-items-center bg-body-secondary border-top border-bottom text-secondary mt-auto">
+    <div
+        class="w-100 h-100 ps-2 align-content-center cursor-pointer user-select-none"
+        data-bs-dismiss="offcanvas"
+        aria-label="Close"
+    >&raquo;</div>
+    <div class="text-nowrap user-select-none"><%= __('Active cart') %>:</div>
+    <div class="m-1">
+        <%- include('./cartSelect'); %>
+    </div>
 </div>

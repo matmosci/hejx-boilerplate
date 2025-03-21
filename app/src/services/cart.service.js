@@ -1,3 +1,4 @@
+const Cart = require("../models/Cart.model");
 const { getProductConfigured } = require("./products.service");
 const { randomUUID } = require('crypto');
 
@@ -7,12 +8,31 @@ const {
 } = require("../utils/cart.utils");
 
 module.exports = {
-    getUserCart,
+    getUserCart, // legacy
+    createUserCart,
+    getUserCarts,
+    getCart,
     getUserCartLength,
-    addUserCartProduct,
-    updateUserCartProduct,
-    clearUserCart,
-    removeUserCartProduct,
+    addCartProduct,
+    updateCartProduct,
+    clearCart,
+    removeCartProduct,
+};
+
+async function createUserCart(user) {
+    return (await Cart.create({ user })).populate('user');
+};
+
+function getUserCarts(user) {
+    return Cart.find({ user });
+};
+
+async function getCart(cartId) {
+    const cart = await Cart.findById(cartId).populate('user');
+    if (!cart) throw new Error("Cart not found.");
+    calculateCartSubtotal(cart);
+    await cart.save();
+    return cart;
 };
 
 async function getUserCartLength(userId) {
@@ -20,8 +40,8 @@ async function getUserCartLength(userId) {
     return cart.content.length;
 };
 
-async function addUserCartProduct(userId, productConfig) {
-    const cart = await getUserCart(userId);
+async function addCartProduct(cartId, productConfig) {
+    const cart = await getCart(cartId);
     const { product: productName, configPath } = productConfig;
     const product = await getProductConfigured(productName, { configPath, strict: true });
     if (!product) throw new Error("Product was not added to cart.");
@@ -36,8 +56,8 @@ async function addUserCartProduct(userId, productConfig) {
     return cart;
 };
 
-async function updateUserCartProduct(userId, productId, productConfig) {
-    const cart = await getUserCart(userId);
+async function updateCartProduct(cartId, productId, productConfig) {
+    const cart = await getCart(cartId);
     const cartProduct = cart.content.find(product => product.id === productId);
     const cartProductEdited = JSON.parse(JSON.stringify(cartProduct));
     for (const configParam of Object.entries(productConfig)) {
@@ -66,16 +86,16 @@ async function updateUserCartProduct(userId, productId, productConfig) {
     return cart;
 };
 
-async function clearUserCart(userId) {
-    const cart = await getUserCart(userId);
+async function clearCart(cartId) {
+    const cart = await getCart(cartId);
     cart.content = [];
     calculateCartSubtotal(cart);
     await cart.save();
     return cart;
 };
 
-async function removeUserCartProduct(userId, productId) {
-    const cart = await getUserCart(userId);
+async function removeCartProduct(cartId, productId) {
+    const cart = await getCart(cartId);
     cart.content = cart.content.filter(product => product.id !== productId);
     calculateCartSubtotal(cart);
     await cart.save();

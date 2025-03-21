@@ -8,6 +8,7 @@ const payu = require('../services/payu.service');
 
 module.exports = {
     getCart,
+    activeCartSelect,
     getCartJSON,
     clearCart,
     addProduct,
@@ -19,10 +20,33 @@ module.exports = {
     postOrder,
 };
 
+async function activeCartSelect(req, res) {
+    try {
+        const userCarts = await service.getUserCarts(req.session.user._id);
+        const cart = userCarts.find(cart => cart._id.toString() === req.query["active-cart-select"])
+            ?? userCarts.find(cart => cart._id.toString() === req.session.active_cart?.toString())
+            ?? userCarts.at(-1)
+            ?? await service.createUserCart(req.session.user._id);
+
+        req.session.active_cart = cart._id;
+
+        res.render('components/CartResponse', { cart, userCarts });
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+};
+
 async function getCart(req, res) {
     try {
-        const cart = await service.getUserCart(req.session.user._id);
-        res.render('components/CartResponse', { cart });
+        const userCarts = await service.getUserCarts(req.session.user._id);
+        const cart = userCarts.find(cart => cart._id.toString() === req.session.active_cart?.toString())
+            ?? userCarts.at(-1)
+            ?? await service.createUserCart(req.session.user._id);
+
+        req.session.active_cart = cart._id;
+
+        res.render('components/CartResponse', { cart, userCarts });
     } catch (error) {
         console.log(error);
         res.sendStatus(500);
@@ -31,7 +55,8 @@ async function getCart(req, res) {
 
 async function getCartJSON(req, res) {
     try {
-        const cart = await service.getUserCart(req.session.user._id);
+        const userCarts = await service.getUserCarts(req.session.user._id);
+        const cart = userCarts.find(cart => cart._id.toString() === req.session.active_cart?.toString());
         res.json(cart);
     } catch (error) {
         console.log(error);
@@ -41,8 +66,10 @@ async function getCartJSON(req, res) {
 
 async function clearCart(req, res) {
     try {
-        const cart = await service.clearUserCart(req.session.user._id);
-        res.render('components/CartResponse', { cart });
+        const userCarts = await service.getUserCarts(req.session.user._id);
+        const cart = userCarts.find(cart => cart._id.toString() === req.session.active_cart?.toString());
+        const cartUpdated = await service.clearCart(cart._id);
+        res.render('components/CartResponse', { cart: cartUpdated, userCarts });
     } catch (error) {
         console.log(error);
         res.sendStatus(500);
@@ -53,13 +80,15 @@ async function addProduct(req, res) {
     const { product, configPath } = req.body;
     try {
         if (!product?.length || !configPath?.length) throw new Error("Product was not added to cart.");
-        const cart = await service.addUserCartProduct(req.session.user._id, { product, configPath });
-        cart.content.at(-1).expanded = true;
-        res.render('components/CartResponse', { cart });
+        const userCarts = await service.getUserCarts(req.session.user._id);
+        const cart = userCarts.find(cart => cart._id.toString() === req.session.active_cart?.toString());
+        const cartUpdated = await service.addCartProduct(cart._id, { product, configPath });
+        cartUpdated.content.at(-1).expanded = true;
+        res.render('components/CartResponse', { cart: cartUpdated, userCarts });
     } catch (error) {
         if (error.message === "Product was not added to cart.") {
             const cart = await service.getUserCart(req.session.user._id);
-            return res.render('components/CartResponse', { cart, error: error.message });
+            return res.render('components/CartResponse', { cart, userCarts, error: error.message });
         };
         console.log(error);
         res.sendStatus(500);
@@ -70,8 +99,10 @@ async function updateProduct(req, res) {
     const productId = req.params.id;
     if (!productId) return res.sendStatus(400);
     try {
-        const cart = await service.updateUserCartProduct(req.session.user._id, productId, req.body);
-        res.render('components/CartResponse', { cart });
+        const userCarts = await service.getUserCarts(req.session.user._id);
+        const cart = userCarts.find(cart => cart._id.toString() === req.session.active_cart?.toString());
+        const cartUpdated = await service.updateCartProduct(cart._id, productId, req.body);
+        res.render('components/CartResponse', { cart: cartUpdated, userCarts });
     } catch (error) {
         console.log(error);
         res.sendStatus(500);
@@ -82,8 +113,10 @@ async function removeProduct(req, res) {
     const productId = req.params.id;
     if (!productId) res.sendStatus(400);
     try {
-        const cart = await service.removeUserCartProduct(req.session.user._id, productId);
-        res.render('components/CartResponse', { cart });
+        const userCarts = await service.getUserCarts(req.session.user._id);
+        const cart = userCarts.find(cart => cart._id.toString() === req.session.active_cart?.toString());
+        const cartUpdated = await service.removeCartProduct(cart._id, productId);
+        res.render('components/CartResponse', { cart: cartUpdated, userCarts });
     } catch (error) {
         console.log(error);
         res.sendStatus(500);
@@ -92,7 +125,8 @@ async function removeProduct(req, res) {
 
 async function checkout(req, res) {
     try {
-        const cart = await service.getUserCart(req.session.user._id);
+        const userCarts = await service.getUserCarts(req.session.user._id);
+        const cart = userCarts.find(cart => cart._id.toString() === req.session.active_cart?.toString());
         render(req, res, "checkout", { cart, shippingMethods });
     } catch (error) {
         console.log(error);
@@ -101,7 +135,8 @@ async function checkout(req, res) {
 };
 
 async function getShipping(req, res) {
-    const cart = await service.getUserCart(req.session.user._id);
+    const userCarts = await service.getUserCarts(req.session.user._id);
+    const cart = userCarts.find(cart => cart._id.toString() === req.session.active_cart?.toString());
     const selectedShippingMethod = req.query['selected-shipping-method'];
     if (!selectedShippingMethod) return res.end();
     const method = shippingMethods.find(method => method.name === selectedShippingMethod);
@@ -109,7 +144,8 @@ async function getShipping(req, res) {
 };
 
 async function updateShipping(req, res) {
-    const cart = await service.getUserCart(req.session.user._id);
+    const userCarts = await service.getUserCarts(req.session.user._id);
+    const cart = userCarts.find(cart => cart._id.toString() === req.session.active_cart?.toString());
     cart.shipping.selectedMethod = req.body['selected-shipping-method'];
     const details = { ...req.body };
     delete details['selected-shipping-method'];
@@ -120,7 +156,8 @@ async function updateShipping(req, res) {
 
 async function postOrder(req, res) {
     try {
-        const cart = await service.getUserCart(req.session.user._id);
+        const userCarts = await service.getUserCarts(req.session.user._id);
+        const cart = userCarts.find(cart => cart._id.toString() === req.session.active_cart?.toString());
         const order = await (await Order.create(Object.assign({}, cart.toObject(), { _id: null }, { number: await OrderNumber.add() }))).populate('user');
 
         if (!order) throw new Error("Order was not created.");

@@ -36,7 +36,7 @@ app.use(session({
     store,
     resave: true,
     rolling: true,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
         secure: global.config.NODE_ENV !== 'development',
         maxAge: global.config.SESSION_MAX_AGE

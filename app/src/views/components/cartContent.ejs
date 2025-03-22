@@ -30,14 +30,17 @@
         >Clear</button>
     </div>
 <% } %>
-<div class="d-flex justify-content-between align-items-center bg-body-secondary border-top border-bottom text-secondary mt-auto">
-    <div
-        class="w-100 h-100 ps-2 align-content-center cursor-pointer user-select-none"
+<div class="d-flex justify-content-between align-items-center bg-body-secondary border-top border-bottom text-secondary mt-auto p-1">
+    <button
+        class="btn btn-outline-secondary me-3 w-100 h-100 material-icons fs-6"
+        style="border-style: dashed;"
         data-bs-dismiss="offcanvas"
         aria-label="Close"
-    >&raquo;</div>
-    <div class="text-nowrap user-select-none"><%= __('Active cart') %>:</div>
-    <div class="m-1">
+        title="<%= __('Close cart panel') %>"
+    >double_arrow</button>
+    <div class="text-nowrap d-none d-sm-block user-select-none"><%= __('Active cart') %>:</div>
+    <div class="mx-1">
         <%- include('./cartSelect'); %>
     </div>
+    <button class="btn btn-sm fs-5 h-100 px-0 material-icons" title="<%= __('Manage carts') %>">more_vert</button>
 </div>

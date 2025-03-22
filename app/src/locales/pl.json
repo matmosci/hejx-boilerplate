@@ -3,5 +3,7 @@
 	"SIGN_OUT": "Wyloguj",
 	"E_INVALID_CREDENTIALS": "Nieprawidłowe dane logowania",
 	"E_USER_ALREADY_LOGGED_IN": "Użytkownik już jest zalogowany",
-	"Active cart": "Aktywny koszyk"
+	"Active cart": "Aktywny koszyk",
+	"Manage carts": "Zarządzaj koszykami",
+	"Close cart panel": "Ukryj panel koszyka"
 }

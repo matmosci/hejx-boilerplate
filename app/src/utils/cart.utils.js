@@ -14,9 +14,9 @@ async function getUserCart(user) {
     return cart;
 };
 
-function createCartProductGroup(product, content) {
+function createCartProductGroup(productName, content) {
     const productGroup = {};
-    content.filter(p => p.name === product).map(p => {
+    content.filter(p => p.name === productName).map(p => {
         p.prices.map(price => {
             productGroup[price.source] ??= {};
             productGroup[price.source][price.id] ??= { qty: 0 };

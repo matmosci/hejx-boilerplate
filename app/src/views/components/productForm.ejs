@@ -20,7 +20,7 @@
             element: form,
             event: 'htmx:configRequest',
             handler: (e) => {
-                e.detail.path = `/products/<%= product.name %>/${[...e.target].map(input => input.value).join("/")}`;
+                e.detail.headers['x-form-request'] = 'true';
             }
         },
         {

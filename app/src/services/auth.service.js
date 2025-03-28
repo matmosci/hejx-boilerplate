@@ -1,5 +1,6 @@
 const User = require('../models/User.model');
 const LoginToken = require('../models/LoginToken.model');
+const Cart = require('../models/Cart.model');
 const crypto = require("crypto");
 const mailer = require('../utils/mailer.utils');
 
@@ -10,7 +11,12 @@ module.exports = {
     getUserByLoginHash,
     removeAnonymusUser,
     transferUserData: async (to_user_id, from_user_id) => {
-        return console.log("moveUserData", to_user_id, from_user_id);
+        const fromUserCarts = await Cart.find({ user: from_user_id });
+        await Promise.all(fromUserCarts.map(async cart => {
+            if (cart.content.length === 0) return await Cart.findByIdAndDelete(cart._id);
+            cart.user = to_user_id;
+            return await cart.save();
+        }));
     }
 };
 

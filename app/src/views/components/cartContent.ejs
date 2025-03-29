@@ -20,7 +20,7 @@
             hx-target="#cart-content"
             hx-trigger="confirmed"
             onClick="Swal.fire({
-                text:'Are you sure you want to clear your cart?',
+                text:'Are you sure you want to empty the contents of your cart?',
                 showCancelButton: true
             }).then((result)=>{
                 if(result.isConfirmed){
@@ -45,8 +45,22 @@
     <div class="dropdown">
         <button class="btn btn-sm fs-5 h-100 px-0 material-icons" type="button" data-bs-toggle="dropdown" aria-expanded="false" title="<%= __('Manage carts') %>">more_vert</button>
         <ul class="dropdown-menu">
-            <li><a class="dropdown-item" hx-post="/cart">Create new cart</a></li>
-            <li><a class="dropdown-item" hx-delete="/cart">Remove active cart</a></li>
+            <li><a class="dropdown-item cursor-pointer" hx-post="/cart">Create new cart</a></li>
+            <li>
+                <a
+                    class="dropdown-item cursor-pointer"
+                    hx-delete="/cart"
+                    hx-trigger="confirmed"
+                    onClick="Swal.fire({
+                        text:'Are you sure you want to delete your cart?',
+                        showCancelButton: true
+                    }).then((result)=>{
+                        if(result.isConfirmed){
+                          htmx.trigger(this, 'confirmed');  
+                        } 
+                    })"
+                >Delete active cart</a>
+            </li>
             <li><a class="dropdown-item" href="#">Manage carts contents</a></li>
         </ul>
     </div>

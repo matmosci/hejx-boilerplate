@@ -27,8 +27,12 @@ async function activeCartSelect(req, res) {
         const userCarts = await service.getUserCarts(req.session.user._id);
         const cart = userCarts.find(cart => cart._id.toString() === req.query["active-cart-select"])
             ?? userCarts.find(cart => cart._id.toString() === req.session.active_cart?.toString())
-            ?? userCarts.at(-1)
-            ?? await service.createUserCart(req.session.user._id);
+            ?? userCarts.at(-1);
+
+        if (!cart) {
+            cart = await service.createUserCart(req.session.user._id);
+            userCarts.push(cart);
+        };
 
         req.session.active_cart = cart._id;
 
@@ -42,9 +46,13 @@ async function activeCartSelect(req, res) {
 async function getCart(req, res) {
     try {
         const userCarts = await service.getUserCarts(req.session.user._id);
-        const cart = userCarts.find(cart => cart._id.toString() === req.session.active_cart?.toString())
-            ?? userCarts.at(-1)
-            ?? await service.createUserCart(req.session.user._id);
+        let cart = userCarts.find(cart => cart._id.toString() === req.session.active_cart?.toString())
+            ?? userCarts.at(-1);
+
+        if (!cart) {
+            cart = await service.createUserCart(req.session.user._id);
+            userCarts.push(cart);
+        };
 
         req.session.active_cart = cart._id;
 
@@ -76,9 +84,15 @@ async function deleteCart(req, res) {
         await service.deleteCart(activeCartId);
 
         const userCarts = await service.getUserCarts(req.session.user._id);
-        const cart = userCarts.find(cart => cart._id.toString() === req.session.active_cart?.toString())
-            ?? userCarts.at(-1)
-            ?? await service.createUserCart(req.session.user._id);
+        let cart = userCarts.find(cart => cart._id.toString() === req.session.active_cart?.toString())
+            ?? userCarts.at(-1);
+
+        if (!cart) {
+            cart = await service.createUserCart(req.session.user._id);
+            userCarts.push(cart);
+        };
+
+        console.log(cart);
 
         req.session.active_cart = cart._id;
 

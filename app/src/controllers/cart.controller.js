@@ -8,6 +8,7 @@ const payu = require('../services/payu.service');
 
 module.exports = {
     getCart,
+    createCart,
     activeCartSelect,
     getCartJSON,
     clearCart,
@@ -43,6 +44,21 @@ async function getCart(req, res) {
         const cart = userCarts.find(cart => cart._id.toString() === req.session.active_cart?.toString())
             ?? userCarts.at(-1)
             ?? await service.createUserCart(req.session.user._id);
+
+        req.session.active_cart = cart._id;
+
+        res.render('components/CartResponse', { cart, userCarts });
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+};
+
+async function createCart(req, res) {
+    try {
+        const userCarts = await service.getUserCarts(req.session.user._id);
+        const cart = await service.createUserCart(req.session.user._id);
+        userCarts.push(cart);
 
         req.session.active_cart = cart._id;
 

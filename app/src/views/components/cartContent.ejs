@@ -42,5 +42,12 @@
     <div class="mx-1">
         <%- include('./cartSelect'); %>
     </div>
-    <button class="btn btn-sm fs-5 h-100 px-0 material-icons" title="<%= __('Manage carts') %>">more_vert</button>
+    <div class="dropdown">
+        <button class="btn btn-sm fs-5 h-100 px-0 material-icons" type="button" data-bs-toggle="dropdown" aria-expanded="false" title="<%= __('Manage carts') %>">more_vert</button>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" hx-post="/cart">Create new cart</a></li>
+            <li><a class="dropdown-item" href="#">Remove active cart</a></li>
+            <li><a class="dropdown-item" href="#">Manage carts contents</a></li>
+        </ul>
+    </div>
 </div>

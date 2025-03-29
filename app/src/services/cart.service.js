@@ -12,6 +12,7 @@ module.exports = {
     createUserCart,
     getUserCarts,
     getCart,
+    deleteCart,
     getUserCartLength,
     addCartProduct,
     updateCartProduct,
@@ -33,6 +34,10 @@ async function getCart(cartId) {
     calculateCartSubtotal(cart);
     await cart.save();
     return cart;
+};
+
+function deleteCart(cartId) {
+    return Cart.findByIdAndDelete(cartId);
 };
 
 async function getUserCartLength(userId) {

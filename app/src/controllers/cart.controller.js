@@ -240,7 +240,7 @@ async function postOrder(req, res) {
         if (!response.ok) console.log(await response.text());
 
         res.set('HX-Redirect', response.url);
-        await service.clearUserCart(req.session.user._id);
+        await service.clearCart(cart._id);
         res.end();
     } catch (error) {
         console.log(error);

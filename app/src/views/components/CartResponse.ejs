@@ -19,3 +19,24 @@
 >
     <%- include('./cartContent'); %>
 </div>
+
+<div id="cart-manager-content" hx-swap-oob="true">
+    <% userCarts.map(userCart => { %>
+        <div class="card overflow-hidden mb-2<%= userCart.id === cart.id ? ' border-primary' : '' %>">
+            <div class="card-header pe-2<%= userCart.id === cart.id ? ' bg-primary' : '' %>">
+                <h2 class="d-flex mb-0">
+                    <div>
+                        <%= userCart.name || "#" + userCart.id.slice(-4) %>
+                    </div>
+                    <button onclick="alert('To implement')" class="btn btn-sm <%= userCart.id === cart.id ? 'btn-outline-light' : 'btn-outline-secondary' %> border-0 ms-1 px-1 py-0 material-icons me-0">edit</button>
+                    <% if (userCart.id !== cart.id) { %>
+                        <button class="btn btn-sm btn-primary py-0 ms-auto" hx-get="/cart/select?active-cart-select=<%= userCart.id %>"><%= __('Select Active') %></button>
+                    <% } %>
+                </h2>
+            </div>
+            <div class="card-body p-0">
+                <%- include('../components/cartContentProducts', { cart: userCart, parent: "manager" }) %>
+            </div>
+        </div>
+    <% }); %>
+</div>

@@ -17,6 +17,7 @@ module.exports = {
     updateProduct,
     removeProduct,
     checkout,
+    manager,
     getShipping,
     updateShipping,
     postOrder,
@@ -178,6 +179,17 @@ async function checkout(req, res) {
         const userCarts = await service.getUserCarts(req.session.user._id);
         const cart = userCarts.find(cart => cart._id.toString() === req.session.active_cart?.toString());
         render(req, res, "checkout", { cart, shippingMethods });
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+};
+
+async function manager(req, res) {
+    try {
+        const userCarts = await service.getUserCarts(req.session.user._id);
+        const cart = userCarts.find(cart => cart._id.toString() === req.session.active_cart?.toString());
+        render(req, res, "cart-manager", { cart, userCarts, shippingMethods });
     } catch (error) {
         console.log(error);
         res.sendStatus(500);

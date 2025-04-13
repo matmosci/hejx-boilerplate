@@ -1,4 +1,4 @@
-<select name="active-cart-select" id="active-cart-select" class="border bg-body-tertiary text-muted p-1" hx-get="/cart/select">
+<select name="active-cart-select" id="active-cart-select" class="border bg-body-tertiary text-muted p-1 rounded-0" hx-get="/cart/select" hx-trigger="change delay:500ms">
     <% userCarts.map(userCart => { %>
         <% if (userCart._id.toString() === cart._id.toString()) Object.assign(userCart, cart, { selected: true }); %>
         <option value="<%= userCart._id %>"<%= userCart.selected ? ' selected' : '' %>>

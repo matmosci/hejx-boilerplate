@@ -7,13 +7,14 @@ module.exports = {
     },
     createToken: async (req, res) => {
         const email = req.body?.email?.trim().toLowerCase();
+        const { redirect } = req.query;
 
         try {
             if (!email) throw new Error("E_INVALID_CREDENTIALS");
             const credentials = await service.createLoginToken(email);
             if (global.config.NODE_ENV === "development") console.log(credentials);
             else service.sendLoginToken(email, credentials);
-            render(req, res, "login", { form: "loginEmailTokenForm", email, $status: 201 });
+            return res.render("components/loginEmailTokenForm", { email, redirect });
         } catch (error) {
             if (error.message === "E_INVALID_CREDENTIALS") return res.status(401).send(res.locals.__(error.message));
             console.log(error);
@@ -64,5 +65,7 @@ async function loginUser(req, res, user) {
     await service.transferUserData(user._id, req.session.user._id);
     await service.removeAnonymusUser(req.session.user._id);
     req.session.user = { _id: user._id, email: user.email, access: user.access };
-    res.redirect("/");
-}
+    const { redirect } = req.query;
+    redirect ? res.set("HX-Redirect", "/") : res.set("HX-Refresh", "true");
+    res.end();
+};

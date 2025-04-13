@@ -1,4 +1,4 @@
-<form action="/auth/login" method="POST" hx-target-error="#error">
+<form hx-post="/auth/login<%= typeof redirect !== 'undefined' && redirect ? ("?redirect=" + redirect) : "" %>" hx-target-error="#error">
     <input class="form-control mb-1" type="email" name="email" placeholder="Email" autofocus>
     <div id="error" class="alert alert-danger d-empty-none py-1"></div>
     <input class="btn btn-primary" type="submit"></input>

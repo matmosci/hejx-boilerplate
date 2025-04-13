@@ -6,7 +6,6 @@ router.get('/', (req, res) => { render(req, res, "home") });
 router.get('/query', (req, res) => { render(req, res, "query", { show: req.query.show }) });
 router.get('/get', (req, res) => { render(req, res, "get") });
 router.get('/form', (req, res) => { render(req, res, "form") });
-router.get('/login', (req, res) => { render(req, res, "login", { form: "loginEmailForm" }) });
-router.get('/login/token', (req, res) => { render(req, res, "login", { form: "loginEmailTokenForm", email: "" }) });
+router.get('/login', (req, res) => { render(req, res, "login", { form: "loginEmailForm", redirect: "/" }) });
 
 module.exports = router;
